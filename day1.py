@@ -1,6 +1,6 @@
 from typing import List
 
-from io_utils import read_file_to_list
+from day import Day
 
 
 def line_to_digit(line: str) -> int:
@@ -9,14 +9,6 @@ def line_to_digit(line: str) -> int:
         if c.isdigit():
             digits.append(int(c))
     return digits[0] * 10 + digits[-1]
-
-
-def part_one(lines: List[str]) -> int:
-    result = 0
-    for line in lines:
-        digits = line_to_digit(line)
-        result += digits
-    return result
 
 
 def line_to_digits_with_letter(line: str) -> int:
@@ -39,16 +31,23 @@ def line_to_digits_with_letter(line: str) -> int:
     return digits[0] * 10 + digits[-1]
 
 
-def part_two(lines: List[str]):
-    result = 0
-    for line in lines:
-        result += line_to_digits_with_letter(line)
-    return result
+class Day1(Day):
+    def __init__(self):
+        super().__init__(day=1)
+
+    def part_one(self, lines: List[str]) -> int:
+        result = 0
+        for line in lines:
+            digits = line_to_digit(line)
+            result += digits
+        return result
+
+    def part_two(self, lines: List[str]):
+        result = 0
+        for line in lines:
+            result += line_to_digits_with_letter(line)
+        return result
 
 
 if __name__ == '__main__':
-    all_lines = read_file_to_list('day1.txt')
-    ans1 = part_one(all_lines)
-    print(f'ans1:{ans1}')
-    ans2 = part_two(all_lines)
-    print(f'ans2:{ans2}')
+    Day1().run()

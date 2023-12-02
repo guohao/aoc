@@ -1,6 +1,6 @@
 from typing import List
 
-import io_utils
+from day import Day
 
 
 def extract_game(line: str) -> List[List[int]]:
@@ -39,14 +39,6 @@ def possible(line: str) -> bool:
     return True
 
 
-def part_one(lines: List[str]) -> int:
-    ret = 0
-    for i, line in enumerate(lines):
-        if possible(line):
-            ret += i + 1
-    return ret
-
-
 def sum_of_minimal(line: str) -> int:
     minimal = [0, 0, 0]
     for play in extract_game(line):
@@ -55,18 +47,24 @@ def sum_of_minimal(line: str) -> int:
     return minimal[0] * minimal[1] * minimal[2]
 
 
-def part_two(lines: List[str]) -> int:
-    ret = 0
-    for line in lines:
-        ret += sum_of_minimal(line)
-    return ret
+class Day2(Day):
+
+    def __init__(self):
+        super().__init__(day=2)
+
+    def part_one(self, lines: List[str]) -> int:
+        ret = 0
+        for i, line in enumerate(lines):
+            if possible(line):
+                ret += i + 1
+        return ret
+
+    def part_two(self, lines: List[str]) -> int:
+        ret = 0
+        for line in lines:
+            ret += sum_of_minimal(line)
+        return ret
 
 
 if __name__ == '__main__':
-    all_lines = io_utils.read_file_to_list('day2.txt')
-    ans1 = part_one(all_lines)
-    # 24
-    print(f'ans1:{ans1}')
-    # 13
-    ans2 = part_two(all_lines)
-    print(f'ans2:{ans2}')
+    Day2().run()
