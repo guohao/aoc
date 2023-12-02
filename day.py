@@ -1,6 +1,9 @@
+import logging
 from typing import List
 
-import io_utils
+from common import io_utils
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Day:
@@ -16,6 +19,6 @@ class Day:
     def run(self):
         lines = io_utils.get_day_input(self.day)
         ans1 = self.part_one(lines)
-        print(f'ans1:{ans1}')
+        logging.info(f'Answer of part one is : {ans1}')
         ans2 = self.part_two(lines)
-        print(f'ans2:{ans2}')
+        logging.info(f'Answer of part two is : {ans2}')
