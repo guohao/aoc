@@ -1,34 +1,16 @@
+import re
 from typing import List
 
 from day import Day
 
 
-def line_to_digit(line: str) -> int:
-    digits = []
-    for c in line:
-        if c.isdigit():
-            digits.append(int(c))
-    return digits[0] * 10 + digits[-1]
-
-
-def line_to_digits_with_letter(line: str) -> int:
-    """
-    letter can be reused, for example: threeight = 38
-
-    :param line:
-    :return:
-    """
+def parse_int(letter: str):
+    if letter.isdigit():
+        return int(letter)
     letters = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-    digits = []
-    for i in range(len(line)):
-        if line[i].isdigit():
-            digits.append(int(line[i]))
-        else:
-            for j, letter in enumerate(letters):
-                if line[i:].startswith(letter):
-                    digits.append(j + 1)
-                    break
-    return digits[0] * 10 + digits[-1]
+    if letter in letters:
+        return letters.index(letter) + 1
+    raise Exception(f"Bad format of letter:{letter}")
 
 
 class Day1(Day):
@@ -38,14 +20,15 @@ class Day1(Day):
     def part_one(self, lines: List[str]) -> int:
         result = 0
         for line in lines:
-            digits = line_to_digit(line)
-            result += digits
+            found = [int(x) for x in re.findall(r'\d', line)]
+            result += found[0] * 10 + found[-1]
         return result
 
     def part_two(self, lines: List[str]):
         result = 0
         for line in lines:
-            result += line_to_digits_with_letter(line)
+            m = re.findall(r'(?=(one|two|three|four|five|six|seven|eight|nine|\d))', line)
+            result += parse_int(m[0]) * 10 + parse_int(m[-1])
         return result
 
 
