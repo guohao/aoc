@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 from typing import List
 
 from day import Day
@@ -24,30 +25,6 @@ def extract_game(line: str) -> List[List[int]]:
     return game
 
 
-def possible(line: str) -> bool:
-    """
-    12 red cubes, 13 green cubes, and 14 blue cubes
-    Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
-    :param line:
-    """
-    for play in extract_game(line):
-        if play[0] > 14:
-            return False
-        elif play[1] > 12:
-            return False
-        elif play[2] > 13:
-            return False
-    return True
-
-
-def sum_of_minimal(line: str) -> int:
-    minimal = [0, 0, 0]
-    for play in extract_game(line):
-        for i in range(3):
-            minimal[i] = max(minimal[i], play[i])
-    return minimal[0] * minimal[1] * minimal[2]
-
-
 class Day2(Day):
 
     def __init__(self):
@@ -68,7 +45,12 @@ class Day2(Day):
     def part_two(self, lines: List[str]) -> int:
         ret = 0
         for line in lines:
-            ret += sum_of_minimal(line)
+            d = {}
+            for m in re.finditer(r'\d+\s+(blue|green|red)', line):
+                count, color = m.group().split(' ')
+                d.setdefault(color, 0)
+                d[color] = max(int(count), d[color])
+            ret += reduce(lambda a, b: a * b, d.values())
         return ret
 
 
