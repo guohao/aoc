@@ -1,3 +1,4 @@
+import re
 from typing import List
 
 from day import Day
@@ -53,9 +54,14 @@ class Day2(Day):
         super().__init__(day=2)
 
     def part_one(self, lines: List[str]) -> int:
+        """
+        12 red cubes, 13 green cubes, and 14 blue cubes
+        Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+        :param line:
+        """
         ret = 0
         for i, line in enumerate(lines):
-            if possible(line):
+            if not re.findall(r'((1[3-9]|[2-9]\d) red)|((1[5-9]|[2-9]\d) blue)|((1[4-9]|[2-9]\d) green)', line):
                 ret += i + 1
         return ret
 
