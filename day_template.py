@@ -23,7 +23,7 @@ def pl(lines: List[str]):
 
 
 if __name__ == '__main__':
-    data = io_utils.get_data(0)
+    data = io_utils.get_data(2023, 0)
     pr(data)
     data = io_utils.raw_str_to_lines(data)
     pl(data)

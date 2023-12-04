@@ -11,28 +11,31 @@ data_dir = os.path.join(project_root, 'data')
 
 config = configparser.ConfigParser()
 config.read(os.path.join(project_root, 'config.ini'))
-season = config['settings']["season"]
 
 
-def day_data_file_name(day: int) -> str:
-    return os.path.join(data_dir, f'day{day}.txt')
+def data_dir_of(year: int) -> str:
+    return os.path.join(data_dir, f'{year}')
 
 
-def download_input_if_not_exist(day: int):
-    if not os.path.exists(day_data_file_name(day)):
-        download_input(day)
+def day_data_file_name(year: int, day: int) -> str:
+    return os.path.join(data_dir_of(year), f'day{day}.txt')
+
+
+def download_input_if_not_exist(year: int, day: int):
+    if not os.path.exists(day_data_file_name(year, day)):
+        download_input(year, day)
     else:
-        logging.info(f"day{day} input data already existed, skip download")
+        logging.info(f"year:{year} day{day} data already existed, skip download")
 
 
-def raw_str_to_lines(input: str) -> List[str]:
-    lines = input.splitlines()
+def raw_str_to_lines(data: str) -> List[str]:
+    lines = data.splitlines()
     return [line.strip() for line in lines if line and len(line.strip()) > 0]
 
 
-def download_input(day: int):
-    logging.info(f"Downloading day{day} input data...")
-    url = f"https://adventofcode.com/{season}/day/{day}/input"
+def download_input(year: int, day: int):
+    logging.info(f"Downloading year:{year} day:{day} input data...")
+    url = f"https://adventofcode.com/{year}/day/{day}/input"
     headers = {
         'authority': 'adventofcode.com',
         'cookie': config['settings']['cookie'],
@@ -40,23 +43,22 @@ def download_input(day: int):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        if not os.path.exists(data_dir):
-            os.mkdir(data_dir)
-        with open(day_data_file_name(day), 'w') as file:
+        os.makedirs(data_dir_of(year), exist_ok=True)
+        with open(day_data_file_name(year, day), 'w') as file:
             file.write(response.text)
     else:
-        raise Exception(f"Failed to download the data for day {day}. Status code: {response.status_code}")
+        raise Exception(f"Failed to download the data for year:{year} day:{day}. Status code: {response.status_code}")
 
 
-def get_data(day: int) -> str:
-    download_input_if_not_exist(day)
-    file_name = day_data_file_name(day)
+def get_data(year: int, day: int) -> str:
+    download_input_if_not_exist(year, day)
+    file_name = day_data_file_name(year, day)
     with open(file_name, 'r') as file:
         return file.read()
 
 
-def get_day_input(day: int) -> List[str]:
-    download_input_if_not_exist(day)
-    file_name = day_data_file_name(day)
+def get_day_input(year: int, day: int) -> List[str]:
+    download_input_if_not_exist(year, day)
+    file_name = day_data_file_name(year, day)
     with open(file_name, 'r') as file:
         return [line.strip() for line in file]

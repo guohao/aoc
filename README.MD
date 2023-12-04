@@ -18,7 +18,5 @@ Rename `config.template.ini` to `config.ini`
 mv config.template.ini config.init
 ```
 
-Set season year in `config.ini`.
-
 Set cookie for auto download input data in `config.ini`.
 > cookie = your cookie

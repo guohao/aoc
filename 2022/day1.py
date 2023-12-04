@@ -5,11 +5,12 @@ from common import io_utils
 
 
 def pr(lines: str):
-    ans1 = 0
-    ans2 = 0
-    for line in lines.split('\n\n'):
-        pass
+    ans1 = max(sum(map(int, re.findall(r'\d+', line))) for line in lines.split('\n\n'))
 
+    ans = []
+    for line in lines.split('\n\n'):
+        ans.append(sum(map(int, re.findall(r'\d+', line))))
+    ans2 = sum(sorted(ans)[-3:])
     print(ans1)
     print(ans2)
 
@@ -26,7 +27,5 @@ def pl(lines: List[str]):
 
 
 if __name__ == '__main__':
-    data = io_utils.get_data(2023, 5)
+    data = io_utils.get_data(2022, 1)
     pr(data)
-    data = io_utils.raw_str_to_lines(data)
-    pl(data)
