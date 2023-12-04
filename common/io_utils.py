@@ -48,6 +48,13 @@ def download_input(day: int):
         raise Exception(f"Failed to download the data for day {day}. Status code: {response.status_code}")
 
 
+def get_data(day: int) -> str:
+    download_input_if_not_exist(day)
+    file_name = day_data_file_name(day)
+    with open(file_name, 'r') as file:
+        return file.read()
+
+
 def get_day_input(day: int) -> List[str]:
     download_input_if_not_exist(day)
     file_name = day_data_file_name(day)
