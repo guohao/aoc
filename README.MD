@@ -1,6 +1,8 @@
-# AOC 2023
+# AOC
 
-Solutions to [aoc-2023](https://adventofcode.com/2023)
+Solutions to 
+- [aoc-2023](https://adventofcode.com/2023)
+- [aoc-2022](https://adventofcode.com/2022)
 
 ## Installation
 
@@ -20,11 +22,3 @@ Set season year in `config.ini`.
 
 Set cookie for auto download input data in `config.ini`.
 > cookie = your cookie
-
-## Run
-
-Just run **day\<i>.py** with python.
-
-```commandline
-python day1.py
-```

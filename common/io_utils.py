@@ -6,11 +6,11 @@ from typing import List
 import requests
 
 current_file_path = os.path.abspath(__file__)
-project_root = os.path.dirname(os.path.dirname(current_file_path))
-data_dir = os.path.join(project_root, 'data')
+project_root = os.path.dirname(current_file_path)
+data_dir = os.path.join(project_root, '../data')
 
 config = configparser.ConfigParser()
-config.read(os.path.join(project_root, 'config.ini'))
+config.read(os.path.join(project_root, '../config.ini'))
 season = config['settings']["season"]
 
 
