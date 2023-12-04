@@ -11,6 +11,7 @@ data_dir = os.path.join(project_root, 'data')
 
 config = configparser.ConfigParser()
 config.read(os.path.join(project_root, 'config.ini'))
+season = config['settings']["season"]
 
 
 def day_data_file_name(day: int) -> str:
@@ -31,7 +32,7 @@ def raw_str_to_lines(input: str) -> List[str]:
 
 def download_input(day: int):
     logging.info(f"Downloading day{day} input data...")
-    url = f"https://adventofcode.com/2023/day/{day}/input"
+    url = f"https://adventofcode.com/{season}/day/{day}/input"
     headers = {
         'authority': 'adventofcode.com',
         'cookie': config['settings']['cookie'],
