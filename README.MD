@@ -16,6 +16,8 @@ Rename `config.template.ini` to `config.ini`
 mv config.template.ini config.init
 ```
 
+Set season year in `config.ini`.
+
 Set cookie for auto download input data in `config.ini`.
 > cookie = your cookie
 
@@ -25,10 +27,4 @@ Just run **day\<i>.py** with python.
 
 ```commandline
 python day1.py
-```
-
-## Run Tests
-
-```commandline
-pytest
 ```
