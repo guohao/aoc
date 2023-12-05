@@ -26,22 +26,17 @@ def extract_game(line: str) -> List[List[int]]:
     return game
 
 
-def pl(lines: List[str]):
-    ans1 = 0
-    ans2 = 0
-    for i, line in enumerate(lines):
-        if not re.findall(r'((1[3-9]|[2-9]\d) red)|((1[5-9]|[2-9]\d) blue)|((1[4-9]|[2-9]\d) green)', line):
-            ans1 += i + 1
-        d = defaultdict(lambda: 0)
-        for m in re.finditer(r'\d+\s+(blue|green|red)', line):
-            count, color = m.group().split(' ')
-            d[color] = max(int(count), d[color])
-        ans2 += reduce(lambda a, b: a * b, d.values())
-    print(ans1)
-    print(ans2)
-
-
-if __name__ == '__main__':
-    data = io_utils.get_data(2023, 2)
-    data = io_utils.raw_str_to_lines(data)
-    pl(data)
+data = io_utils.get_data(2023, 2)
+lines = io_utils.raw_str_to_lines(data)
+ans1 = 0
+ans2 = 0
+for i, line in enumerate(lines):
+    if not re.findall(r'((1[3-9]|[2-9]\d) red)|((1[5-9]|[2-9]\d) blue)|((1[4-9]|[2-9]\d) green)', line):
+        ans1 += i + 1
+    d = defaultdict(lambda: 0)
+    for m in re.finditer(r'\d+\s+(blue|green|red)', line):
+        count, color = m.group().split(' ')
+        d[color] = max(int(count), d[color])
+    ans2 += reduce(lambda a, b: a * b, d.values())
+print(ans1)
+print(ans2)
