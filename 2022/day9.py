@@ -31,7 +31,5 @@ for line in lines:
         v1.add(p[1])
         v2.add(p[9])
 
-# 6470
-# 2658
 print(len(v1))
 print(len(v2))
