@@ -10,18 +10,11 @@ lines = io_utils.raw_str_to_lines(data)
 v1 = set()
 v2 = set()
 p = [(0, 0)] * 10
+d2v = {'R': (1, 0), 'L': (-1, 0), 'U': (0, 1), 'D': (0, -1)}
 for line in lines:
-    d = line.split()[0]
+    d = d2v[line.split()[0]]
     for _ in range(int(line.split()[1])):
-        match d:
-            case 'R':
-                p[0] = (p[0][0] + 1, p[0][1])
-            case 'L':
-                p[0] = (p[0][0] - 1, p[0][1])
-            case 'U':
-                p[0] = (p[0][0], p[0][1] + 1)
-            case 'D':
-                p[0] = (p[0][0], p[0][1] - 1)
+        p[0] = (d[0] + p[0][0], d[1] + p[0][1])
         for i in range(1, len(p)):
             xc = cmp(p[i - 1][0], p[i][0])
             yc = cmp(p[i - 1][1], p[i][1])
