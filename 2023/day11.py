@@ -12,8 +12,6 @@ def cal(w):
     for i, line in enumerate(lines):
         if sum(1 for x in line if x == '.') == len(line):
             wx[i] = w
-            # wx[i] = 100
-            # wx[i] = 10
     for i in range(len(lines[0])):
         if sum(lines[j][i] == '.' for j in range(len(lines))) == len(lines):
             for j in range(len(lines)):
