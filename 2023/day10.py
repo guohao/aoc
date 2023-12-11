@@ -26,13 +26,12 @@ def t(p):
 S = [p for p in grid.keys() if grid[p] == 'S'][0]
 nv = [n for n in t(S) if S in t(n)]
 diff = {(nv[0][0] - S[0], nv[0][1] - S[1]), (nv[1][0] - S[0], nv[1][1] - S[1])}
-assert len(nv) == 2
 grid[S] = [i[0] for i in P.items() if diff == set(i[1])][0]
 
-pipes = []
+pipes = set()
 nv = S
 while nv:
-    pipes.append(nv)
+    pipes.add(nv)
     nv = [n for n in t(nv) if n not in pipes]
     if len(nv) == 0:
         break
