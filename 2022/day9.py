@@ -5,8 +5,8 @@ def cmp(a, b):
     return (a > b) - (a < b)
 
 
-data = io_utils.get_data(2022, 9)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2022, 9)
+lines = helper.lines(data)
 v1 = set()
 v2 = set()
 p = [(0, 0)] * 10

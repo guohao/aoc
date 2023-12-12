@@ -1,6 +1,6 @@
 import helper
 
-data = io_utils.get_data(2022, 10)
+data = helper.raw_data(2022, 10)
 lines = data.strip().splitlines()
 x = 1
 s = []

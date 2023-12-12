@@ -2,7 +2,7 @@ import re
 
 import helper
 
-data = io_utils.get_data(2022, 11)
+data = helper.raw_data(2022, 11)
 parts = data.strip().split('\n\n')
 MS = []
 opd = {'+': lambda a, b: a + b,

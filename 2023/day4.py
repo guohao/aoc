@@ -9,8 +9,8 @@ def count_winning(line: str) -> int:
     return sum(x in n for x in m)
 
 
-data = io_utils.get_data(2023, 4)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 4)
+lines = helper.lines(data)
 ans1 = sum([int(2 ** (count_winning(line) - 1)) for line in lines])
 d = {x: 1 for x in range(len(lines))}
 for i in range(len(lines)):

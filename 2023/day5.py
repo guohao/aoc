@@ -2,7 +2,7 @@ import re
 
 import helper
 
-data = io_utils.get_data(2023, 5)
+data = helper.raw_data(2023, 5)
 parts = data.split('\n\n')
 seeds = list(map(int, parts[0].split()[1:]))
 mappings = parts[1:]
@@ -18,7 +18,6 @@ for mapping in mappings:
 print(min(seeds))
 sr = list(map(int, parts[0].split()[1:]))
 seeds = set((sr[i], sr[i] + sr[i + 1]) for i in range(0, len(sr), 2))
-print(seeds)
 
 for mapping in mappings:
     epoch = set()

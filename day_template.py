@@ -1,9 +1,9 @@
-import io_utils
+import helper
 
 data = """
 
 """
-data = io_utils.get_data(2023, 0)
-data = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 0)
+data = helper.lines(data)
 
 

@@ -2,7 +2,7 @@ import re
 
 import helper
 
-data = io_utils.get_data(2022, 8)
+data = helper.raw_data(2022, 8)
 grid = [list(map(int, re.findall(r'\d', line))) for line in data.strip().splitlines()]
 ans = 0
 for i, line in enumerate(grid):

@@ -2,7 +2,7 @@ import itertools
 
 import helper
 
-data = io_utils.get_data(2023, 10)
+data = helper.raw_data(2023, 10)
 P = {
     'S': [(0, 1), (-1, 0), (1, 0), (0, -1)],
     '-': [(0, -1), (0, 1)],
@@ -13,7 +13,7 @@ P = {
     '7': [(0, -1), (1, 0)],
     '.': []}
 
-lines = io_utils.raw_str_to_lines(data)
+lines = helper.lines(data)
 grid = {(i, j): lines[i][j] for i, j in itertools.product(range(len(lines)), range(len(lines[0])))}
 
 

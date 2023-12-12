@@ -3,8 +3,8 @@ from collections import defaultdict
 
 import helper
 
-data = io_utils.get_data(2023, 3)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 3)
+lines = helper.lines(data)
 
 ans1 = 0
 d = defaultdict(list)

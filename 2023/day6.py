@@ -2,8 +2,8 @@ import re
 
 import helper
 
-data = io_utils.get_data(2023, 6)
-data = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 6)
+data = helper.lines(data)
 
 
 def ways(total_time: int, current_record: int) -> int:

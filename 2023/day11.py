@@ -2,7 +2,7 @@ import itertools
 
 import helper
 
-data = io_utils.get_data(2023, 11)
+data = helper.raw_data(2023, 11)
 lines = data.strip().splitlines()
 wx = [1] * len(lines[0])
 wy = [1] * len(lines[0])

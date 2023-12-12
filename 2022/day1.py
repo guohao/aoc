@@ -27,5 +27,5 @@ def pl(lines: List[str]):
 
 
 if __name__ == '__main__':
-    data = io_utils.get_data(2022, 1)
+    data = helper.raw_data(2022, 1)
     pr(data)

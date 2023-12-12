@@ -2,13 +2,8 @@ from typing import List
 
 import helper
 
-data = """
-0 3 6 9 12 15
-1 3 6 10 15 21
-10 13 16 21 30 45
-"""
-data = io_utils.get_data(2023, 9)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 9)
+lines = helper.lines(data)
 
 
 def gen_all_his(line: str) -> List[List[int]]:

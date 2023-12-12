@@ -21,6 +21,6 @@ def pl(lines: List[str]):
 
 
 if __name__ == '__main__':
-    data = io_utils.get_data(2022, 4)
-    data = io_utils.raw_str_to_lines(data)
+    data = helper.raw_data(2022, 4)
+    data = helper.lines(data)
     pl(data)

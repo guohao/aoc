@@ -12,8 +12,8 @@ def parse_int(letter: str):
     raise Exception(f"Bad format of letter:{letter}")
 
 
-data = io_utils.get_data(2023, 1)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 1)
+lines = helper.lines(data)
 ans1 = 0
 ans2 = 0
 for line in lines:

@@ -53,7 +53,7 @@ def cmp(a: Tuple[List[int], int], b: Tuple[List[int], int]) -> int:
     return 0
 
 
-data = io_utils.get_data(2023, 7)
+data = helper.raw_data(2023, 7)
 
 ctn = "0023456789TJQKA"
 lines = data.strip().splitlines()

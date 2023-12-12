@@ -4,7 +4,7 @@ from collections import defaultdict, deque
 
 import helper
 
-data = io_utils.get_data(2022, 5)
+data = helper.raw_data(2022, 5)
 bs, ms = data.split("\n\n")
 d = defaultdict(deque)
 for i, line in enumerate(bs.splitlines()[:-1]):

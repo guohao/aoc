@@ -26,8 +26,8 @@ def extract_game(line: str) -> List[List[int]]:
     return game
 
 
-data = io_utils.get_data(2023, 2)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 2)
+lines = helper.lines(data)
 ans1 = 0
 ans2 = 0
 for i, line in enumerate(lines):

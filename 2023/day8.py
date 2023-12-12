@@ -5,8 +5,8 @@ from functools import reduce
 
 import helper
 
-data = io_utils.get_data(2023, 8)
-lines = io_utils.raw_str_to_lines(data)
+data = helper.raw_data(2023, 8)
+lines = helper.lines(data)
 cmds = cycle_iterator = itertools.cycle([1 if 'R' == x else 0 for x in re.findall(r'\w', lines[0])])
 pos = {}
 for line in lines[1:]:

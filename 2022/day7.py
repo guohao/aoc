@@ -1,6 +1,6 @@
 import helper
 
-lines = io_utils.get_data(2022, 7).splitlines()
+lines = helper.raw_data(2022, 7).splitlines()
 d = {}
 p = []
 for line in lines:
