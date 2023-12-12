@@ -2,7 +2,7 @@ import copy
 import re
 from collections import defaultdict, deque
 
-import io_utils
+import helper
 
 data = io_utils.get_data(2022, 5)
 bs, ms = data.split("\n\n")

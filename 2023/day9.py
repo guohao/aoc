@@ -1,6 +1,6 @@
 from typing import List
 
-import io_utils
+import helper
 
 data = """
 0 3 6 9 12 15

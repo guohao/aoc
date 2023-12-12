@@ -1,6 +1,6 @@
 from typing import List
 
-import io_utils
+import helper
 
 
 def pl(lines: List[str]):

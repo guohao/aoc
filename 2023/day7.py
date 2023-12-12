@@ -2,7 +2,7 @@ import functools
 import re
 from typing import List, Tuple
 
-import io_utils
+import helper
 
 
 def cmp1(a: Tuple[List[int], int], b: Tuple[List[int], int]) -> int:

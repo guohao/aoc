@@ -1,6 +1,6 @@
 import re
 
-import io_utils
+import helper
 
 data = io_utils.get_data(2022, 11)
 parts = data.strip().split('\n\n')

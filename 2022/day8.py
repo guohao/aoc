@@ -1,6 +1,6 @@
 import re
 
-import io_utils
+import helper
 
 data = io_utils.get_data(2022, 8)
 grid = [list(map(int, re.findall(r'\d', line))) for line in data.strip().splitlines()]

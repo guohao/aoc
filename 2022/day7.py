@@ -1,4 +1,4 @@
-import io_utils
+import helper
 
 lines = io_utils.get_data(2022, 7).splitlines()
 d = {}

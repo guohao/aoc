@@ -1,6 +1,6 @@
 import itertools
 
-import io_utils
+import helper
 
 data = io_utils.get_data(2023, 10)
 P = {

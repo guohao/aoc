@@ -1,7 +1,7 @@
 import re as regex
 from collections import defaultdict
 
-import io_utils
+import helper
 
 data = io_utils.get_data(2023, 3)
 lines = io_utils.raw_str_to_lines(data)

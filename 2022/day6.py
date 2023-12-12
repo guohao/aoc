@@ -1,4 +1,4 @@
-import io_utils
+import helper
 
 data = io_utils.get_data(2022, 6)
 data = io_utils.raw_str_to_lines(data)[0]
