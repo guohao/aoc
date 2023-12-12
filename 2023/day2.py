@@ -3,7 +3,7 @@ from collections import defaultdict
 from functools import reduce
 from typing import List
 
-from common import io_utils
+import io_utils
 
 
 def extract_game(line: str) -> List[List[int]]:

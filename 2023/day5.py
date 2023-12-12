@@ -1,6 +1,6 @@
 import re
 
-from common import io_utils
+import io_utils
 
 data = io_utils.get_data(2023, 5)
 parts = data.split('\n\n')

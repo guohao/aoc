@@ -1,6 +1,6 @@
 import itertools
 
-from common import io_utils
+import io_utils
 
 data = io_utils.get_data(2023, 11)
 lines = data.strip().splitlines()

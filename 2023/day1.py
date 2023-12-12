@@ -1,6 +1,6 @@
 import re
 
-from common import io_utils
+import io_utils
 
 
 def parse_int(letter: str):

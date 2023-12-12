@@ -3,7 +3,7 @@ import math
 import re
 from functools import reduce
 
-from common import io_utils
+import io_utils
 
 data = io_utils.get_data(2023, 8)
 lines = io_utils.raw_str_to_lines(data)

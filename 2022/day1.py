@@ -1,7 +1,7 @@
 import re
 from typing import List
 
-from common import io_utils
+import io_utils
 
 
 def pr(lines: str):

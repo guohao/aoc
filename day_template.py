@@ -1,6 +1,4 @@
-from common import io_utils
-import re
-import functools
+import io_utils
 
 data = """
 

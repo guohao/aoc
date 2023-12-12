@@ -1,4 +1,4 @@
-from common import io_utils
+import io_utils
 
 lines = io_utils.get_data(2022, 7).splitlines()
 d = {}

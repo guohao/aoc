@@ -1,4 +1,4 @@
-from common import io_utils
+import io_utils
 
 
 def cmp(a, b):

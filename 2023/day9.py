@@ -1,6 +1,6 @@
 from typing import List
 
-from common import io_utils
+import io_utils
 
 data = """
 0 3 6 9 12 15

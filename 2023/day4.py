@@ -1,6 +1,6 @@
 import re
 
-from common import io_utils
+import io_utils
 
 
 def count_winning(line: str) -> int:
