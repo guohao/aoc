@@ -8,7 +8,7 @@ wy = [1] * len(lines[0])
 
 def cal(w):
     for i, line in enumerate(lines):
-        if sum(1 for x in line if x == '.') == len(line):
+        if line.count('.') == len(line):
             wx[i] = w
     for i in range(len(lines[0])):
         if sum(lines[j][i] == '.' for j in range(len(lines))) == len(lines):
