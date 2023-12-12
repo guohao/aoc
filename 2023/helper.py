@@ -24,14 +24,28 @@ def grid_dict(all_lines: List[str]) -> dict:
             itertools.product(range(len(all_lines)), range(len(all_lines[0])))}
 
 
+def grid_find_first(grid: dict, find_str: str) -> tuple:
+    return grid_find(grid, find_str)[0]
+
+
 def grid_find(grid: dict, find_str: str) -> List[tuple]:
     return [(i, j) for i, j in grid.keys() if grid[i, j] == find_str]
 
 
-def grid_find_neighbors(grid: dict, find_str: str, i: int, j: int) -> List[tuple]:
+def grid_find_neighbors(grid: dict, p: tuple[int, int]) -> List[tuple]:
+    i = p[0]
+    j = p[1]
     return [(i + x, j + y) for x, y in
             itertools.product(range(-1, 2), range(-1, 2)) if
-            (i + x, j + y) in grid.keys() and grid[i + x, j + y] == find_str]
+            (i + x, j + y) in grid.keys() and (x, y) != (0, 0)]
+
+
+def grid_find_4_neighbors(grid: dict, p: tuple[int, int]) -> List[tuple]:
+    i = p[0]
+    j = p[1]
+    return [(i + x, j + y) for x, y in
+            [(0, 1), (1, 0), (0, -1), (-1, 0)] if
+            (i + x, j + y) in grid.keys() and (x, y) != (0, 0)]
 
 
 def extract_digit(line: str) -> List[int]:
