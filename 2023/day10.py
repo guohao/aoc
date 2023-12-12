@@ -1,8 +1,6 @@
-import itertools
+from helper import *
 
-import helper
-
-data = helper.raw_data(2023, 10)
+data = raw_data(2023, 10)
 P = {
     'S': [(0, 1), (-1, 0), (1, 0), (0, -1)],
     '-': [(0, -1), (0, 1)],
@@ -13,8 +11,8 @@ P = {
     '7': [(0, -1), (1, 0)],
     '.': []}
 
-lines = helper.lines(data)
-grid = {(i, j): lines[i][j] for i, j in itertools.product(range(len(lines)), range(len(lines[0])))}
+lines = lines(data)
+grid = grid_dict(lines)
 
 
 def t(p):
@@ -23,7 +21,7 @@ def t(p):
     return [(x[0] + p[0], x[1] + p[1]) for x in P[grid[p]]]
 
 
-S = [p for p in grid.keys() if grid[p] == 'S'][0]
+S = grid_find(grid, 'S')[0]
 nv = [n for n in t(S) if S in t(n)]
 diff = {(nv[0][0] - S[0], nv[0][1] - S[1]), (nv[1][0] - S[0], nv[1][1] - S[1])}
 grid[S] = [i[0] for i in P.items() if diff == set(i[1])][0]
