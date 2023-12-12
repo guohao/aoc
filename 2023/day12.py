@@ -7,4 +7,4 @@ data = """
 """
 
 lines = lines(data)
-grid_dict(lines)
+grid = grid_dict(lines)
