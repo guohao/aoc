@@ -1,13 +1,10 @@
-import itertools
-import math
-import re
 from functools import reduce
 
-import helper
+from helper import *
 
-data = helper.raw_data(2023, 8)
-lines = helper.lines(data)
-cmds = cycle_iterator = itertools.cycle([1 if 'R' == x else 0 for x in re.findall(r'\w', lines[0])])
+data = raw_data(2023, 8)
+lines = lines(data)
+cmds = itertools.cycle([1 if 'R' == x else 0 for x in re.findall(r'\w', lines[0])])
 pos = {}
 for line in lines[1:]:
     a, b, c = re.findall(r'\w+', line)
@@ -32,10 +29,5 @@ for t, cmd in enumerate(cmds, start=1):
         ps[i] = pos[p][cmd]
         if ps[i].endswith("Z"):
             fc[i] = t
-
-
-def lcm(a: int, b: int) -> int:
-    return a * b // math.gcd(a, b)
-
 
 print(reduce(lcm, fc))

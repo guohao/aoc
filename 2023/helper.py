@@ -1,8 +1,13 @@
 import itertools
+import math
 import re
 from typing import List
 
 import elf
+
+
+def lcm(a: int, b: int) -> int:
+    return a * b // math.gcd(a, b)
 
 
 def cmp(a, b):
