@@ -1,8 +1,6 @@
-import itertools
+from helper import *
 
-import helper
-
-data = helper.raw_data(2023, 11)
+data = raw_data(2023, 11)
 lines = data.strip().splitlines()
 wx = [1] * len(lines[0])
 wy = [1] * len(lines[0])
@@ -17,9 +15,9 @@ def cal(w):
             for j in range(len(lines)):
                 wy[i] = w
 
-    grid = {(i, j): lines[i][j] for i, j in itertools.product(range(len(lines)), range(len(lines[0])))}
+    grid = grid_dict(lines)
 
-    ss = [(i, j) for i, j in grid.keys() if grid[i, j] == '#']
+    ss = grid_find(grid, '#')
 
     ans = 0
     for p in ss:
@@ -32,5 +30,7 @@ def cal(w):
     print(ans // 2)
 
 
+# 9918828
+# 692506533832
 cal(2)
 cal(1000000)
