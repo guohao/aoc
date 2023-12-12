@@ -21,9 +21,7 @@ def cal(w):
 
     ans = 0
     for p in ss:
-        r = ss.copy()
-        r.remove(p)
-        for p2 in r:
+        for p2 in ss:
             ans += sum(wx[i] for i in range(min(p[0], p2[0]), max(p[0], p2[0])))
             ans += sum(wy[i] for i in range(min(p[1], p2[1]), max(p[1], p2[1])))
 
