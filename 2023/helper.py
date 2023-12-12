@@ -52,8 +52,8 @@ def extract_digit(line: str) -> List[int]:
     return [int(x) for x in line.split() if x.isdigit()]
 
 
-def extract_num(line: str) -> List[int]:
-    return [int(x) for x in re.findall(r'\d+', line)]
+def extract_num(line: str) -> tuple[int]:
+    return tuple(int(x) for x in re.findall(r'\d+', line))
 
 
 def grid_list(all_lines: List[str]) -> List[List[str]]:
