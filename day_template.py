@@ -1,9 +1,10 @@
-import helper
+from helper import *
+
+data = raw_data(2023, )
 
 data = """
 
 """
-data = helper.raw_data(2023, 0)
-data = helper.lines(data)
 
-
+lines = lines(data)
+grid = grid_dict(lines)
