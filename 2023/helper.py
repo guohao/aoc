@@ -65,3 +65,15 @@ def raw_data(year: int, day: int) -> str:
     file_name = elf.day_data_file_name(year, day)
     with open(file_name, 'r') as file:
         return file.read()
+
+
+def patterns(data: str) -> List[List[str]]:
+    return [x.splitlines() for x in data.strip().split('\n\n')]
+
+
+def rotate_matrix_90_clockwise(matrix) -> List[str]:
+    return [''.join(row) for row in zip(*matrix[::-1])]
+
+
+def count_differences_in_lists(list1, list2):
+    return sum(sum(ch1 != ch2 for ch1, ch2 in zip(str1, str2)) for str1, str2 in zip(list1, list2))
