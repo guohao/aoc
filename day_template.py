@@ -1,10 +1,7 @@
 from helper import *
 
-data = raw_data(2023, )
-
-data = """
+p = Puzzle(2023, )
+p.data= """
 
 """
 
-lines = lines(data)
-grid = grid_dict(lines)

@@ -1,7 +1,6 @@
 import itertools
 import math
 import re
-from functools import reduce
 from typing import List
 
 import elf
@@ -103,5 +102,10 @@ class Puzzle:
 
     def solve_eline(self, function):
         ret = sum(function(i, line) for i, line in enumerate(lines(self.data)))
+        print(ret)
+        return ret
+
+    def solve_pattern(self, function):
+        ret = sum(function(pattern) for pattern in patterns(self.data))
         print(ret)
         return ret
