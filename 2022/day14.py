@@ -72,8 +72,5 @@ def f2(lines: List[str]) -> int:
 
 
 p = Puzzle(2022, 14)
-data = raw_data(2022, 14)
-
-lines = lines(data)
-print(f2(lines))
+p.solve_lines(f)
 p.solve_lines(f2)
