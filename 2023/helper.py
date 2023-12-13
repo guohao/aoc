@@ -1,6 +1,7 @@
 import itertools
 import math
 import re
+from functools import reduce
 from typing import List
 
 import elf
@@ -77,3 +78,30 @@ def rotate_matrix_90_clockwise(matrix) -> List[str]:
 
 def count_differences_in_lists(list1, list2):
     return sum(sum(ch1 != ch2 for ch1, ch2 in zip(str1, str2)) for str1, str2 in zip(list1, list2))
+
+
+class Puzzle:
+    def __init__(self, year: int, day: int):
+        self.year = 2023
+        self.day = 1
+        self.data = raw_data(year, day)
+
+    def solve_raw(self, function):
+        ret = function(self.data)
+        print(ret)
+        return ret
+
+    def solve_lines(self, function):
+        ret = function(lines(self.data))
+        print(ret)
+        return ret
+
+    def solve_line(self, function):
+        ret = sum(function(line) for line in lines(self.data))
+        print(ret)
+        return ret
+
+    def solve_eline(self, function):
+        ret = sum(function(i, line) for i, line in enumerate(lines(self.data)))
+        print(ret)
+        return ret
