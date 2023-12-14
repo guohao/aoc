@@ -1,7 +1,6 @@
 import itertools
 import math
 import re
-from enum import Enum
 from typing import List
 
 import elf
@@ -78,13 +77,6 @@ def patterns(data: str) -> List[List[str]]:
 
 def rotate_matrix_90_clockwise(matrix) -> List[List]:
     return [list(row) for row in zip(*matrix[::-1])]
-
-
-class D(Enum):
-    L = 1
-    R = 2
-    U = 3
-    D = 4
 
 
 def rotate_in_place(matrix: List[List], clockwise=True):
