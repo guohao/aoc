@@ -19,6 +19,10 @@ def lines(data: str) -> List[str]:
     return [line.strip() for line in all_lines if line and len(line.strip()) > 0]
 
 
+def grid_2d(raw_data: str) -> List[List[str]]:
+    return [list(row) for row in raw_data.strip().splitlines()]
+
+
 def grid_dict(all_lines: List[str]) -> dict:
     return {(i, j): all_lines[i][j] for i, j in
             itertools.product(range(len(all_lines)), range(len(all_lines[0])))}
@@ -71,8 +75,12 @@ def patterns(data: str) -> List[List[str]]:
     return [x.splitlines() for x in data.strip().split('\n\n')]
 
 
-def rotate_matrix_90_clockwise(matrix) -> List[str]:
-    return [''.join(row) for row in zip(*matrix[::-1])]
+def rotate_matrix_90_clockwise(matrix) -> List[List]:
+    return [list(row) for row in zip(*matrix[::-1])]
+
+
+def rotate_matrix_90_anticlockwise(matrix) -> List[List]:
+    return [list(row) for row in zip(*matrix)][::-1]
 
 
 def count_differences_in_lists(list1, list2):
@@ -85,6 +93,13 @@ def count_intersect(a, b):
 
 def intersect(a, b):
     return list(set(a) & set(b))
+
+
+def print_lines(lines):
+    print()
+    for line in lines:
+        print(line)
+    print()
 
 
 class Puzzle:
