@@ -78,7 +78,6 @@ def rotate_matrix_90_clockwise(matrix) -> List[str]:
 def count_differences_in_lists(list1, list2):
     return sum(sum(ch1 != ch2 for ch1, ch2 in zip(str1, str2)) for str1, str2 in zip(list1, list2))
 
-
 class Puzzle:
     def __init__(self, year: int, day: int):
         self.year = 2023
