@@ -1,63 +1,51 @@
 import functools
-from collections import defaultdict, deque
 
 from helper import *
 
 
 @functools.cache
-def one_cycle(data: str) -> str:
+def move_cycle(data: str) -> str:
     lines = grid_2d(data.strip())
-    lines = rotate_matrix_90_anticlockwise(lines)
-    move_grid(lines)
-    # west
-    lines = rotate_matrix_90_clockwise(lines)
-    move_grid(lines)
-    # south
-    lines = rotate_matrix_90_clockwise(lines)
-    move_grid(lines)
-    # east
-    lines = rotate_matrix_90_clockwise(lines)
-    move_grid(lines)
-    lines = rotate_matrix_90_clockwise(lines)
-    lines = rotate_matrix_90_clockwise(lines)
+    move(lines)
+    rotate_in_place(lines)
+    move(lines)
+    rotate_in_place(lines)
+    move(lines)
+    rotate_in_place(lines)
+    move(lines)
+    rotate_in_place(lines)
     return '\n'.join("".join(line) for line in lines)
 
 
-def move_grid(lines: List[List[str]]):
-    def move_left(ll: List[str]):
-        for i, c in enumerate(ll):
-            if c != '.':
-                continue
-            for j in range(i + 1, len(ll)):
-                if ll[j] == '#':
-                    break
-                if ll[j] == 'O':
-                    ll[i] = 'O'
-                    ll[j] = '.'
-                    break
-
-    for line in lines:
-        move_left(line)
+def move(lines: List[List[str]]):
+    for i, j in itertools.product(range(len(lines)), range(len(lines[0]))):
+        if lines[i][j] != '.':
+            continue
+        for k in range(i + 1, len(lines)):
+            if lines[k][j] == '#':
+                break
+            if lines[k][j] == 'O':
+                lines[i][j] = 'O'
+                lines[k][j] = '.'
+                break
 
 
-def count_score(ll: List[str]) -> int:
-    cnt = 0
-    for i in range(len(ll)):
-        s = len(ll) - i
-        if ll[i] == 'O':
-            cnt += s
-    return cnt
+def score_of(lines: List[List[str]]) -> int:
+    ret = 0
+    for i in range(len(lines)):
+        ss = len(lines) - i
+        for j in range(len(lines[0])):
+            if lines[i][j] == 'O':
+                ret += ss
+    return ret
 
 
 data = raw_data(2023, 14)
-p1_in = rotate_matrix_90_anticlockwise(grid_2d(data))
-move_grid(p1_in)
-score = sum(count_score(line) for line in p1_in)
-
-print(score)
+g = grid_2d(data)
+move(g)
+print(score_of(g))
 
 for _ in range(1000000000):
-    data = one_cycle(data)
+    data = move_cycle(data)
 
-score = sum(count_score(line) for line in rotate_matrix_90_anticlockwise(grid_2d(data)))
-print(score)
+print(score_of(grid_2d(data)))
