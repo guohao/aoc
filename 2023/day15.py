@@ -27,11 +27,10 @@ def h3(line: str) -> int:
                 b[a] = (len(b) + 1, bb)
         else:
             if a in b:
-                ai = b[a][0]
-                del b[a]
                 for x, y in b.copy().items():
-                    if y[0] > ai:
+                    if y[0] > b[a][0]:
                         b[x] = (y[0] - 1, y[1])
+                del b[a]
     for i in range(256):
         for a, b in box[i].values():
             ret += (i + 1) * a * b
