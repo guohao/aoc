@@ -4,17 +4,8 @@ from helper import *
 def h(s: str) -> int:
     n = 0
     for c in s:
-        n = n + ord(c)
-        n = n * 17
-        n = n % 256
+        n = ((n + ord(c)) * 17) % 256
     return n
-
-
-def h2(line: str) -> int:
-    ret = 0
-    for s in line.strip().split(','):
-        ret += h(s)
-    return ret
 
 
 def h3(line: str) -> int:
@@ -48,5 +39,5 @@ def h3(line: str) -> int:
 
 
 data = raw_data(2023, 15)
-print(h2(data))
+print(sum(h(s) for s in data.strip().split(',')))
 print(h3(data))
