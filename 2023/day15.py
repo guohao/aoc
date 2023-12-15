@@ -24,23 +24,23 @@ def h3(line: str) -> int:
         add = False
         if '=' in s:
             a, b = s.split('=')
-            b = int(b)
+            bb = int(b)
             add = True
         else:
             a = s.split('-')[0]
-        idx = h(a)
+        b = box[h(a)]
         if add:
-            if a in box[idx].keys():
-                box[idx][a] = (box[idx][a][0], b)
+            if a in b.keys():
+                b[a] = (b[a][0], bb)
             else:
-                box[idx][a] = (len(box[idx]) + 1, b)
+                b[a] = (len(b) + 1, bb)
         else:
-            if a in box[idx]:
-                ai = box[idx][a][0]
-                del box[idx][a]
-                for x, y in box[idx].copy().items():
+            if a in b:
+                ai = b[a][0]
+                del b[a]
+                for x, y in b.copy().items():
                     if y[0] > ai:
-                        box[idx][x] = (y[0] - 1, y[1])
+                        b[x] = (y[0] - 1, y[1])
     for i in range(256):
         for a, b in box[i].values():
             ret += (i + 1) * a * b
