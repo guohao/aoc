@@ -25,21 +25,30 @@ for i, line in enumerate(lines):
     D[c] = (r, ov)
     # print(c, r, ov)
 
+ov = ','.join(c[0] for c in D.items() if c[1][0] == 0)
+
 
 @functools.cache
-def dfs(current, state: str, time_left) -> int:
-    # print(current, state, time_left)
+def dfs(ci: str, ce: str, vo: str, time_left: int) -> int:
+    # print(f'{ci} {ce} {vo} {26 - time_left}')
     if time_left <= 1:
         return 0
-    if current in state:
-        return max(dfs(c, state, time_left - 1) for c in D[current][1])
-    else:
-        if D[current][0] == 0:
-            return max(dfs(c, state, time_left - 1) for c in D[current][1])
-        b = max(dfs(c, state + ',' + current, time_left - 2) for c in D[current][1])
-        b += (time_left - 1) * D[current][0]
-        return b
+    time_left -= 1
+    ret = -1
+    for i in D[ci][1]:
+        for j in D[ce][1]:
+            ret = max(ret, dfs(i, j, vo, time_left))
+    if ci not in vo:
+        ret = max(ret, time_left * D[ci][0] + max(dfs(ci, ne, vo + ',' + ci, time_left) for ne in D[ce][1]))
+    if ce not in vo:
+        ret = max(ret, time_left * D[ce][0] + max(dfs(ni, ce, vo + ',' + ce, time_left) for ni in D[ci][1]))
+    if ce not in vo and ci not in vo:
+        if ce != ci:
+            ret = max(ret, time_left * D[ci][0] + time_left * D[ce][0] + dfs(ci, ce, vo + ',' + ci + ',' + ce, time_left))
+        else:
+            ret = max(ret, time_left * D[ce][0] + max(dfs(ni, ce, vo + ',' + ce, time_left) for ni in D[ci][1]))
+    return ret
 
 
-ret = dfs('AA', '', 30)
+ret = dfs('AA', 'AA', ov, 26)
 print(ret)

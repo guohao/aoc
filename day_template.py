@@ -1,7 +1,7 @@
 from helper import *
 
-p = Puzzle(2023, )
-p.data= """
+data= """
 
 """
-
+# data = raw_data(2023,)
+lines = lines(data)
