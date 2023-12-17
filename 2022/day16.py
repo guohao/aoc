@@ -23,12 +23,10 @@ for i, line in enumerate(lines):
     c, r, ov = [line[1], int(next(re.finditer(r'\d+', line[4])).group()), line[9:]]
     ov = [x.replace(',', '') for x in ov]
     D[c] = (r, ov)
-    # print(c, r, ov)
 
 
 @functools.cache
 def dfs(current, ov: str, time_left) -> int:
-    # print(current, state, time_left)
     if time_left == 1:
         return 0
     time_left = time_left - 1
