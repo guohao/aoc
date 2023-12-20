@@ -30,4 +30,4 @@ for t, cmd in enumerate(cmds, start=1):
         if ps[i].endswith("Z"):
             fc[i] = t
 
-print(reduce(lcm, fc))
+print(reduce(math.lcm, fc))

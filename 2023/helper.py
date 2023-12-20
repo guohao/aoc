@@ -1,10 +1,10 @@
 import itertools
 import math
 import re
-import nographs
 from typing import List
 
 import elf
+import nographs
 
 
 def lcm(arr: List[int]) -> int:
@@ -26,6 +26,7 @@ def lines(data: str) -> List[str]:
 def grid_2d(maze: List[str]) -> nographs.Array:
     return nographs.Array(maze)
 
+
 def nums(line: str) -> List[int]:
     return [int(x) for x in line.split() if x.isdigit()]
 
@@ -35,6 +36,7 @@ def raw_data(year: int, day: int) -> str:
     file_name = elf.day_data_file_name(year, day)
     with open(file_name, 'r') as file:
         return file.read()
+
 
 def patterns(data: str) -> List[List[str]]:
     return [x.splitlines() for x in data.strip().split('\n\n')]
@@ -63,35 +65,3 @@ def print_lines(lines):
     for line in lines:
         print(line)
     print()
-
-
-class Puzzle:
-    def __init__(self, year: int, day: int):
-        self.year = 2023
-        self.day = 1
-        self.data = raw_data(year, day)
-
-    def solve_raw(self, function):
-        ret = function(self.data)
-        print(ret)
-        return ret
-
-    def solve_lines(self, function):
-        ret = function(lines(self.data))
-        print(ret)
-        return ret
-
-    def solve_line(self, function):
-        ret = sum(function(line) for line in lines(self.data))
-        print(ret)
-        return ret
-
-    def solve_eline(self, function):
-        ret = sum(function(i, line) for i, line in enumerate(lines(self.data)))
-        print(ret)
-        return ret
-
-    def solve_pattern(self, function):
-        ret = sum(function(pattern) for pattern in patterns(self.data))
-        print(ret)
-        return ret
