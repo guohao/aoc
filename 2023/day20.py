@@ -65,10 +65,7 @@ for i in range(100000):
             if s in cycles.keys() and d == source and not cycles[s]:
                 cycles[s] = i + 1
                 if all(cycles.values()):
-                    x = 1
-                    for c in cycles.values():
-                        x = lcm(c, x)
-                    print(x)
+                    print(lcm(list(cycles.values())))
                     stop = True
         if d == 'rx' and p == 0:
             stop = True

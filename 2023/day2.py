@@ -18,6 +18,6 @@ def f2(line):
     return reduce(lambda a, b: a * b, d.values())
 
 
-p = Puzzle(2023, 2)
-p.solve_eline(f)
-p.solve_line(f2)
+lines = lines(raw_data(2023, 2))
+print(sum(f(i, line) for i, line in enumerate(lines)))
+print(sum(f2(line) for line in lines))
