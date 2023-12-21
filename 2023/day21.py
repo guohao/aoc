@@ -17,12 +17,10 @@ def dfs(start, depth):
             yield tuple(next_visit)
 
     traversal = nog.TraversalBreadthFirst(next_vertices)
-    for found in traversal.start_from(start_vertices=((start,),),
+    found = next(traversal.start_from(start_vertices=((start,),),
                                       build_paths=True
-                                      ).go_for_depth_range(depth, depth + 1):
-        print(len(traversal.paths[found][-1]))
-        pass
-    return 0
+                                      ).go_for_depth_range(depth, depth + 1))
+    print(len(traversal.paths[found][-1]))
 
 
 S = g.findall('S')[0]
