@@ -1,54 +1,29 @@
 import nographs as nog
 from helper import *
 
-data = """
-...........
-.....###.#.
-.###.##..#.
-..#.#...#..
-....#.#....
-.##..S####.
-.##..#...#.
-.......##..
-.##.#.####.
-.##..##.##.
-...........
-"""
 data = raw_data(2023, 21)
 g = nog.Array(data.strip().splitlines(), 2)
+
+
+def dfs(start, depth):
+    def next_vertices(points, _):
+        moves = nog.Position.moves(2)
+        next_visit = set()
+        for point in points:
+            for neighbor in point.neighbors(moves, g.limits()):
+                if g[neighbor] != "#":
+                    next_visit.add(neighbor)
+        if next_visit:
+            yield tuple(next_visit)
+
+    traversal = nog.TraversalBreadthFirst(next_vertices)
+    for found in traversal.start_from(start_vertices=((start,),),
+                                      build_paths=True
+                                      ).go_for_depth_range(depth, depth + 1):
+        print(len(traversal.paths[found][-1]))
+        pass
+    return 0
+
+
 S = g.findall('S')[0]
-
-MOVE = 64
-M = {x: set() for x in range(MOVE + 2)}
-
-
-def next_vertices(state, _):
-    step, position = state
-    moves = nog.Position.moves(2)
-    M[step].add(position)
-    for neighbor in position.neighbors(moves, g.limits()):
-        if g[neighbor] != "#":
-            yield step + 1, neighbor
-    if step > 0:
-        for p in M[step - 1]:
-            yield step + 1, p
-
-
-# next_vertices = g.next_vertices_from_forbidden('#')
-goals = [i[0] for i in g.items() if g[i[0]] != '#']
-v = set()
-traversal = nog.TraversalBreadthFirst(next_vertices)
-for found in traversal.start_from(start_vertices=[(0, S)],
-                                  build_paths=False
-                                  ).go_for_depth_range(0, MOVE + 2):
-    pass
-    # print(traversal.paths[found])
-    # v.add(traversal.paths[found][-1])
-# print(M)
-print(len(M[MOVE]))
-# print(v)
-# print(len(v) + 1)
-#
-# lines = lines(data)
-# for line in lines:
-#     ns = nums(line)
+dfs(S, 64)
