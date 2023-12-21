@@ -20,8 +20,8 @@ def dfs(start, depth):
     found = next(traversal.start_from(start_vertices=((start,),),
                                       build_paths=True
                                       ).go_for_depth_range(depth, depth + 1))
-    print(len(traversal.paths[found][-1]))
+    return len(traversal.paths[found][-1])
 
 
 S = g.findall('S')[0]
-dfs(S, 64)
+print(dfs(S, 64))
