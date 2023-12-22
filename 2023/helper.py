@@ -28,7 +28,7 @@ def grid_2d(maze: List[str]) -> nographs.Array:
 
 
 def nums(line: str) -> List[int]:
-    return [int(x) for x in line.split() if x.isdigit()]
+    return [int(x) for x in re.findall(r'\d+', line)]
 
 
 def raw_data(year: int, day: int) -> str:
