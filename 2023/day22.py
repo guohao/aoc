@@ -52,7 +52,7 @@ def bfs(broke):
     while dq:
         nb = dq.popleft()
         for bb in supporting[nb]:
-            if len(supported_by[bb]) == 0 or all(sb in v for sb in supported_by[bb]):
+            if all(sb in v for sb in supported_by[bb]):
                 dq.append(bb)
                 v.add(bb)
     return len(v) - 1
