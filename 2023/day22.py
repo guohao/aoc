@@ -45,16 +45,10 @@ print(ans)
 
 
 def bfs(broke):
-    dq = deque()
-    dq.append(broke)
-    v = set()
-    v.add(broke)
-    while dq:
-        nb = dq.popleft()
+    v = {broke}
+    for nb in range(len(bricks)):
         for bb in supporting[nb]:
-            if all(sb in v for sb in supported_by[bb]):
-                dq.append(bb)
-                v.add(bb)
+            v.add(bb) if all(sb in v for sb in supported_by[bb]) else None
     return len(v) - 1
 
 
