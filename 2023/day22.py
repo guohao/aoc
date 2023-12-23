@@ -44,12 +44,15 @@ ans += len(bricks) - len(supporting)
 print(ans)
 
 
-def bfs(broke):
-    v = {broke}
-    for nb in range(len(bricks)):
-        for bb in supporting[nb]:
-            v.add(bb) if all(sb in v for sb in supported_by[bb]) else None
-    return len(v) - 1
+def p2():
+    ans2 = 0
+    for i in range(len(bricks)):
+        v = {i}
+        for nb in range(len(bricks)):
+            for bb in supporting[nb]:
+                v.add(bb) if all(sb in v for sb in supported_by[bb]) else None
+        ans2 += len(v) - 1
+    return ans2
 
 
-print(sum(bfs(b) for b in range(len(bricks))))
+print(p2())
