@@ -19,18 +19,14 @@ def can_move(rock, left, down):
         return False
     if left < 0 or left + len(rock) > N:
         return False
-    for j in range(len(rock)):
-        if G[left + j] & (rock[j] << down):
-            return False
+    if any(G[left + j] & (rock[j] << down) for j in range(len(rock))):
+        return False
     return True
 
 
 def do_move(rock, left, down):
     for j in range(len(rock)):
         G[left + j] |= rock[j] << down
-
-
-MIN_CYCLE_LEN = lcm([5, len(data)])
 
 
 def p(epoch):
@@ -53,8 +49,8 @@ def p(epoch):
             if can_move(rock, left, down - 1):
                 down -= 1
             else:
-                do_move(rock, left, down)
                 break
+        do_move(rock, left, down)
         height = max(height, down + max(rock).bit_length())
         state = (ji, ri, tuple(height - G[j].bit_length() for j in range(N)))
         if state in memo:
