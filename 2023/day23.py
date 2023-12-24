@@ -8,27 +8,20 @@ N = len(lines)
 dots = g.findall(".")
 START, GOAL = dots[0], dots[-1]
 
-narrow = True
-
 
 def next_edges(state, _):
     p, v = state
     if p in v or p == GOAL:
         return
     nv = v | {p}
-    if narrow:
-        if g[p] == '>':
-            yield p + (0, 1), nv
-        elif g[p] == 'v':
-            yield p + (1, 0), nv
-        elif g[p] == '^':
-            yield p + (-1, 0), nv
-        elif g[p] == '<':
-            yield p + (1, 0), nv
-        else:
-            for ne in p.neighbors(nog.Position.moves(2), g.limits()):
-                if g[ne] != '#' and ne not in v:
-                    yield ne, nv
+    if g[p] == '>':
+        yield p + (0, 1), nv
+    elif g[p] == 'v':
+        yield p + (1, 0), nv
+    elif g[p] == '^':
+        yield p + (-1, 0), nv
+    elif g[p] == '<':
+        yield p + (1, 0), nv
     else:
         for ne in p.neighbors(nog.Position.moves(2), g.limits()):
             if g[ne] != '#' and ne not in v:
@@ -44,6 +37,4 @@ def bfs():
     print(ret)
 
 
-bfs()
-narrow = False
 bfs()
