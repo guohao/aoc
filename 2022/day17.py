@@ -14,11 +14,6 @@ N = 7
 G = [0] * N
 
 
-def print_bin(x: List[int]):
-    for n in range(max(x).bit_length() - 1, -1, -1):
-        print(''.join(['#' if (i >> n) & 1 else '.' for i in x]))
-
-
 def can_move(rock, left, down):
     if down < 0:
         return False
