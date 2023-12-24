@@ -1,77 +1,78 @@
-from itertools import cycle
-
 from helper import *
 
-MOVES = {'<': 1, '>': 0}
-
-data = """
->>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>
-"""
-
 data = raw_data(2022, 17)
-JETS = cycle(list(data.strip()))
-ROCKS = cycle([
-    [0b11110],
-    [0b01000, 0b11100, 0b01000],
-    [0b11100, 0b00100, 0b00100],
-    [0b10000, 0b10000, 0b10000, 0b10000],
-    [0b11000, 0b11000]
-])
+JETS = list(map({'<': -1, '>': 1}.get, list(data.strip())))
+ROCKS = [
+    [1, 1, 1, 1],
+    [2, 7, 2],
+    [1, 1, 7],
+    [15],
+    [3, 3]
+]
 
 N = 7
 G = [0] * N
 
 
 def print_bin(x: List[int]):
-    for i in x:
-        print(bin(i)[2:].zfill(7).replace('1', '#').replace('0', '+'))
+    for n in range(max(x).bit_length() - 1, -1, -1):
+        print(''.join(['#' if (i >> n) & 1 else '.' for i in x]))
 
 
-def can_move(rock, d):
-    if d < 0:
+def can_move(rock, left, down):
+    if down < 0:
         return False
-    for i in range(len(rock)):
-        r = rock[i]
-        while r.bit_length() > 0:
-            j = r.bit_length()
-            if G[N - j] & 1 << (d + i):
-                return False
-            r &= ~(1 << j - 1)
+    if left < 0 or left + len(rock) > N:
+        return False
+    for j in range(len(rock)):
+        if G[left + j] & (rock[j] << down):
+            return False
     return True
 
 
-def do_move(rock, d):
-    for i in range(len(rock)):
-        r = rock[i]
-        while r.bit_length() > 0:
-            j = r.bit_length()
-            G[N - j] |= 1 << (d + i)
-            r &= ~(1 << j - 1)
+def do_move(rock, left, down):
+    for j in range(len(rock)):
+        G[left + j] |= rock[j] << down
 
 
-def create_new_rock(rock, move_left: bool):
-    for i in range(len(rock)):
-        if move_left and rock[i] & 1 << 6:
-            return
-        if not move_left and rock[i] & 1:
-            return
-    return [x << 1 if move_left else x >> 1 for x in rock]
+MIN_CYCLE_LEN = lcm([5, len(data)])
 
 
-ans = 0
-M = 2022
-for epoch in range(0, M):
-    d = max(G).bit_length() + 3
-    rock = next(ROCKS)
-    while True:
-        jet = next(JETS)
-        n_r = create_new_rock(rock, MOVES[jet])
-        if n_r and can_move(n_r, d):
-            rock = n_r
-        if can_move(rock, d - 1):
-            d -= 1
+def p(epoch):
+    ans = 0
+    height = 0
+    i = 1
+    ji = -1
+    ri = -1
+    memo = {}
+    while i <= epoch:
+        down = height + 3
+        ri = (ri + 1) % len(ROCKS)
+        rock = ROCKS[ri]
+        left = 2
+        while True:
+            ji = (ji + 1) % len(JETS)
+            move = JETS[ji]
+            if can_move(rock, left + move, down):
+                left += move
+            if can_move(rock, left, down - 1):
+                down -= 1
+            else:
+                do_move(rock, left, down)
+                break
+        height = max(height, down + max(rock).bit_length())
+        state = (ji, ri, tuple(height - G[j].bit_length() for j in range(N)))
+        if state in memo:
+            prev_i, prev_height = memo[state]
+            cut_down_times = (epoch - i) // (i - prev_i)
+            ans += cut_down_times * (height - prev_height)
+            epoch -= cut_down_times * (i - prev_i)
         else:
-            do_move(rock, d)
-            break
-    epoch += 1
-print(max(G).bit_length())
+            memo[state] = i, height
+        i += 1
+
+    print(height + ans)
+
+
+p(2022)
+p(1000000000000)
