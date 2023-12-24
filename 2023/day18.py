@@ -3,22 +3,6 @@ from helper import *
 D = {'R': (0, 1), 'L': (0, -1), 'U': (-1, 0), 'D': (1, 0)}
 
 
-def polygon_area(g, xs, xe, ys, ye):
-    ans = len(g)
-    for i in range(xs, xe + 1):
-        non_edge_node = 0
-        current_in = False
-        for j in range(ys, ye + 1):
-            if (i, j) in g:
-                if g[i, j] in [('D', 'D'), ('L', 'U'), ('D', 'L'), ('R', "U"), ('D', 'R'), ('U', 'U')]:
-                    current_in = not current_in
-            else:
-                if current_in:
-                    non_edge_node += 1
-        ans += non_edge_node
-    return ans
-
-
 def p1():
     # Flood fill also works
     g = {}
@@ -47,7 +31,18 @@ def p1():
         xe = max(xe, node[0])
         ye = max(ye, node[1])
 
-    ans = polygon_area(g, xs, xe, ys, ye)
+    ans = len(g)
+    for i in range(xs, xe + 1):
+        non_edge_node = 0
+        current_in = False
+        for j in range(ys, ye + 1):
+            if (i, j) in g:
+                if g[i, j] in [('D', 'D'), ('L', 'U'), ('D', 'L'), ('R', "U"), ('D', 'R'), ('U', 'U')]:
+                    current_in = not current_in
+            else:
+                if current_in:
+                    non_edge_node += 1
+        ans += non_edge_node
     print(ans)
 
 
