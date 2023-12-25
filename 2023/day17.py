@@ -5,10 +5,7 @@ from helper import *
 lines = lines(raw_data(2023, 17))
 GOAL = (len(lines) - 1, len(lines[0]) - 1)
 
-g = {}
-for i, line in enumerate(lines):
-    for j, c in enumerate(line):
-        g[i, j] = int(c)
+g = {(i, j): int(lines[i][j]) for i in range(len(lines)) for j in range(len(lines[i]))}
 
 
 def dfs(min_step, max_step):
