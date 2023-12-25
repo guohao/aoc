@@ -21,7 +21,7 @@ def dfs(min_step, max_step) -> int:
         visited.add((p, d, step))
         if p == GOAL:
             print(heat_lost)
-            return heat_lost
+            return
         for nd in {(1, 0), (0, 1), (0, -1), (-1, 0)} - {(-d[0], -d[1])}:
             if d == nd and step == max_step:
                 continue
