@@ -58,44 +58,37 @@ def neighbors(p, ignore_direction=False):
 def transitive_closure(ignore_direction=False):
     adjacency = defaultdict(set)
     weight = defaultdict(int)
-    for p in g:
-        for neighbor in neighbors(p, ignore_direction):
-            adjacency[p].add(neighbor)
-            weight[p, neighbor] = 1
+    for v in g:
+        v_neighbors = list(neighbors(v, ignore_direction))
+        if len(v_neighbors) == 2:
+        for neighbor in v_neighbors :
+            adjacency[v].add(neighbor)
+            weight[v, neighbor] = 1
     while True:
-        changed = False
-        for v, e in adjacency.copy().items():
-            if ignore_direction:
-                if len(e) == 2:
-                    changed = True
-                    a, b = e
-                    adjacency[a].add(b)
-                    adjacency[b].add(a)
-                    weight[a, b] = weight[a, v] + weight[v, b]
-                    weight[b, a] = weight[a, v] + weight[v, b]
-                    if v in adjacency[a]:
-                        adjacency[v].remove(a)
-                        adjacency[a].remove(v)
-                    if v in adjacency[b]:
-                        adjacency[v].remove(b)
-                        adjacency[b].remove(v)
-            else:
-                if len(e) == 1:
-                    mid = list(e)[0]
-                    if len(adjacency[mid]) > 0:
-                        changed = True
-                        adjacency[v].remove(mid)
-                        for target in adjacency[mid]:
-                            adjacency[v].add(target)
-                            weight[v, target] = weight[v, mid] + weight[mid, target]
-                        adjacency[mid].clear()
+        vertex_to_remove = set()
+        in_edges = defaultdict(set)
+        out_edges = defaultdict(set)
+        for v in g:
+            for neighbor in adjacency[v]:
+                out_edges[v].add(neighbor)
+                in_edges[neighbor].add(v)
 
-        if not changed:
+        for v in g:
+            if in_edges[v] == out_edges[v] and len(in_edges) == 2:
+                vertex_to_remove.add(v)
+
+        for v in vertex_to_remove:
+            predecessor, successor = in_edges[v].pop(), out_edges[v].pop()
+            adjacency[predecessor].remove(v)
+            adjacency[v].remove(successor)
+            adjacency[predecessor].add(successor)
+
+        if not vertex_to_remove:
             break
     return adjacency, weight
 
 
-def dfs2(p, path, adjacency, weight):
+def dfs(p, path, adjacency, weight):
     if p not in adjacency or p in path:
         return 0
     ret = 0
@@ -107,31 +100,14 @@ def dfs2(p, path, adjacency, weight):
     path = path.copy()
     path.append(p)
     for neighbor in adjacency[p]:
-        ret = max(ret, dfs2(neighbor, path, adjacency, weight))
-    return ret
-
-
-def dfs(p, path, ignore_direction=False):
-    if p not in g:
-        return 0
-    if p == goal:
-        return len(path)
-    if g[p] == '#':
-        return 0
-    if p in path:
-        return 0
-
-    path = path.union({p})
-    ret = 0
-    for neighbor in neighbors(p, ignore_direction):
-        ret = max(ret, dfs(neighbor, path, ignore_direction))
+        ret = max(ret, dfs(neighbor, path, adjacency, weight))
     return ret
 
 
 def solve(ignore_direction=False):
     adj, wt = transitive_closure(ignore_direction)
-    print(dfs2(start, [], adj, wt))
+    print(dfs(start, [], adj, wt))
 
 
 solve(False)
-# solve(True)
+solve(True)
