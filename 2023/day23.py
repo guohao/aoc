@@ -1,40 +1,102 @@
-import nographs as nog
+import sys
+from collections import defaultdict
+
 from helper import *
+from heapq import *
 
-data = raw_data(2023, 23)
+sys.setrecursionlimit(1000000)
+
+data = """
+#.#####################
+#.......#########...###
+#######.#########.#.###
+###.....#.>.>.###.#.###
+###v#####.#v#.###.#.###
+###.>...#.#.#.....#...#
+###v###.#.#.#########.#
+###...#.#.#.......#...#
+#####.#.#.#######.#.###
+#.....#.#.#.......#...#
+#.#####.#.#.#########v#
+#.#...#...#...###...>.#
+#.#.#v#######v###.###v#
+#...#.>.#...>.>.#.###.#
+#####v#.#.###v#.#.###.#
+#.....#...#...#.#.#...#
+#.#########.###.#.#.###
+#...###...#...#...#.###
+###.###.#.###v#####v###
+#...#...#.#.>.>.#.>.###
+#.###.###.#.###.#.#v###
+#.....###...###...#...#
+#####################.#
+"""
+# data = raw_data(2023, 23)
 lines = lines(data)
-g = nog.Array(lines, 2)
-N = len(lines)
-dots = g.findall(".")
-START, GOAL = dots[0], dots[-1]
+start = (0, lines[0].index('.'))
+goal = (len(lines) - 1, lines[-1].index('.'))
+g = {(i, j): lines[i][j] for i in range(len(lines)) for j in range(len(lines[i]))}
 
 
-def next_edges(state, _):
-    p, v = state
-    if p in v or p == GOAL:
+def neighbors(p, ignore_direction=False):
+    if g[p] == '#':
         return
-    nv = v | {p}
-    if g[p] == '>':
-        yield p + (0, 1), nv
-    elif g[p] == 'v':
-        yield p + (1, 0), nv
-    elif g[p] == '^':
-        yield p + (-1, 0), nv
-    elif g[p] == '<':
-        yield p + (1, 0), nv
+    if g[p] == '.' or ignore_direction:
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nx, ny = p[0] + dx, p[1] + dy
+            np = (nx, ny)
+            if np in g and g[np] != '#':
+                yield np
     else:
-        for ne in p.neighbors(nog.Position.moves(2), g.limits()):
-            if g[ne] != '#' and ne not in v:
-                yield ne, nv
+        dx, dy = {'^': (-1, 0), 'v': (1, 0), '<': (0, -1), '>': (0, 1)}[g[p]]
+        nx, ny = p[0] + dx, p[1] + dy
+        np = (nx, ny)
+        if np in g and g[np] != '#':
+            yield np
 
 
-def bfs():
-    traversal = nog.TraversalBreadthFirst(next_edges, is_tree=True)
+def transitive_closure(ignore_direction=False):
+    adjacency = defaultdict(set)
+    weight = defaultdict(int)
+    for p in g:
+        for neighbor in neighbors(p, ignore_direction):
+            adjacency[p].add(neighbor)
+            weight[p, neighbor] = 1
+    while True:
+        changed = False
+        for v, e in adjacency.copy().items():
+            if len(e) == 2:
+                changed = True
+                a, b = e
+                adjacency[a].add(b)
+                adjacency[b].add(a)
+                weight[a, b] = weight[a, v] + weight[v, b]
+                del adjacency[v]
+        if not changed:
+            break
+    return adjacency, weight
+
+
+def dfs(p, path, ignore_direction=False):
+    if p not in g:
+        return 0
+    if p == goal:
+        return len(path)
+    if g[p] == '#':
+        return 0
+    if p in path:
+        return 0
+
+    path = path.union({p})
     ret = 0
-    for current in traversal.start_from((START, frozenset())):
-        if current[0] == GOAL:
-            ret = max(ret, len(current[1]))
-    print(ret)
+    for neighbor in neighbors(p, ignore_direction):
+        ret = max(ret, dfs(neighbor, path, ignore_direction))
+    return ret
 
 
-bfs()
+# def solve(ignore_direction=False):
+
+
+# transitive_closure()
+print(dfs(start, set()))
+# print(dfs(start, set(), True))
