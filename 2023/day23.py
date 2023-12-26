@@ -65,19 +65,31 @@ def transitive_closure(ignore_direction=False):
     while True:
         changed = False
         for v, e in adjacency.copy().items():
-            if len(e) == 2:
-                changed = True
-                a, b = e
-                adjacency[a].add(b)
-                adjacency[b].add(a)
-                weight[a, b] = weight[a, v] + weight[v, b]
-                weight[b, a] = weight[a, v] + weight[v, b]
-                if v in adjacency[a]:
-                    adjacency[v].remove(a)
-                    adjacency[a].remove(v)
-                if v in adjacency[b]:
-                    adjacency[v].remove(b)
-                    adjacency[b].remove(v)
+            if ignore_direction:
+                if len(e) == 2:
+                    changed = True
+                    a, b = e
+                    adjacency[a].add(b)
+                    adjacency[b].add(a)
+                    weight[a, b] = weight[a, v] + weight[v, b]
+                    weight[b, a] = weight[a, v] + weight[v, b]
+                    if v in adjacency[a]:
+                        adjacency[v].remove(a)
+                        adjacency[a].remove(v)
+                    if v in adjacency[b]:
+                        adjacency[v].remove(b)
+                        adjacency[b].remove(v)
+            else:
+                if len(e) == 1:
+                    mid = list(e)[0]
+                    if len(adjacency[mid]) > 0:
+                        changed = True
+                        adjacency[v].remove(mid)
+                        for target in adjacency[mid]:
+                            adjacency[v].add(target)
+                            weight[v, target] = weight[v, mid] + weight[mid, target]
+                        adjacency[mid].clear()
+
         if not changed:
             break
     return adjacency, weight
@@ -122,4 +134,4 @@ def solve(ignore_direction=False):
 
 
 solve(False)
-solve(True)
+# solve(True)
