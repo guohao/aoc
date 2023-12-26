@@ -31,7 +31,7 @@ data = """
 #.....###...###...#...#
 #####################.#
 """
-# data = raw_data(2023, 23)
+data = raw_data(2023, 23)
 lines = lines(data)
 start = (0, lines[0].index('.'))
 goal = (len(lines) - 1, lines[-1].index('.'))
@@ -71,10 +71,32 @@ def transitive_closure(ignore_direction=False):
                 adjacency[a].add(b)
                 adjacency[b].add(a)
                 weight[a, b] = weight[a, v] + weight[v, b]
-                del adjacency[v]
+                weight[b, a] = weight[a, v] + weight[v, b]
+                if v in adjacency[a]:
+                    adjacency[v].remove(a)
+                    adjacency[a].remove(v)
+                if v in adjacency[b]:
+                    adjacency[v].remove(b)
+                    adjacency[b].remove(v)
         if not changed:
             break
     return adjacency, weight
+
+
+def dfs2(p, path, adjacency, weight):
+    if p not in adjacency or p in path:
+        return 0
+    ret = 0
+    if p == goal:
+        path.append(p)
+        for i in range(len(path) - 1):
+            ret += weight[path[i], path[i + 1]]
+        return ret
+    path = path.copy()
+    path.append(p)
+    for neighbor in adjacency[p]:
+        ret = max(ret, dfs2(neighbor, path, adjacency, weight))
+    return ret
 
 
 def dfs(p, path, ignore_direction=False):
@@ -94,9 +116,10 @@ def dfs(p, path, ignore_direction=False):
     return ret
 
 
-# def solve(ignore_direction=False):
+def solve(ignore_direction=False):
+    adj, wt = transitive_closure(ignore_direction)
+    print(dfs2(start, [], adj, wt))
 
 
-# transitive_closure()
-print(dfs(start, set()))
-# print(dfs(start, set(), True))
+solve(False)
+solve(True)
