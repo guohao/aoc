@@ -6,25 +6,33 @@ from helper import *
 sys.setrecursionlimit(1000000)
 
 
-def neighbors(p, ignore_direction=False):
-    if g[p] == '.' or ignore_direction:
-        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-            nx, ny = p[0] + dx, p[1] + dy
-            np = (nx, ny)
-            if np in g:
-                yield np
-    else:
-        dx, dy = {'^': (-1, 0), 'v': (1, 0), '<': (0, -1), '>': (0, 1)}[g[p]]
+def neighbors_with_direction(p):
+    dx, dy = {'^': (-1, 0), 'v': (1, 0), '<': (0, -1), '>': (0, 1)}[g[p]]
+    nx, ny = p[0] + dx, p[1] + dy
+    np = (nx, ny)
+    if np in g:
+        yield np
+
+
+def neighbors_without_direction(p):
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
         nx, ny = p[0] + dx, p[1] + dy
         np = (nx, ny)
         if np in g:
             yield np
 
 
+def neighbors(p, ignore_direction=False):
+    if ignore_direction or g[p] == '.':
+        return neighbors_without_direction(p)
+    else:
+        return neighbors_with_direction(p)
+
+
 def transitive_closure(ignore_direction=False):
     adjacency = defaultdict(dict)
     for v in g:
-        for neighbor in list(neighbors(v, ignore_direction)):
+        for neighbor in neighbors(v, ignore_direction):
             adjacency[v][neighbor] = 1
     while True:
         change = False
