@@ -1,42 +1,41 @@
 from helper import *
 
+data = raw_data(2023, 15).strip()
 
-def h(s: str) -> int:
-    n = 0
+
+def hash(s):
+    val = 0
     for c in s:
-        n = ((n + ord(c)) * 17) % 256
-    return n
+        val += ord(c)
+        val *= 17
+        val %= 256
+    return val
 
 
-def h3(line: str) -> int:
-    ret = 0
-    box = [{} for _ in range(256)]
-    for s in line.strip().split(','):
-        add = False
-        if '=' in s:
-            a, b = s.split('=')
-            bb = int(b)
-            add = True
+print(sum(hash(d) for d in data.split(',')))
+
+boxes = [{} for _ in range(256)]
+for part in data.split(','):
+    label = next(re.finditer(r'\w+', part)).group()
+    box = boxes[hash(label)]
+    if '-' in part:
+        if label not in box:
+            continue
+        (_, order) = box[label]
+        del box[label]
+        for other in box.keys():
+            other_order = box[other][1]
+            if other_order > order:
+                box[other] = (box[other][0], other_order - 1)
+    else:
+        lens = int(next(re.finditer(r'\d+', part)).group())
+        if label in box:
+            box[label] = (lens, box[label][1])
         else:
-            a = s.split('-')[0]
-        b = box[h(a)]
-        if add:
-            if a in b.keys():
-                b[a] = (b[a][0], bb)
-            else:
-                b[a] = (len(b) + 1, bb)
-        else:
-            if a in b:
-                for x, y in b.copy().items():
-                    if y[0] > b[a][0]:
-                        b[x] = (y[0] - 1, y[1])
-                del b[a]
-    for i in range(256):
-        for a, b in box[i].values():
-            ret += (i + 1) * a * b
-    return ret
+            box[label] = (lens, len(box) + 1)
+ans = 0
+for i, box in enumerate(boxes, start=1):
+    for label, (lens, order) in box.items():
+        ans += lens * i * order
 
-
-data = raw_data(2023, 15)
-print(sum(h(s) for s in data.strip().split(',')))
-print(h3(data))
+print(ans)
