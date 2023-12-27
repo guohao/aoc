@@ -2,50 +2,54 @@ import functools
 
 from helper import *
 
-
-@functools.cache
-def move_cycle(data: str) -> str:
-    lines = grid_2d(data.strip())
-    move(lines)
-    rotate_in_place(lines)
-    move(lines)
-    rotate_in_place(lines)
-    move(lines)
-    rotate_in_place(lines)
-    move(lines)
-    rotate_in_place(lines)
-    return '\n'.join("".join(line) for line in lines)
-
-
-def move(lines: List[List[str]]):
-    for i, j in itertools.product(range(len(lines)), range(len(lines[0]))):
-        if lines[i][j] != '.':
-            continue
-        for k in range(i + 1, len(lines)):
-            if lines[k][j] == '#':
-                break
-            if lines[k][j] == 'O':
-                lines[i][j] = 'O'
-                lines[k][j] = '.'
-                break
-
-
-def score_of(lines: List[List[str]]) -> int:
-    ret = 0
-    for i in range(len(lines)):
-        ss = len(lines) - i
-        for j in range(len(lines[0])):
-            if lines[i][j] == 'O':
-                ret += ss
-    return ret
-
-
 data = raw_data(2023, 14)
-g = grid_2d(data)
-move(g)
-print(score_of(g))
+lines = lines(data)
 
-for _ in range(1000000000):
-    data = move_cycle(data)
 
-print(score_of(grid_2d(data)))
+def move(g, d: tuple[int, int]):
+    while True:
+        change = False
+        for p in g.keys():
+            v = g[p]
+            neighbor = (p[0] + d[0], p[1] + d[1])
+            if v == 'O' and neighbor in g and g[neighbor] == '.':
+                g[p], g[neighbor] = g[neighbor], g[p]
+                change = True
+        if not change:
+            break
+
+
+def load_of(g):
+    return sum(len(lines) - p[0] for p, v in g.items() if v == 'O')
+
+
+def p1():
+    g = {(i, j): lines[i][j] for i in range(len(lines)) for j in range(len(lines[i]))}
+    move(g, (-1, 0))
+    print(load_of(g))
+
+
+def move_cycle(g):
+    moves = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+    for _move in moves:
+        move(g, _move)
+
+
+def p2():
+    g = {(i, j): lines[i][j] for i in range(len(lines)) for j in range(len(lines[i]))}
+    n = 1000000000
+    memo = {}
+    cycle = 0
+    while cycle < n:
+        state = tuple(g.values())
+        if state in memo:
+            step = cycle - memo[state]
+            n -= (n - cycle) // step * step
+        memo[state] = cycle
+        move_cycle(g)
+        cycle += 1
+    print(load_of(g))
+
+
+p1()
+p2()
