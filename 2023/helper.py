@@ -23,10 +23,6 @@ def lines(data: str) -> List[str]:
     return [line.strip() for line in all_lines if line and len(line.strip()) > 0]
 
 
-def grid_2d(maze: List[str]) -> nographs.Array:
-    return nographs.Array(maze)
-
-
 def nums(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'\d+', line)]
 
