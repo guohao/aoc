@@ -1,42 +1,32 @@
-from typing import List
+from helper import *
 
-import helper
+data = raw_data(2023, 9)
+lines = lines(data)
 
-data = helper.raw_data(2023, 9)
-lines = helper.lines(data)
+ans = 0
+for line in lines:
+    ns = nums(line)
+    seq = []
+    while True:
+        seq.append(ns)
+        ns = [ns[i + 1] - ns[i] for i in range(len(ns) - 1)]
+        if all(x == 0 for x in ns):
+            break
+    for i in range(len(seq) - 2, -1, -1):
+        seq[i].append(seq[i + 1][-1] + seq[i][-1])
+    ans += seq[0][-1]
+print(ans)
 
-
-def gen_all_his(line: str) -> List[List[int]]:
-    g = [[int(x) for x in line.split()]]
-    while sum(g[-1]) != 0:
-        d = []
-        for i in range(len(g[-1]) - 1):
-            d.append(g[-1][i + 1] - g[-1][i])
-        g.append(d)
-    return g
-
-
-def p1():
-    ans = []
-    for line in lines:
-        g = gen_all_his(line)
-        g[-1].append(0)
-        for i in range(len(g) - 2, -1, -1):
-            g[i].append(g[i][-1] + g[i + 1][-1])
-        ans.append(g[0][-1])
-    print(sum(ans))
-
-
-def p2():
-    ans = []
-    for line in lines:
-        g = gen_all_his(line)
-        g[-1].insert(0, 0)
-        for i in range(len(g) - 2, -1, -1):
-            g[i].insert(0, g[i][0] - g[i + 1][0])
-        ans.append(g[0][0])
-    print(sum(ans))
-
-
-p1()
-p2()
+ans = 0
+for line in lines:
+    ns = nums(line)
+    seq = []
+    while True:
+        seq.append(ns)
+        ns = [ns[i + 1] - ns[i] for i in range(len(ns) - 1)]
+        if all(x == 0 for x in ns):
+            break
+    for i in range(len(seq) - 2, -1, -1):
+        seq[i].append(seq[i][0] - seq[i + 1][-1])
+    ans += seq[0][-1]
+print(ans)

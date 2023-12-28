@@ -38,7 +38,7 @@ def digits(line: str) -> List[int]:
 
 
 def nums(line: str) -> List[int]:
-    return [int(x) for x in re.findall(r'\d+', line)]
+    return [int(x) for x in re.findall(r'[-+]?\d+', line)]
 
 
 def raw_data(year: int, day: int) -> str:
