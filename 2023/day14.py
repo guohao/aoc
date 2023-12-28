@@ -1,5 +1,3 @@
-import functools
-
 from helper import *
 
 data = raw_data(2023, 14)
