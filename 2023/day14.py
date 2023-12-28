@@ -22,7 +22,7 @@ def load_of(g):
 
 
 def p1():
-    g = {(i, j): lines[i][j] for i in range(len(lines)) for j in range(len(lines[i]))}
+    g = grid(data)
     move(g, (-1, 0))
     print(load_of(g))
 
@@ -34,7 +34,7 @@ def move_cycle(g):
 
 
 def p2():
-    g = {(i, j): lines[i][j] for i in range(len(lines)) for j in range(len(lines[i]))}
+    g = grid(data)
     n = 1000000000
     memo = {}
     cycle = 0

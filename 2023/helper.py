@@ -23,6 +23,16 @@ def lines(data: str) -> List[str]:
     return [line.strip() for line in all_lines if line and len(line.strip()) > 0]
 
 
+def grid(data: str) -> dict[tuple[int, int], str]:
+    all_lines = lines(data)
+    return {(i, j): all_lines[i][j] for i in range(len(all_lines)) for j in range(len(all_lines[i]))}
+
+
+def int_grid(data: str) -> dict[tuple[int, int], int]:
+    all_lines = lines(data)
+    return {(i, j): int(all_lines[i][j]) for i in range(len(all_lines)) for j in range(len(all_lines[i]))}
+
+
 def nums(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'\d+', line)]
 
