@@ -1,70 +1,81 @@
 import functools
-import re
-from typing import List, Tuple
+from collections import defaultdict
 
-import helper
+from helper import *
 
-
-def cmp1(a: Tuple[List[int], int], b: Tuple[List[int], int]) -> int:
-    a = a[0]
-    b = b[0]
-
-    ac = sorted([a.count(x) for x in set(a)])
-    bc = sorted([b.count(x) for x in set(b)])
-    if len(bc) != len(ac):
-        return len(bc) - len(ac)
-    for i in range(1, min(len(ac), len(bc))):
-        if ac[-i] != bc[-i]:
-            return ac[-i] - bc[-i]
-    for i in range(5):
-        if a[i] != b[i]:
-            return a[i] - b[i]
-    return 0
+data = raw_data(2023, 7)
+lines = lines(data)
+cards = []
 
 
-def cmp(a: Tuple[List[int], int], b: Tuple[List[int], int]) -> int:
-    a = [x if x != 11 else 1 for x in a[0]]
-    b = [x if x != 11 else 1 for x in b[0]]
+def hands_to_int(hands: str) -> List[int]:
+    _cards = 'AKQJT98765432'[::-1]
+    return [_cards.index(c) for c in hands]
 
-    ac = [a.count(x) for x in set(a) if x != 1]
-    ac.sort()
-    if len(ac) > 0:
-        ac[-1] += a.count(1)
+
+def hands_to_int_with_joker(hands: str) -> List[int]:
+    _cards = 'AKQT98765432J'[::-1]
+    return [_cards.index(c) for c in hands]
+
+
+def type_of(hands: List[int], with_joker: bool) -> int:
+    count = defaultdict(lambda: 0)
+    for c in set(hands):
+        count[c] = hands.count(c)
+    if with_joker and 0 in count:
+        del count[0]
+        jc = hands.count(0)
     else:
-        ac = [5]
-    bc = [b.count(x) for x in set(b) if x != 1]
-    bc.sort()
-    if len(bc) > 0:
-        bc[-1] += b.count(1)
+        jc = 0
+    count = sorted(count.values(), reverse=True)
+    if not count:
+        return 1
+    a = count[0] + jc
+    if a == 5:
+        return 1
+    if a == 4:
+        return 2
+    if a == 3:
+        if count[1] == 2:
+            return 3
+        else:
+            return 4
+    if a == 2:
+        if count[1] == 2:
+            return 5
+        else:
+            return 6
+    return 7
+
+
+def my_cmp_with_joker(a: tuple[List[int], int], b: tuple[List[int], int]) -> int:
+    return my_cmp(a, b, with_joker=True)
+
+
+def my_cmp(a: tuple[List[int], int], b: tuple[List[int], int], with_joker=False) -> int:
+    ha = a[0]
+    hb = b[0]
+    ta = type_of(ha, with_joker)
+    tb = type_of(hb, with_joker)
+    if ta == tb:
+        if ha == hb:
+            return 0
+        return -1 if ha < hb else 1
     else:
-        bc = [5]
-
-    m = len(bc) - len(ac)
-    if m != 0:
-        return m
-    for i in range(1, min(len(ac), len(bc))):
-        m = ac[-i] - bc[-i]
-        if m != 0:
-            return m
-    for i in range(5):
-        m = a[i] - b[i]
-        if m != 0:
-            return m
-    return 0
+        return tb - ta
 
 
-data = helper.raw_data(2023, 7)
-
-ctn = "0023456789TJQKA"
-lines = data.strip().splitlines()
-hands = []
 for line in lines:
-    hand = [ctn.index(x) for x in re.findall(r'\w', line.split()[0])]
-    hands.append((hand, int(line.split()[1])))
-hands.sort(key=functools.cmp_to_key(cmp1))
-# 251106089
-# 249620106
-print(sum(bid * rank for bid, (_, rank) in enumerate(hands, start=1)))
+    hands, bid = line.split()
+    cards.append((hands_to_int(hands), int(bid)))
 
-hands.sort(key=functools.cmp_to_key(cmp))
-print(sum(bid * rank for bid, (_, rank) in enumerate(hands, start=1)))
+cards.sort(key=functools.cmp_to_key(my_cmp))
+print(sum(bid * i for i, (_, bid) in enumerate(cards, start=1)))
+
+cards = []
+for line in lines:
+    hands, bid = line.split()
+    cards.append((hands_to_int_with_joker(hands), int(bid)))
+
+cards.sort(key=functools.cmp_to_key(my_cmp_with_joker))
+print(sum(bid * i for i, (_, bid) in enumerate(cards, start=1)))
