@@ -1,24 +1,31 @@
-import re
+from helper import *
 
-import helper
-
-data = helper.raw_data(2023, 6)
-data = helper.lines(data)
+data = raw_data(2023, 6)
+lines = lines(data)
 
 
-def ways(total_time: int, current_record: int) -> int:
-    return len([x for x in range(1, total_time) if x * (total_time - x) > current_record])
+def solutions_of(total_time, goal_distance):
+    for press_duration in range(total_time):
+        run_distance = (total_time - press_duration) * press_duration
+        if run_distance > goal_distance:
+            return (total_time - press_duration) - press_duration + 1
+    return 0
 
 
-ans1 = 1
-times = [int(x) for x in re.findall(r'\d+', data[0])]
-records = [int(x) for x in re.findall(r'\d+', data[1])]
+def p1():
+    times = nums(lines[0])
+    distances = nums(lines[1])
+    ans = 1
+    for i in range(len(times)):
+        ans *= solutions_of(times[i], distances[i])
+    print(ans)
 
-for i, time in enumerate(times):
-    ans1 *= ways(time, records[i])
 
-print(ans1)
-time = int(''.join(re.findall(r'\d+', data[0])))
-record = int(''.join(re.findall(r'\d+', data[1])))
-ways = ways(time, record)
-print(ways)
+def p2():
+    long_time = int(lines[0].split(':')[1].replace(' ', ''))
+    long_goal = int(lines[1].split(':')[1].replace(' ', ''))
+    print(solutions_of(long_time, long_goal))
+
+
+p1()
+p2()
