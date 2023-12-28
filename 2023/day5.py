@@ -1,35 +1,29 @@
-import re
+from helper import *
 
-import helper
+data = raw_data(2023, 5)
+lines = lines(data)
 
-data = helper.raw_data(2023, 5)
-parts = data.split('\n\n')
-seeds = list(map(int, parts[0].split()[1:]))
-mappings = parts[1:]
-for mapping in mappings:
-    epoch = []
-    for line in mapping.splitlines()[1:]:
-        d, s, r = map(int, re.match(r'(\d+) (\d+) (\d+)', line).groups())
-        for seed in seeds.copy():
-            if s <= seed < s + r:
-                seeds.remove(seed)
-                epoch.append(d + seed - s)
-    seeds += epoch
-print(min(seeds))
-sr = list(map(int, parts[0].split()[1:]))
-seeds = set((sr[i], sr[i] + sr[i + 1]) for i in range(0, len(sr), 2))
 
-for mapping in mappings:
-    epoch = set()
-    for line in mapping.splitlines()[1:]:
-        d, s, r = map(int, re.match(r'(\d+) (\d+) (\d+)', line).groups())
-        for lo, hi in seeds.copy():
-            if (s + r - lo) * (s - hi) < 0:
-                seeds.remove((lo, hi))
-                epoch.add((d + max(0, lo - s), d + min(hi - s, s + r)))
-                if lo < s:
-                    seeds.add((lo, s))
-                if hi > s + r:
-                    seeds.add((s + r, hi))
-    seeds = seeds.union(epoch)
-print(min(seeds)[0])
+def mapping(prev: List[tuple[int, int]]):
+    for part in data.split('\n\n')[1:]:
+        cur = []
+        for m in part.splitlines()[1:]:
+            target, source, ranges = nums(m)
+            for start, end in prev.copy():
+                left = max(start, source)
+                right = min(end, source + ranges)
+                if left < right:
+                    prev.remove((start, end))
+                    cur.append((target + left - source, target + right - source))
+                    if start < source:
+                        prev.append((start, source))
+                    if end > source + ranges:
+                        prev.append((source + ranges, end))
+        for changed in cur:
+            prev.append(changed)
+    print(min(map(lambda x: x[0], prev)))
+
+
+seeds = nums(lines[0])
+mapping([(x, x + 1) for x in seeds])
+mapping([(seeds[i], seeds[i + 1] + seeds[i]) for i in range(0, len(seeds), 2)])
