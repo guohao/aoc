@@ -33,6 +33,10 @@ def int_grid(data: str) -> dict[tuple[int, int], int]:
     return {(i, j): int(all_lines[i][j]) for i in range(len(all_lines)) for j in range(len(all_lines[i]))}
 
 
+def digits(line: str) -> List[int]:
+    return [int(x) for x in re.findall(r'\d', line)]
+
+
 def nums(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'\d+', line)]
 
