@@ -3,8 +3,6 @@ from collections import defaultdict
 
 from helper import *
 
-# 525181
-# 84289137
 data = raw_data(2023, 3)
 lines = lines(data)
 
@@ -19,7 +17,7 @@ for i, line in enumerate(lines):
                 break
 print(ans)
 
-d = defaultdict(lambda: [])
+d = defaultdict(list)
 for i, line in enumerate(lines):
     for m in regex.finditer(r'\d+', line):
         for x, y in itertools.product(range(i - 1, i + 2), range(m.start() - 1, m.end() + 1)):
