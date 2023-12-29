@@ -23,6 +23,13 @@ def lines(data: str) -> List[str]:
     return [line.strip() for line in all_lines if line and len(line.strip()) > 0]
 
 
+def neighbors_2d(grid: dict[tuple[int, int], str], p: tuple[int, int]) -> List[tuple[int, int]]:
+    for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+        np = (p[0] + dx, p[1] + dy)
+        if np in grid:
+            yield np
+
+
 def grid(data: str) -> dict[tuple[int, int], str]:
     all_lines = lines(data)
     return {(i, j): all_lines[i][j] for i in range(len(all_lines)) for j in range(len(all_lines[i]))}
