@@ -11,7 +11,6 @@ for part in helper.raw_data(2023, 13).strip().split('\n\n'):
             size = len(lines) - i
         up = lines[i - size:i]
         down = lines[i:i + size][::-1]
-        # if up == down:
         diff_count = 0
         for j in range(len(lines[0])):
             diff_count += sum(1 for k in range(size) if up[k][j] != down[k][j])

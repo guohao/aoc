@@ -7,87 +7,60 @@ data = raw_data(2023, 16)
 lines = data.strip().split('\n')
 N = len(lines)
 M = len(lines[0])
-g = grid_dict(lines)
+g = grid(data)
 
 
-def f2(x, y, d):
-    D = set()
-    v = set()
-    tv = deque()
-    tv.append((x, y, d))
-    while tv:
-        x, y, d = tv.popleft()
-        if x not in range(0, N):
+# print(g)
+
+def bfs(entrypoint):
+    path = set()
+    dq = deque()
+    dq.append(entrypoint)
+    while dq:
+        source, current = dq.popleft()
+        if current not in g:
             continue
-        if y not in range(0, M):
+        if (source, current) in path:
             continue
-        if (x, y, d) in v:
-            continue
-        v.add((x, y, d))
-        D.add((x, y))
-        if g[(x, y)] == '.':
-            if d == 'N':
-                tv.append((x - 1, y, d))
-            elif d == 'S':
-                tv.append((x + 1, y, d))
-            elif d == 'E':
-                tv.append((x, y + 1, d))
-            else:
-                tv.append((x, y - 1, d))
-        elif g[(x, y)] == '\\':
-            if d == 'E':
-                d = 'S'
-                tv.append((x + 1, y, d))
-            elif d == 'W':
-                d = 'N'
-                tv.append((x - 1, y, d))
-            elif d == 'N':
-                d = 'W'
-                tv.append((x, y - 1, d))
-            else:
-                d = 'E'
-                tv.append((x, y + 1, d))
-        elif g[(x, y)] == '/':
-            if d == 'E':
-                d = 'N'
-                tv.append((x - 1, y, d))
-            elif d == 'W':
-                d = 'S'
-                tv.append((x + 1, y, d))
-            elif d == 'N':
-                d = 'E'
-                tv.append((x, y + 1, d))
-            elif d == 'S':
-                d = 'W'
-                tv.append((x, y - 1, d))
-        elif g[(x, y)] == '-':
-            if d == 'E':
-                tv.append((x, y + 1, d))
-            elif d == 'W':
-                tv.append((x, y - 1, d))
-            elif d == 'N':
-                tv.append((x, y - 1, 'W'))
-                tv.append((x, y + 1, 'E'))
-            elif d == 'S':
-                tv.append((x, y - 1, 'W'))
-                tv.append((x, y + 1, 'E'))
-        elif g[(x, y)] == '|':
-            if d == 'N':
-                tv.append((x - 1, y, d))
-            elif d == 'S':
-                tv.append((x + 1, y, d))
-            elif d == 'E':
-                tv.append((x - 1, y, 'N'))
-                tv.append((x + 1, y, 'S'))
-            elif d == 'W':
-                tv.append((x - 1, y, 'N'))
-                tv.append((x + 1, y, 'S'))
-    return len(D)
+        path.add((source, current))
+
+        # print(source, current, g[current])
+        diff = (current[0] - source[0], current[1] - source[1])
+        match g[current]:
+            case '.':
+                dq.append((current, (current[0] + diff[0], current[1] + diff[1])))
+            case '/':
+                dq.append((current, (current[0] - diff[1], current[1] - diff[0])))
+            case '\\':
+                dq.append((current, (current[0] + diff[1], current[1] + diff[0])))
+            case '|':
+                if diff[1] == 0:
+                    dq.append((current, (current[0] + diff[0], current[1])))
+                else:
+                    dq.append((current, (current[0] + 1, current[1])))
+                    dq.append((current, (current[0] - 1, current[1])))
+            case '-':
+                if diff[0] == 0:
+                    dq.append((current, (current[0], current[1] + diff[1])))
+                else:
+                    dq.append((current, (current[0], current[1] + 1)))
+                    dq.append((current, (current[0], current[1] - 1)))
+
+    visited = set()
+    for source, target in path:
+        if source in g:
+            visited.add(source)
+        if target in g:
+            visited.add(target)
+    return len(visited)
 
 
-print(f2(0, 0, 'E'))
-m = max(f2(i, 0, 'E') for i in range(N))
-m = max(m, max(f2(i, M - 1, 'W') for i in range(N)))
-m = max(m, max(f2(0, i, 'S') for i in range(M)))
-m = max(m, max(f2(N - 1, i, 'N') for i in range(M)))
-print(m)
+print(bfs(((0, -1), (0, 0))))
+eps = []
+for i in range(N):
+    eps.append(((i, -1), (i, 0)))
+    eps.append(((i, M), (i, M - 1)))
+for j in range(M):
+    eps.append(((-1, j), (0, j)))
+    eps.append(((N, j), (N - 1, j)))
+print(max(bfs(ep) for ep in eps))
