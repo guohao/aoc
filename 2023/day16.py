@@ -10,8 +10,6 @@ M = len(lines[0])
 g = grid(data)
 
 
-# print(g)
-
 def bfs(entrypoint):
     path = set()
     dq = deque()
@@ -24,7 +22,6 @@ def bfs(entrypoint):
             continue
         path.add((source, current))
 
-        # print(source, current, g[current])
         diff = (current[0] - source[0], current[1] - source[1])
         match g[current]:
             case '.':
