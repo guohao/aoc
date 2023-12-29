@@ -2,31 +2,32 @@ from helper import *
 
 data = raw_data(2023, 11)
 lines = data.strip().splitlines()
-wx = [1] * len(lines[0])
-wy = [1] * len(lines[0])
+N = len(lines)
+M = len(lines[0])
+grid = grid(data)
+galaxies = [p for p, v in grid.items() if v == '#']
 
 
-def cal(w):
-    for i, line in enumerate(lines):
-        if line.count('.') == len(line):
-            wx[i] = w
-    for i in range(len(lines[0])):
-        if sum(lines[j][i] == '.' for j in range(len(lines))) == len(lines):
-            for j in range(len(lines)):
-                wy[i] = w
+def solve(magnify: int):
+    weight_x = [1 for _ in range(N)]
+    weight_y = [1 for _ in range(M)]
 
-    grid = grid_dict(lines)
+    for i in range(N):
+        if all(grid[i, j] == '.' for j in range(M)):
+            weight_x[i] = magnify
 
-    ss = grid_find(grid, '#')
+    for j in range(M):
+        if all(grid[i, j] == '.' for i in range(N)):
+            weight_y[j] = magnify
 
     ans = 0
-    for p in ss:
-        for p2 in ss:
-            ans += sum(wx[i] for i in range(min(p[0], p2[0]), max(p[0], p2[0])))
-            ans += sum(wy[i] for i in range(min(p[1], p2[1]), max(p[1], p2[1])))
 
-    print(ans // 2)
+    for i, ga in enumerate(galaxies):
+        for gb in galaxies[:i]:
+            ans += sum(weight_x[i] for i in range(min(ga[0], gb[0]), max(ga[0], gb[0])))
+            ans += sum(weight_y[i] for i in range(min(ga[1], gb[1]), max(ga[1], gb[1])))
+    print(ans)
 
 
-cal(2)
-cal(1000000)
+solve(2)
+solve(1000000)
