@@ -1,24 +1,6 @@
-import functools
-import sys
 from collections import deque
 
 from helper import *
-
-data = """
-2,2,2
-1,2,2
-3,2,2
-2,1,2
-2,3,2
-2,2,1
-2,2,3
-2,2,4
-2,2,6
-1,2,5
-3,2,5
-2,1,5
-2,3,5
-"""
 
 data = raw_data(2022, 18)
 lines = lines(data)
