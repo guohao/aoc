@@ -7,8 +7,6 @@ data = raw_data(2015, 17)
 containers = nums(data)
 N = 150
 
-print(containers)
-
 
 def p1():
     @cache
