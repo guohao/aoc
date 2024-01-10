@@ -31,5 +31,11 @@ def p1():
     print(len(ret))
 
 
+def p2():
+    cells = sum([c.isupper() for c in raw_input])
+    parentheses = raw_input.count('Rn') + raw_input.count('Ar')
+    periods = 2 * raw_input.count('Y')
+    print(cells - parentheses - periods - 1)
 
 p1()
+p2()
