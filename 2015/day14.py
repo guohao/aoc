@@ -13,7 +13,7 @@ def distance_of(r, d, s, t):
 max_ = 0
 rds = []
 for line in lines(data):
-    s, d, r = nums(line)
+    s, d, r = ints(line)
     dis = distance_of(r, d, s, T)
     if dis > max_:
         max_ = dis

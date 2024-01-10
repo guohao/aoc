@@ -5,7 +5,7 @@ lines = lines(data)
 
 ans = 0
 for line in lines:
-    ns = nums(line)
+    ns = ints(line)
     seq = []
     while True:
         seq.append(ns)
@@ -19,7 +19,7 @@ print(ans)
 
 ans = 0
 for line in lines:
-    ns = nums(line)
+    ns = ints(line)
     seq = []
     while True:
         seq.append(ns)

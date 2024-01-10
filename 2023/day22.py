@@ -6,7 +6,7 @@ data = raw_data(2023, 22).strip()
 bricks = []
 lines = lines(data)
 for line in lines:
-    x0, y0, z0, x1, y1, z1 = nums(line)
+    x0, y0, z0, x1, y1, z1 = ints(line)
     if z0 > z1:
         x0, y0, z0, x1, y1, z1 = x1, y1, z1, x0, y0, z0
     if x0 == x1:

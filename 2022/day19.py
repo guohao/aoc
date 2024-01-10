@@ -4,7 +4,7 @@ data = raw_data(2022, 19)
 blueprints = []
 
 for line in lines(data):
-    _, ore, clay, obs0, obs1, geo0, geo1 = nums(line)
+    _, ore, clay, obs0, obs1, geo0, geo1 = ints(line)
     blueprints.append([(ore, 0, 0, 0), (clay, 0, 0, 0), (obs0, obs1, 0, 0), (geo0, 0, geo1, 0)])
 
 name_idx = {'ore': 0, 'clay': 1, 'obsidian': 2, 'geode': 3}

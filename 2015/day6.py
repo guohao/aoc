@@ -7,7 +7,7 @@ N = 1000
 def p1():
     g = [[0] * N for _ in range(N)]
     for line in lines(data):
-        x0, y0, x1, y1 = nums(line)
+        x0, y0, x1, y1 = ints(line)
         if line.startswith('turn on '):
             for x in range(x0, x1 + 1):
                 for y in range(y0, y1 + 1):
@@ -26,7 +26,7 @@ def p1():
 def p2():
     g = [[0] * N for _ in range(N)]
     for line in lines(data):
-        x0, y0, x1, y1 = nums(line)
+        x0, y0, x1, y1 = ints(line)
         for x in range(x0, x1 + 1):
             for y in range(y0, y1 + 1):
                 if line.startswith('turn on '):

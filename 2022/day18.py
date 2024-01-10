@@ -5,7 +5,7 @@ from helper import *
 data = raw_data(2022, 18)
 lines = lines(data)
 
-cubes = [nums(line) for line in lines]
+cubes = [ints(line) for line in lines]
 ans = 6 * len(cubes)
 for i, a in enumerate(cubes):
     for b in cubes[:i]:

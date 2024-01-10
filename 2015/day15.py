@@ -9,7 +9,7 @@ lines = lines(data)
 ings = []
 for line in lines:
     name = line.split(':')[0]
-    ings.append(nums(line))
+    ings.append(ints(line))
 
 
 def score(state):

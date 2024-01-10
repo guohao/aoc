@@ -4,7 +4,7 @@ from helper import *
 
 data = raw_data(2015, 17)
 
-containers = nums(data)
+containers = ints(data)
 N = 150
 
 
