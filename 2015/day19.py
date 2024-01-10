@@ -1,15 +1,5 @@
-from collections import defaultdict, deque
-from functools import cache
-
 from helper import *
 
-data = """
-H => HO
-H => OH
-O => HH
-
-HOH
-"""
 data = raw_data(2015, 19)
 raw_mapping, raw_input = data.strip().split('\n\n')
 mappings = []
@@ -36,6 +26,7 @@ def p2():
     parentheses = raw_input.count('Rn') + raw_input.count('Ar')
     periods = 2 * raw_input.count('Y')
     print(cells - parentheses - periods - 1)
+
 
 p1()
 p2()
