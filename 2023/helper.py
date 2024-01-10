@@ -44,6 +44,10 @@ def digits(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'\d', line)]
 
 
+def nums(line: str) -> List[int]:
+    return ints(line)
+
+
 def ints(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'[-+]?\d+', line)]
 
