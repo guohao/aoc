@@ -37,6 +37,11 @@ def solve(append: bool):
             if current == 3 and sum(len(x) for x in fs[:3]) == 0:
                 print(i)
                 return
+
+            if any(-x not in hold for x in hold if x < 0):
+                if any(x > 0 for x in hold):
+                    continue
+
             fs = [set(x) for x in fs]
             fs[current] = frozenset(hold)
             next_visit = []
@@ -51,15 +56,7 @@ def solve(append: bool):
                         if j == src and comb == carry:
                             continue
                         nfs = [frozenset(x) for x in fs]
-                        for x in comb:
-                            nfs[current] = nfs[current] - {x}
-                        if any(-x not in nfs[current] for x in nfs[current] if x < 0):
-                            if any(x > 0 for x in nfs[current]):
-                                continue
-                        nh = fs[tv] | frozenset(comb)
-                        if any(-x not in nh for x in nh if x < 0):
-                            if any(x > 0 for x in nh):
-                                continue
+                        nfs[current] = nfs[current] - frozenset(comb)
                         ns.add((tuple(nfs), current, tv, frozenset(comb)))
             states = ns
 
