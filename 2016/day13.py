@@ -17,4 +17,4 @@ for p in G.nodes():
         if abs(p[0] - q[0]) + abs(p[1] - q[1]) == 1:
             G.add_edge(p, q)
 print(nx.shortest_path_length(G, (1, 1), (31, 39)))
-print(sum(1 for k, v in nx.shortest_path(G, (1, 1)).items() if len(v) <= 51))
+print(len([k for k, v in nx.shortest_path_length(G, (1, 1)).items() if v <= 50]))
