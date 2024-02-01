@@ -2,10 +2,7 @@ from collections import deque
 
 
 def p1(n):
-    q = deque()
-    for i in range(n):
-        q.append(i + 1)
-
+    q = deque([i + 1 for i in range(n)])
     while len(q) > 1:
         q.rotate(-1)
         q.popleft()
@@ -13,10 +10,7 @@ def p1(n):
 
 
 def p2(n):
-    q = deque()
-    for i in range(n):
-        q.append(i + 1)
-
+    q = deque([i + 1 for i in range(n)])
     tr = 0
     for _ in range(n - 1):
         while tr != len(q) // 2:
