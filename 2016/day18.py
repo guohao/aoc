@@ -13,15 +13,14 @@ def gen_line(s: str) -> str:
     return res
 
 
-def p1():
-    data = raw_data(2016, 18)
-    # data = ".^^.^.^^^^"
+def solve(n):
+    data = raw_data(2016, 18).strip()
     ans = 0
-    for _ in range(40):
+    for _ in range(n):
         ans += data.count('.')
-        # print(data)
         data = gen_line(data)
     print(ans)
 
 
-p1()
+solve(40)
+solve(400000)
