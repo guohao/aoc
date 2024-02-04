@@ -6,7 +6,7 @@ data = raw_data(2016, 23)
 lines = lines(data)
 
 
-def p1(a):
+def solve(a):
     cmds = lines.copy()
     i = 0
     r = {'a': a, 'b': 0, 'c': 0, 'd': 0}
@@ -23,13 +23,8 @@ def p1(a):
             return r[v]
         return None
 
-    seen_i = set()
     while i < len(cmds):
         cmd = cmds[i]
-        # if i not in seen_i:
-        print(i, cmd, r)
-            # seen_i.add(i)
-
         if cmd.startswith('cpy'):
             src, target = cmd.split()[1:]
             if not target.isdigit():
@@ -60,16 +55,20 @@ def p1(a):
                         if key not in diffs:
                             diff = {k: r[k] - mem[k] for k in r.keys()}
                             dt = abs(diff[src])
-                            diffs[key] = {k: diff[k] // dt for k in diff.keys()}
-                        diff = diffs[key]
-                        t = abs(r[src])
-                        r = {k: r[k] + t * diff[k] for k in r.keys()}
-                        i += 1
-                    else:
-                        seen[key] = r.copy()
-                        i = idx
+                            if dt > 0:
+                                diffs[key] = {k: diff[k] // dt for k in diff.keys()}
+                        if key in diffs:
+                            diff = diffs[key]
+                            t = abs(r[src])
+                            r = {k: r[k] + t * diff[k] for k in r.keys()}
+                            i += 1
+                            continue
+                    seen[key] = r.copy()
+                    i = idx
                     continue
         elif cmd.startswith('tgl'):
+            seen.clear()
+            diffs.clear()
             val = get_val(cmd.split()[1])
             if val is not None:
                 idx = i + val
@@ -90,5 +89,5 @@ def p1(a):
     print(r['a'])
 
 
-p1(7)
-# p1(12)
+solve(7)
+solve(12)
