@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 from helper import *
 
 data = raw_data(2016, 23)
