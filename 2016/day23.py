@@ -12,6 +12,7 @@ def p1(a):
     r = {'a': a, 'b': 0, 'c': 0, 'd': 0}
 
     seen = {}
+    diffs = {}
 
     def get_val(v):
         if v.startswith('-') and v[1:].isdigit():
@@ -22,9 +23,12 @@ def p1(a):
             return r[v]
         return None
 
+    seen_i = set()
     while i < len(cmds):
         cmd = cmds[i]
+        # if i not in seen_i:
         print(i, cmd, r)
+            # seen_i.add(i)
 
         if cmd.startswith('cpy'):
             src, target = cmd.split()[1:]
@@ -50,29 +54,20 @@ def p1(a):
             if val is not None and target is not None and val != 0:
                 idx = i + int(target)
                 if 0 <= idx <= len(cmds):
-                    key = (tuple(cmds[:i]), i)
-                    if key in seen:
+                    key = (tuple(cmds[idx:i]), i)
+                    if key in seen and target < 0 and src in r:
                         mem = seen[key]
-                        diff = [r[k] - mem[m] for m, k in enumerate('abcd')]
-                        if src in r:
-                            dt = diff['abcd'.index(src)]
-                            if dt > 0:
-                                valid = False
-                                for cc in range(idx + i, i):
-                                    if cmds[cc].startswith('inc') and cmds[cc].split()[1] == src and dt < 0:
-                                        valid = True
-                                        break
-                                    elif cmds[cc].startswith('dec') and cmds[cc].split()[1] == src and dt > 0:
-                                        valid = True
-                                        break
-                                if valid:
-                                    t = abs(r[src] // dt)
-                                    for m, k in enumerate('abcd'):
-                                        r[k] += t * (r[k] - mem[m])
-                                    i += 1
-                                    continue
-                    seen[(tuple(cmds[:i]), i)] = [r[k] for k in 'abcd']
-                    i = idx
+                        if key not in diffs:
+                            diff = {k: r[k] - mem[k] for k in r.keys()}
+                            dt = abs(diff[src])
+                            diffs[key] = {k: diff[k] // dt for k in diff.keys()}
+                        diff = diffs[key]
+                        t = abs(r[src])
+                        r = {k: r[k] + t * diff[k] for k in r.keys()}
+                        i += 1
+                    else:
+                        seen[key] = r.copy()
+                        i = idx
                     continue
         elif cmd.startswith('tgl'):
             val = get_val(cmd.split()[1])
@@ -95,5 +90,5 @@ def p1(a):
     print(r['a'])
 
 
-# p1(7)
-p1(12)
+p1(7)
+# p1(12)
