@@ -1,98 +1,99 @@
+from collections import defaultdict
+
 from helper import *
 
 data = raw_data(2016, 23)
 lines = lines(data)
 
 
-def p1():
+def p1(a):
     cmds = lines.copy()
     i = 0
-    r = {}
+    r = {'a': a, 'b': 0, 'c': 0, 'd': 0}
+
+    seen = {}
+
+    def get_val(v):
+        if v.startswith('-') and v[1:].isdigit():
+            return -int(v[1:])
+        if v.isdigit():
+            return int(v)
+        if v in r:
+            return r[v]
+        return None
+
     while i < len(cmds):
         cmd = cmds[i]
-        print(i,cmd)
+        print(i, cmd, r)
+
         if cmd.startswith('cpy'):
-            _, src, target = cmd.split()
-            if target.isdigit():
-                i += 1
-                continue
-            else:
-                if src.isdigit():
-                    r[target] = int(src)
-                else:
-                    if src in r:
-                        r[target] = r[src]
-                i += 1
+            src, target = cmd.split()[1:]
+            if not target.isdigit():
+                val = get_val(src)
+                if val is not None:
+                    r[target] = val
         elif cmd.startswith('inc'):
-            if len(cmd.split()) != 3:
-                i += 1
-                continue
-            _, val, target = cmd.split()
-            if target.isdigit():
-                i += 1
-                continue
-            if target in r:
-                r[target] += 1
-            else:
-                r[target] = 1
+            if len(cmd.split()) == 2:
+                target = cmd.split()[1]
+                if not target.isdigit():
+                    r[target] += 1
         elif cmd.startswith('dec'):
-            if len(cmd.split()) != 3:
-                i += 1
-                continue
-            _, val, target = cmd.split()
-            if target.isdigit():
-                i += 1
-                continue
-            if target in r:
-                r[target] -= 1
-            else:
-                r[target] = -1
+            if len(cmd.split()) == 2:
+                target = cmd.split()[1]
+                if not target.isdigit():
+                    r[target] -= 1
         elif cmd.startswith('jnz'):
-            _, src, target = cmd.split()
-            if src.isdigit():
-                if int(src) != 0:
-                    if target.isdigit():
-                        i += int(target)
-                        continue
-                    else:
-                        if target in r:
-                            i += r[target]
-                            continue
-            else:
-                if src not in r:
-                    i += 1
-                    continue
-                if r[src] != 0:
-                    i += int(target)
+            src, target = cmd.split()[1:]
+            val = get_val(src)
+            target = get_val(target)
+
+            if val is not None and target is not None and val != 0:
+                idx = i + int(target)
+                if 0 <= idx <= len(cmds):
+                    key = (tuple(cmds[:i]), i)
+                    if key in seen:
+                        mem = seen[key]
+                        diff = [r[k] - mem[m] for m, k in enumerate('abcd')]
+                        if src in r:
+                            dt = diff['abcd'.index(src)]
+                            if dt > 0:
+                                valid = False
+                                for cc in range(idx + i, i):
+                                    if cmds[cc].startswith('inc') and cmds[cc].split()[1] == src and dt < 0:
+                                        valid = True
+                                        break
+                                    elif cmds[cc].startswith('dec') and cmds[cc].split()[1] == src and dt > 0:
+                                        valid = True
+                                        break
+                                if valid:
+                                    t = abs(r[src] // dt)
+                                    for m, k in enumerate('abcd'):
+                                        r[k] += t * (r[k] - mem[m])
+                                    i += 1
+                                    continue
+                    seen[(tuple(cmds[:i]), i)] = [r[k] for k in 'abcd']
+                    i = idx
                     continue
         elif cmd.startswith('tgl'):
-            _, val = cmd.split()
-            if val.isdigit():
-                val = int(val)
-            else:
-                if val in r:
-                    val = r[val]
-                else:
-                    i += 1
-                    continue
-            idx = i + val
-            if idx < 0 or idx >= len(cmds):
-                i += 1
-                continue
-            c = cmds[idx]
-            ca = c.split()
-            if len(ca) == 2:
-                if ca[0].startswith('inc'):
-                    cmds[idx] = c.replace('inc', 'dec')
-                else:
-                    cmds[idx] = c.replace(ca[0], 'inc')
-            elif len(ca) == 3:
-                if ca[0].startswith('jnz'):
-                    cmds[idx] = c.replace('jnz', 'cpy')
-                else:
-                    cmds[idx] = c.replace(ca[0], 'jnz')
-            i += 1
+            val = get_val(cmd.split()[1])
+            if val is not None:
+                idx = i + val
+                if 0 <= idx < len(cmds):
+                    c = cmds[idx]
+                    ca = c.split()
+                    if len(ca) == 2:
+                        if ca[0].startswith('inc'):
+                            cmds[idx] = c.replace('inc', 'dec')
+                        else:
+                            cmds[idx] = c.replace(ca[0], 'inc')
+                    elif len(ca) == 3:
+                        if ca[0].startswith('jnz'):
+                            cmds[idx] = c.replace('jnz', 'cpy')
+                        else:
+                            cmds[idx] = c.replace(ca[0], 'jnz')
+        i += 1
     print(r['a'])
 
 
-p1()
+# p1(7)
+p1(12)
