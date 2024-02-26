@@ -68,12 +68,8 @@ def p2():
         if len(wd) == 1:
             return None
         counts = [(cws.count(x), x) for x in wd]
-        if len(counts) != 2:
-            raise Exception(node.children[cws.index(counts[0][1])].v - (counts[0][1] - counts[1][1]))
-        if counts[0][0] > counts[1][0]:
-            return node.children[cws.index(counts[1][1])].v + (counts[0][1] - counts[1][1])
-        else:
-            return node.children[cws.index(counts[0][1])].v + (counts[1][1] - counts[0][1])
+        counts.sort(key=lambda x: x[0])
+        return node.children[cws.index(counts[0][1])].v + (counts[1][1] - counts[0][1])
 
     return find_wrong_weight(root)
 
