@@ -1,6 +1,3 @@
-from helper import *
-
-
 def p1():
     a = 591
     b = 393
