@@ -1,10 +1,8 @@
-import itertools
 import math
 import re
 from typing import List
 
 import elf
-import nographs
 
 
 def lcm(arr: List[int]) -> int:
@@ -52,11 +50,6 @@ def ints(line: str) -> List[int]:
     return [int(x) for x in re.findall(r'[-+]?\d+', line)]
 
 
-def raw_data(year: int, day: int) -> str:
-    elf.download_input_if_not_exist(year, day)
-    file_name = elf.day_data_file_name(year, day)
-    with open(file_name, 'r') as file:
-        return file.read()
 
 
 def patterns(data: str) -> List[List[str]]:

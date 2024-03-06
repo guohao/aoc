@@ -1,9 +1,4 @@
-from helper import *
-
-data = raw_data(2017, 1).strip()
-
-
-def solve(offset: int) -> int:
+def solve(data: str, offset: int) -> int:
     s = data[offset:] + data[:offset]
     ans = 0
     for i, c in enumerate(data):
@@ -12,5 +7,9 @@ def solve(offset: int) -> int:
     return ans
 
 
-print(solve(1))
-print(solve(len(data) // 2))
+def p1(data: str):
+    return solve(data, 1)
+
+
+def p2(data: str):
+    return solve(data, len(data) // 2)

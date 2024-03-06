@@ -1,20 +1,15 @@
-from helper import *
-
-data = raw_data(2017, 17)
-
-
-def p1():
+def p1(data: str):
     seq = [0]
-    step = 382
+    step = int(data)
     i = 0
     for k in range(1, 2018):
         i = (i + step) % len(seq) + 1
         seq = seq[:i] + [k] + seq[i:]
-    print(seq[(i + 1) % len(seq)])
+    return seq[(i + 1) % len(seq)]
 
 
-def p2():
-    step = 382
+def p2(data: str):
+    step = int(data)
     i = 0
     iz = 0
     ans = -1
@@ -24,8 +19,4 @@ def p2():
             ans = k
         elif i <= iz:
             iz += 1
-    print(ans)
-
-
-p1()
-p2()
+    return ans
