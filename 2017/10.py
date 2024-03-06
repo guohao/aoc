@@ -1,16 +1,12 @@
 from functools import reduce
 
-from helper import *
 
-data = raw_data(2017, 10)
-
-
-def p1():
+def p1(data):
     ll = 256
     l = list(range(ll))
     i = 0
     s = 0
-    for x in ints(data):
+    for x in list(map(int, data.split(','))):
         l = l[i:] + l[:i]
         x = x % ll
         l = list(reversed(l[:x])) + l[x:]
@@ -20,7 +16,7 @@ def p1():
     return l[0] * l[1]
 
 
-def p2():
+def p2(data: str):
     ll = 256
     l = list(range(ll))
     i = 0
@@ -38,7 +34,3 @@ def p2():
     for x in range(16):
         v = v * 16 * 16 + reduce(lambda a, b: a ^ b, l[x * 16:x * 16 + 16])
     return hex(v)[2:]
-
-
-print(p1())
-print(p2())

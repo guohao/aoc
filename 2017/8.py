@@ -1,14 +1,10 @@
 from collections import defaultdict
 
-from helper import *
 
-data = raw_data(2017, 8)
-
-
-def solve():
+def solve(data: str):
     r = defaultdict(int)
     max_v = 0
-    for line in lines(data):
+    for line in data.splitlines():
         v0, op0, c0, _, v1, op1, c1 = line.split()
         c0 = int(c0)
         c1 = int(c1)
@@ -22,4 +18,11 @@ def solve():
     return max(r.values()), max_v
 
 
-print(solve())
+def p1(data: str):
+    return solve(data)[0]
+
+
+def p2(data: str):
+    return solve(data)[1]
+
+

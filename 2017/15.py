@@ -1,4 +1,4 @@
-def p1():
+def p1(data: str):
     a = 591
     b = 393
     fa = 16807
@@ -9,7 +9,7 @@ def p1():
         b = (b * fb) % 2147483647
         if a & 0xffff == b & 0xffff:
             ans += 1
-    print(ans)
+    return ans
 
 
 def gen(a, fa, m):
@@ -19,7 +19,7 @@ def gen(a, fa, m):
             yield a & 0xffff
 
 
-def p2():
+def p2(data: str):
     a = 591
     b = 393
     fa = 16807
@@ -30,8 +30,4 @@ def p2():
     for _ in range(5000000):
         if next(ga) == next(gb):
             ans += 1
-    print(ans)
-
-
-p1()
-p2()
+    return ans

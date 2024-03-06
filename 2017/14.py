@@ -1,9 +1,6 @@
 from functools import reduce
 
 import networkx as nx
-from helper import *
-
-data = raw_data(2017, 14).strip()
 
 
 def knot_hashes(s: str):
@@ -27,20 +24,20 @@ def knot_hashes(s: str):
     return ans
 
 
-def p1():
+def p1(data: str):
     ans = 0
     for i in range(128):
-        s = data + '-' + str(i)
+        s = data.strip() + '-' + str(i)
         hashed = knot_hashes(s)
         ans += int(hashed, 16).bit_count()
-    print(ans)
+    return ans
 
 
-def p2():
+def p2(data: str):
     G = nx.Graph()
 
     for i in range(128):
-        s = data + '-' + str(i)
+        s = data.strip() + '-' + str(i)
         hashed = knot_hashes(s)
         v = bin(int(hashed, 16))[2:].zfill(128)
         for j in range(128):
@@ -51,8 +48,4 @@ def p2():
             nd = (node[0] + dx, node[1] + dy)
             if G.has_node(nd):
                 G.add_edge(node, nd)
-    print(len(list(nx.connected_components(G))))
-
-
-p1()
-p2()
+    return len(list(nx.connected_components(G)))

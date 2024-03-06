@@ -1,8 +1,4 @@
-from helper import *
-
-data = raw_data(2017, 9)
-
-
+import re
 def remove_cancel(line):
     while '!' in line:
         line = re.sub(r'!.', '', line)
@@ -34,13 +30,18 @@ def score_of(line):
     return ans1, ans2
 
 
-def solve():
+def solve(data):
     ans1, ans2 = 0, 0
-    for line in lines(data):
+    for line in data.splitlines():
         a1, a2 = score_of(line)
         ans1 += a1
         ans2 += a2
     return ans1, ans2
 
 
-print(solve())
+def p1(data):
+    return solve(data)[0]
+
+
+def p2(data):
+    return solve(data)[1]

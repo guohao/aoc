@@ -1,9 +1,5 @@
 from collections import Counter
 
-from helper import *
-
-data = raw_data(2017, 11)
-
 
 def simplify(c):
     if c['n']:
@@ -31,15 +27,19 @@ def simplify(c):
     return c
 
 
-def solve():
+def p1(data: str):
+    c = Counter()
+    for p in data.strip().split(','):
+        c[p] += 1
+        c = simplify(c)
+    return sum(c.values())
+
+
+def p2(data: str):
     c = Counter()
     m = 0
     for p in data.strip().split(','):
         c[p] += 1
         c = simplify(c)
         m = max(m, sum(c.values()))
-    print(sum(c.values()))
-    print(m)
-
-
-solve()
+    return m

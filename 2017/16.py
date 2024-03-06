@@ -1,18 +1,15 @@
+import re
 from functools import cache
-
-from helper import *
-
-data = raw_data(2017, 16)
 
 
 @cache
-def dance(seq: str) -> str:
+def dance(data: str, seq: str) -> str:
     for cmd in data.strip().split(','):
         if cmd.startswith('s'):
-            s = ints(cmd)[0]
+            s = [int(x) for x in re.findall(r'\d+', cmd)][0]
             seq = seq[-s:] + seq[:-s]
         elif cmd.startswith('x'):
-            x, y = sorted(ints(cmd))
+            x, y = sorted([int(x) for x in re.findall(r'\d+', cmd)])
             seq = seq[:x] + seq[y] + seq[x + 1:y] + seq[x] + seq[y + 1:]
         elif cmd.startswith('p'):
             x, y = sorted([seq.index(cmd[1]), seq.index(cmd[3])])
@@ -22,12 +19,12 @@ def dance(seq: str) -> str:
     return seq
 
 
-def p1():
+def p1(data: str):
     seq = ''.join([chr(ord('a') + i) for i in range(16)])
-    print(dance(seq))
+    return dance(data, seq)
 
 
-def p2():
+def p2(data: str):
     seq = ''.join([chr(ord('a') + i) for i in range(16)])
     seen = set()
     terms = 1000000000
@@ -35,10 +32,6 @@ def p2():
         if seq in seen:
             terms = terms % len(seen)
         seen.add(seq)
-        seq = dance(seq)
+        seq = dance(data, seq)
         terms -= 1
-    print(seq)
-
-
-p1()
-p2()
+    return seq
