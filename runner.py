@@ -73,9 +73,11 @@ if __name__ == '__main__':
     func = getattr(mod, 'p1')
     data = raw_data(int(year), int(day))
     ans = func(data)
-    pyperclip.copy(ans)
+    if ans:
+        pyperclip.copy(ans)
     print(ans)
     func = getattr(mod, 'p2')
     ans = func(data)
-    pyperclip.copy(ans)
+    if ans:
+        pyperclip.copy(ans)
     print(ans)

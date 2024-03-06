@@ -1,10 +1,3 @@
-from collections import defaultdict
-
-from helper import *
-
-data = raw_data(2017, 7)
-
-
 class Node:
     def __init__(self, name, v, children=None):
         self.name = name
@@ -18,9 +11,9 @@ class Node:
         return self.__str__()
 
 
-def p1():
+def root_of(data: str):
     d = {}
-    for line in lines(data):
+    for line in data.splitlines():
         children = []
 
         if '->' not in line:
@@ -47,8 +40,12 @@ def p1():
     return list(d.values())[0]
 
 
-def p2():
-    root = p1()
+def p1(data: str):
+    return root_of(data).name
+
+
+def p2(data: str):
+    root = root_of(data)
 
     def weight_of(node) -> int:
         if len(node.children) == 0:
@@ -72,7 +69,3 @@ def p2():
         return node.children[cws.index(counts[0][1])].v + (counts[1][1] - counts[0][1])
 
     return find_wrong_weight(root)
-
-
-print(p1().name)
-print(p2())

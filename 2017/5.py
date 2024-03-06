@@ -1,10 +1,5 @@
-from helper import *
-
-data = raw_data(2017, 5)
-
-
-def p1():
-    cmds = [int(x) for x in lines(data)]
+def p1(data: str):
+    cmds = [int(x) for x in data.splitlines()]
     i = 0
     t = 0
     while i < len(cmds):
@@ -15,8 +10,8 @@ def p1():
     return t
 
 
-def p2():
-    cmds = [int(x) for x in lines(data)]
+def p2(data: str):
+    cmds = [int(x) for x in data.splitlines()]
     i = 0
     t = 0
     while i < len(cmds):
@@ -28,7 +23,3 @@ def p2():
             cmds[i] += 1
         i += cmd
     return t
-
-
-print(p1())
-print(p2())
