@@ -32,14 +32,14 @@ def p1(data: str):
     return ans
 
 
-def is_prime(n):
+def is_composite(n):
     if n % 2 == 0 or n % 3 == 0:
-        return False
+        return True
     for i in range(5, int(math.sqrt(n)) + 1, 6):
         if n % i == 0 or n % (i + 2) == 0:
-            return False
-    return True
+            return True
+    return False
 
 
 def p2(data: str):
-    return sum(not is_prime(x) for x in range(109300, 126317, 17))
+    return sum(is_composite(x) for x in range(109300, 126317, 17))
