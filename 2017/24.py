@@ -1,13 +1,8 @@
-import networkx as nx
-
-
 def p1(data: str):
     cmps = []
-    G = nx.Graph()
     for line in data.splitlines():
         a, b = map(int, line.split('/'))
         cmps.append((a, b))
-        G.add_node((a, b))
     cmps = set(cmps)
 
     def dfs(visited: tuple, pn=None):
@@ -24,11 +19,9 @@ def p1(data: str):
 
 def p2(data: str):
     cmps = []
-    G = nx.Graph()
     for line in data.splitlines():
         a, b = map(int, line.split('/'))
         cmps.append((a, b))
-        G.add_node((a, b))
     cmps = set(cmps)
 
     def dfs(visited: tuple, pn=None):
