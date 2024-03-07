@@ -1,10 +1,15 @@
-def p1(data: str):
+def build_graph(data: str):
     G = {}
     for i, line in enumerate(data.splitlines()):
         for j, c in enumerate(line):
             G[i, j] = c
     X, Y = max(x for x, _ in G.keys()), max(y for _, y in G.keys())
     p = (X // 2, Y // 2)
+    return G, p
+
+
+def p1(data: str):
+    G, p = build_graph(data)
     infect_count = 0
     d = (-1, 0)
     for _ in range(10000):
@@ -20,12 +25,7 @@ def p1(data: str):
 
 
 def p2(data: str):
-    G = {}
-    for i, line in enumerate(data.splitlines()):
-        for j, c in enumerate(line):
-            G[i, j] = c
-    X, Y = max(x for x, _ in G.keys()), max(y for _, y in G.keys())
-    p = (X // 2, Y // 2)
+    G, p = build_graph(data)
     infect_count = 0
     d = (-1, 0)
     for _ in range(10000000):
