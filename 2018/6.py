@@ -37,6 +37,7 @@ def p2(data: str):
     max_y = max(x[1] for x in nodes)
     max_distance = 10000
     start = ((max_x + min_x) // 2, (max_y + min_y) // 2)
+    assert sum_md(*start, nodes) < max_distance
     visited = set()
     q = deque()
     q.append(start)
@@ -47,8 +48,6 @@ def p2(data: str):
         visited.add((i, j))
         for dx, dy in [(1, 0), (-1, 0), (0, -1), (0, 1)]:
             ni, nj = dx + i, dy + j
-            if (ni, nj) in visited:
-                continue
             if sum_md(ni, nj, nodes) < max_distance:
                 q.append((ni, nj))
     return len(visited)
