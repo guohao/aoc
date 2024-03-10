@@ -1,8 +1,13 @@
 import itertools
+from collections import deque
 
 
 def md(i, j, node):
     return abs(node[0] - i) + abs(node[1] - j)
+
+
+def sum_md(i, j, nodes):
+    return sum(md(i, j, node) for node in nodes)
 
 
 def p1(data: str):
@@ -26,15 +31,24 @@ def p1(data: str):
 
 def p2(data: str):
     nodes = [eval(f'({x})') for x in data.splitlines()]
-    MD = 10000
-    min_x = min(x[0] - MD for x in nodes)
-    max_x = max(x[0] + MD for x in nodes)
-    min_y = min(x[1] - MD for x in nodes)
-    max_y = max(x[1] + MD for x in nodes)
-    ans = 0
-    # total = (max_x - min_x + 1) * (max_y - min_x + 1)
-    print(min_x, max_x, min_y, max_y)
-    for i, j in itertools.product(range(min_x, max_x), range(min_y, max_y)):
-        if all(md(i, j, x) < MD for x in nodes):
-            ans += 1
-    return ans
+    min_x = min(x[0] for x in nodes)
+    max_x = max(x[0] for x in nodes)
+    min_y = min(x[1] for x in nodes)
+    max_y = max(x[1] for x in nodes)
+    max_distance = 10000
+    start = ((max_x + min_x) // 2, (max_y + min_y) // 2)
+    visited = set()
+    q = deque()
+    q.append(start)
+    while q:
+        i, j = q.popleft()
+        if (i, j) in visited:
+            continue
+        visited.add((i, j))
+        for dx, dy in [(1, 0), (-1, 0), (0, -1), (0, 1)]:
+            ni, nj = dx + i, dy + j
+            if (ni, nj) in visited:
+                continue
+            if sum_md(ni, nj, nodes) < max_distance:
+                q.append((ni, nj))
+    return len(visited)
