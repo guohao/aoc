@@ -9,10 +9,8 @@ def solve(data: str, turns: int):
         pl, pr = line.split(' => ')
         rules[pl] = pr
     lo = 0
-    t = 0
     seen = set()
     for t in range(turns):
-        # for t in range(turns):
         k = (t - lo, seq)
         if k in seen:
             lo = turns - (t - lo)
