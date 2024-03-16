@@ -17,7 +17,7 @@ def build_g(data: str):
     return G
 
 
-def p1(data: str):
+def solve(data: str):
     G = build_g(data)
     min_y = min(y for _, y in G)
     max_y = max(y for _, y in G)
@@ -48,17 +48,14 @@ def p1(data: str):
         while q:
             k = q.pop()
             x, y = k
-            if y > max_y:
-                continue
             if is_solid(x, y):
                 continue
-            if k not in G and y >= min_y:
+            if k not in G:
                 G[x, y] = '|'
             if y + 1 > max_y:
                 continue
             if (x, y + 1) not in G:
-                if y >= min_y:
-                    q.append(k)
+                q.append(k)
                 q.append((x, y + 1))
                 continue
             if not is_solid(x, y + 1):
@@ -82,16 +79,12 @@ def p1(data: str):
                     q.append((x - 1, y))
 
     drop()
-    return sum(v in '~|' for v in G.values())
+    return [v for (_, y), v in G.items() if min_y <= y <= max_y]
 
 
-data = """x=495, y=2..7
-y=7, x=495..501
-x=501, y=3..7
-x=498, y=2..4
-x=506, y=1..2
-x=498, y=10..13
-x=504, y=10..13
-y=13, x=498..504
-"""
-print(p1(data))
+def p1(data: str):
+    return sum(v in '~|' for v in solve(data))
+
+
+def p2(data: str):
+    return sum(v == '~' for v in solve(data))
