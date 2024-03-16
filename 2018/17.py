@@ -44,22 +44,24 @@ def solve(data: str):
 
     def drop():
         q = deque()
-        q.append((500, 0))
-        while q:
-            k = q.pop()
-            x, y = k
-            if is_solid(x, y):
-                continue
-            if k not in G:
-                G[x, y] = '|'
+
+        def drop_down(x, y) -> bool:
             if y + 1 > max_y:
-                continue
+                return False
             if (x, y + 1) not in G:
-                q.append(k)
+                q.append((x, y))
                 q.append((x, y + 1))
-                continue
+                return False
             if not is_solid(x, y + 1):
-                continue
+                return False
+            return True
+
+        def drop_left(x, y, op):
+            if (x + op, y) not in G:
+                q.append((x, y))
+                q.append((x + op, y))
+
+        def drain_water(x, y):
             xl = x - 1
             while (xl, y) in G and G[xl, y] == '|':
                 xl -= 1
@@ -69,14 +71,20 @@ def solve(data: str):
             if is_solid(xl, y) and is_solid(xr, y):
                 for i in range(xl + 1, xr):
                     G[i, y] = '~'
+
+        q.append((500, 0))
+        while q:
+            k = q.pop()
+            x, y = k
+            if is_solid(x, y):
                 continue
-            else:
-                if not ((x + 1, y) in G and (x - 1, y) in G):
-                    q.append(k)
-                if (x + 1, y) not in G:
-                    q.append((x + 1, y))
-                if (x - 1, y) not in G:
-                    q.append((x - 1, y))
+            if k not in G:
+                G[x, y] = '|'
+            if not drop_down(x, y):
+                continue
+            drop_left(x, y, -1)
+            drop_left(x, y, 1)
+            drain_water(x, y)
 
     drop()
     return [v for (_, y), v in G.items() if min_y <= y <= max_y]
