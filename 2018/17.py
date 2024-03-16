@@ -1,6 +1,4 @@
 import re
-from collections import deque
-from functools import cache
 import sys
 
 sys.setrecursionlimit(10000)
