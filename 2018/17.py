@@ -24,21 +24,6 @@ def solve(data: str):
     min_x = min(x for x, _ in G)
     max_x = max(x for x, _ in G)
 
-    def g_print():
-        for j in range(min_y, max_y + 1):
-            line = ''
-            for i in range(min_x - 3, max_x + 1):
-                if (i, j) in G:
-                    if G[i, j] == '|':
-                        line += '+'
-                    else:
-                        line += G[i, j]
-                else:
-                    line += '0'
-            line += f'   {j} '
-            print(line)
-        print('----------------------')
-
     def is_solid(x, y):
         return (x, y) in G and G[x, y] in '~#'
 
