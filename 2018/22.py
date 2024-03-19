@@ -37,11 +37,11 @@ def p2(data: str):
     # target = tuple(ints(lines[1]))
     depth = 510
     target=(10,10)
-    g = build_g(depth, target)
+    g = build_g(depth, (target[0]+20,target[1]+20))
     G = nx.Graph()
     for x, y in g:
         k0 = (x, y)
-        for i, j in itertools.product(range(-1, 2), range(-1, 2)):
+        for i, j in [(0,1),(-1,0),(1,0),(0,-1)]:
             k1 = (x + i, y + j)
             if k1 == (0, 0):
                 continue
@@ -87,4 +87,5 @@ def p2(data: str):
                     G.add_edge((k0, 0), (k1, 2), weight=8)
                     G.add_edge((k0, 2), (k1, 0), weight=8)
     path = nx.shortest_path(G, ((0, 0), 0), (target, 0), 'weight')
+    print(path)
     return nx.path_weight(G, path, 'weight')
