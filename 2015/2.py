@@ -1,17 +1,11 @@
-import re
+import itertools
+import math
 
 
-def p1(d: str):
-    ans = 0
-    for line in d.splitlines():
-        l, w, h = map(int, re.findall(r'-?\d', line))
-        ans += 2 * l * w + 2 * w * h + 2 * h * l + min(l * w, w * h, h * l)
-    return ans
+def p1is(data):
+    ms = [a * b for a, b in itertools.combinations(data, 2)]
+    return 2 * sum(ms) + min(ms)
 
 
-def p2(d: str):
-    ans = 0
-    for line in d.splitlines():
-        l, w, h = map(int, re.findall(r'-?\d', line))
-        ans += min(l + w, w + h, h + l) * 2 + l * w * h
-    return ans
+def p2is(data):
+    return 2 * sum(sorted(data)[:2]) + math.prod(data)

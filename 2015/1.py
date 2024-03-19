@@ -3,11 +3,8 @@ def p1(data: str):
 
 
 def p2(data: str):
-    floor = 0
-    for i, c in enumerate(data, start=1):
-        if c == '(':
-            floor += 1
-        else:
-            floor -= 1
-        if floor == -1:
-            return i
+    n = 0
+    for i, c in enumerate(data.strip()):
+        n += 1 if c == '(' else -1
+        if n == -1:
+            return i + 1
