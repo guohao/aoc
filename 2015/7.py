@@ -21,22 +21,26 @@ def solve(data: str, b: int):
             r[t] = b
             continue
         cells = op.split()
-        if len(cells) == 1 and has_value(cells[0]):
-            r[t] = value_of(cells[0])
-        elif len(cells) == 2 and has_value(cells[1]):
-            r[t] = ~ r[cells[1]]
-        elif len(cells) == 3 and has_value(cells[0]) and has_value(cells[2]):
-            a, b, c = cells
-            if b == 'AND':
-                r[t] = value_of(a) & value_of(c)
-            elif b == 'OR':
-                r[t] = value_of(a) | value_of(c)
-            elif b == 'LSHIFT':
-                r[t] = value_of(a) << value_of(c)
-            elif b == 'RSHIFT':
-                r[t] = value_of(a) >> value_of(c)
-        else:
+        if any(not has_value(v) for v in cells if v.islower()):
             q.append(line)
+            continue
+
+        if len(cells) == 1:
+            r[t] = value_of(cells[0])
+        elif cells[0] == 'NOT':
+            r[t] = ~ r[cells[1]]
+        elif len(cells) == 3:
+            a, b, c = cells
+            a = value_of(a)
+            c = value_of(c)
+            if b == 'AND':
+                r[t] = a & c
+            elif b == 'OR':
+                r[t] = a | c
+            elif b == 'LSHIFT':
+                r[t] = a << c
+            elif b == 'RSHIFT':
+                r[t] = a >> c
     return r['a']
 
 
