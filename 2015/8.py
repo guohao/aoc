@@ -3,4 +3,4 @@ def p1ss(line: str):
 
 
 def p2ss(line: str):
-    return line.count('\\') + line.count('"') + 2
+    return line.count('\\') + line.count('"')+2
