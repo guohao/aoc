@@ -1,71 +1,46 @@
-class Node:
-    def __init__(self, name, v, children=None):
-        self.name = name
-        self.v = v
-        self.children = children or []
-
-    def __str__(self):
-        return f'{self.name} {self.v} {self.children}'
-
-    def __repr__(self):
-        return self.__str__()
-
-
-def root_of(data: str):
-    d = {}
-    for line in data.splitlines():
-        children = []
-
-        if '->' not in line:
-            name, weight = line.split()
-        else:
-            l, r = line.split('->')
-            name, weight = l.split()
-            if r is not None:
-                cs = r.replace(',', '').split()
-                for c in cs:
-                    if c not in d:
-                        d[c] = Node(c, -1)
-                    children.append(d[c])
-
-        weight = int(weight.replace('(', '').replace(')', ''))
-        if name in d:
-            d[name].children = children
-            d[name].v = weight
-        else:
-            d[name] = Node(name, weight, children)
-    for k in set(d.values()):
-        for child in k.children:
-            d.pop(child.name)
-    return list(d.values())[0]
+import networkx as nx
 
 
 def p1(data: str):
-    return root_of(data).name
+    G = nx.DiGraph()
+    for line in data.splitlines():
+        cells = line.replace(',', '').split()
+        parent = cells[0]
+        children = cells[3:]
+        for child in children:
+            G.add_edge(parent, child)
+    return (list(nx.topological_sort(G)))[0]
 
 
 def p2(data: str):
-    root = root_of(data)
+    G = nx.DiGraph()
+    for line in data.splitlines():
+        cells = line.replace(',', '').split()
+        parent = cells[0]
+        weight = int(cells[1][1:-1])
+        G.add_node(parent, weight=weight)
+        children = cells[3:]
+        for child in children:
+            G.add_edge(parent, child)
 
-    def weight_of(node) -> int:
-        if len(node.children) == 0:
-            return node.v
-        return node.v + sum(weight_of(c) for c in node.children)
+    weights = nx.get_node_attributes(G, 'weight')
 
-    def find_wrong_weight(node):
-        if len(node.children) == 0:
+    def weight_of(node):
+        return weights[node] + sum(weight_of(nb) for nb in G[node])
+
+    def find_diff(node):
+        for c in G[node]:
+            ans = find_diff(c)
+            if ans:
+                return ans
+        if len(G[node]) < 2:
             return None
-        for c in node.children:
-            ww = find_wrong_weight(c)
-            if ww is not None:
-                return ww
-
-        cws = [weight_of(c) for c in node.children]
-        wd = set(cws)
-        if len(wd) == 1:
+        cw = {c: weight_of(c) for c in G[node]}
+        if len(set(cw.values())) == 1:
             return None
-        counts = [(cws.count(x), x) for x in wd]
-        counts.sort(key=lambda x: x[0])
-        return node.children[cws.index(counts[0][1])].v + (counts[1][1] - counts[0][1])
+        cc = sorted(((list(cw.values()).count(v)), c) for c, v in cw.items())
+        target = [(v, c) for v, c in cc if v == 1][0]
+        return weights[target[1]] + cw[cc[cc.index(target) + 1][1]] - cw[target[1]]
 
-    return find_wrong_weight(root)
+    root = (list(nx.topological_sort(G)))[0]
+    return find_diff(root)
