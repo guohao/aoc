@@ -1,3 +1,4 @@
+import itertools
 from collections import Counter
 
 
@@ -15,10 +16,9 @@ def p1(data: str):
 
 def p2(data: str):
     ids = data.splitlines()
-    for a in ids:
-        for b in ids:
-            if a == b:
-                continue
-            common = ''.join([a[i] for i in range(len(a)) if a[i] == b[i]])
-            if len(common) == len(a) - 1:
-                return common
+    for a, b in itertools.product(ids, repeat=2):
+        if a == b:
+            continue
+        comm = [a[i] for i in range(len(a)) if a[i] == b[i]]
+        if len(comm) == len(a) - 1:
+            return ''.join(comm)

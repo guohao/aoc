@@ -1,22 +1,24 @@
+import math
 import re
+import string
 
 
 def p1(data: str):
-    pattern = '|'.join([chr(ord('a') + i) + chr(ord('A') + i) for i in range(26)])
-    pattern = pattern + '|' + pattern[::-1]
-    s = data.strip()
-    last = ''
-    while last != s:
-        last = s
-        s = re.sub(pattern, '', s)
-    return len(last)
+    data = data.strip()
+    while True:
+        pl = len(data)
+        for i in range(26):
+            l = string.ascii_lowercase[i]
+            u = string.ascii_uppercase[i]
+            data = re.sub(r'{0}{1}|{1}{0}'.format(l, u), '', data)
+        if pl == len(data):
+            return pl
 
 
 def p2(data: str):
-    ans = len(data)
+    ans = math.inf
     for i in range(26):
-        l = chr(ord('a') + i)
-        u = chr(ord('A') + i)
-        s = re.sub(l + '|' + u, '', data)
+        s = data.replace(string.ascii_lowercase[i], '')
+        s = s.replace(string.ascii_uppercase[i], '')
         ans = min(ans, p1(s))
     return ans

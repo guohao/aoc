@@ -9,6 +9,7 @@ def sum_md(i, j, nodes):
     return sum(md(i, j, node) for node in nodes)
 
 
+
 def p1(data: str):
     nodes = [eval('(' + x + ')') for x in data.splitlines()]
     X, Y = max(x[0] for x in nodes), max(x[1] for x in nodes)

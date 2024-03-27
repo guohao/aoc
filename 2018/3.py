@@ -1,37 +1,26 @@
+import itertools
 import re
 from collections import defaultdict
 
 
 def p1(data: str):
-    g = set()
-    ol = set()
+    g = defaultdict(int)
     for line in data.splitlines():
-        id, fl, ft, w, h = list(map(int, re.findall(r'\d+', line)))
-        for i in range(ft, ft + h):
-            for j in range(fl, fl + w):
-                p = (i, j)
-                if p in g:
-                    ol.add(p)
-                g.add(p)
-    return len(ol)
+        _, x, y, w, h = list(map(int, re.findall(r'\d+', line)))
+        for i in range(y, y + h):
+            for j in range(x, x + w):
+                g[i, j] += 1
+    return sum(1 for v in g.values() if v > 1)
 
 
 def p2(data: str):
     g = defaultdict(int)
-    ol = set()
     for line in data.splitlines():
-        id, fl, ft, w, h = list(map(int, re.findall(r'\d+', line)))
-        for i in range(ft, ft + h):
-            for j in range(fl, fl + w):
-                p = (i, j)
-                g[p] += 1
+        _, x, y, w, h = list(map(int, re.findall(r'\d+', line)))
+        for i in range(y, y + h):
+            for j in range(x, x + w):
+                g[i, j] += 1
     for line in data.splitlines():
-        id, fl, ft, w, h = list(map(int, re.findall(r'\d+', line)))
-        o1 = True
-        for i in range(ft, ft + h):
-            for j in range(fl, fl + w):
-                p = (i, j)
-                if g[p] != 1:
-                    o1 = False
-        if o1:
+        id, x, y, w, h = list(map(int, re.findall(r'\d+', line)))
+        if all(g[i, j] == 1 for i, j in itertools.product(range(y, y + h), range(x, x + w))):
             return id

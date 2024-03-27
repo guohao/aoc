@@ -1,8 +1,8 @@
 import itertools
 
 
-def p1(data: str):
-    return sum(map(int, data.splitlines()))
+def p1is(n):
+    return sum(n)
 
 
 def p2(data: str):
