@@ -1,7 +1,7 @@
-def ic(data: str, fi):
-    ns: list[int] = list(map(int, data.strip().split(','))) + [0 for _ in range(1000)]
-    rb = 0
+from collections import deque, defaultdict
 
+
+def ic(ns, pc, rb, fi):
     def vo(mode: str, key: int):
         if mode == '0':
             return ns[key]
@@ -18,12 +18,12 @@ def ic(data: str, fi):
         else:
             return rb + key
 
-    ans = 0
-    i = 0
+    i = pc
+    ans = deque()
     while i < len(ns):
         op = ns[i] % 100
         if op == 99:
-            break
+            return -1, rb, 0, 0
         modes = str(ns[i] // 100).zfill(3)[::-1]
         if op == 1:
             a, b = [vo(modes[j], ns[i + j + 1]) for j in range(2)]
@@ -40,8 +40,10 @@ def ic(data: str, fi):
             ns[c] = fi
             i += 2
         elif op == 4:
-            ans = vo(modes[0], ns[i + 1])
+            ans.append(vo(modes[0], ns[i + 1]))
             i += 2
+            if len(ans) == 2:
+                return i, rb, ans.popleft(), ans.popleft()
         elif op == 5:
             if vo(modes[0], ns[i + 1]):
                 i = vo(modes[1], ns[i + 2])
@@ -67,12 +69,59 @@ def ic(data: str, fi):
             i += 2
         else:
             assert False
-    return ans
 
 
 def p1(data: str):
-    return ic(data, 1)
+    ns: list[int] = list(map(int, data.strip().split(','))) + [0 for _ in range(1000)]
+    pc = 0
+    rb = 0
+
+    g = defaultdict(int)
+    q = deque()
+    q.append(((0, 0), (0, 1), 0))
+    while q:
+        (x, y), (dx, dy), c = q.popleft()
+        pc, rb, cc, r = ic(ns, pc, rb, c)
+        if pc == -1:
+            break
+        g[x, y] = cc
+        if r:
+            dx, dy = dy, -dx
+        else:
+            dx, dy = -dy, dx
+        x, y = x + dx, y + dy
+        q.append(((x, y), (dx, dy), g[x, y]))
+    return len(g)
 
 
 def p2(data: str):
-    return ic(data, 2)
+    ns: list[int] = list(map(int, data.strip().split(','))) + [0 for _ in range(1000)]
+    pc = 0
+    rb = 0
+
+    g = defaultdict(int)
+    q = deque()
+    q.append(((0, 0), (0, 1), 1))
+    while q:
+        (x, y), (dx, dy), c = q.popleft()
+        pc, rb, cc, r = ic(ns, pc, rb, c)
+        if pc == -1:
+            break
+        g[x, y] = cc
+        if r:
+            dx, dy = dy, -dx
+        else:
+            dx, dy = -dy, dx
+        x, y = x + dx, y + dy
+        q.append(((x, y), (dx, dy), g[x, y]))
+    min_x, max_x = min(x for x, _ in g.keys()), max(x for x, _ in g.keys())
+    min_y, max_y = min(y for _, y in g.keys()), max(y for _, y in g.keys())
+    for j in range(max_y, min_y - 1, -1):
+        line = ''
+        for i in range(min_x, max_x + 1):
+            if g[i, j] == 1:
+                line += '#'
+            else:
+                line += '.'
+        print(line)
+    return 0
