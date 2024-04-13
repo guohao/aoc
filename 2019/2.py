@@ -1,6 +1,3 @@
-import itertools
-
-
 def solve(ns, n, v):
     ns[1] = n
     ns[2] = v
