@@ -33,6 +33,5 @@ def p2(data: str):
         return out
 
     for t in range(100):
-        print(t)
         data = fft2(data)
     return data[:8]
