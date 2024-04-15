@@ -3,7 +3,7 @@ from collections import deque
 
 class IntCodeVM:
     def __init__(self, instructions: str, rq=deque(), sq=deque()):
-        self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(1000)]
+        self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(10000)]
         self.pc = 0
         self.rb = 0
         self.rq = rq
@@ -26,8 +26,10 @@ class IntCodeVM:
     def write(self, mode: str, key: int, value: int):
         if mode == '0':
             wp = key
-        else:
+        elif mode == '2':
             wp = self.rb + key
+        else:
+            raise ValueError(f'{mode} {key} {value}')
         self.instructions[wp] = value
 
     def run(self):
