@@ -77,4 +77,4 @@ class IntCodeVM:
                 self.rb += self.read(modes[0], self.instructions[self.pc + 1])
                 self.inc_pc(2)
             else:
-                assert False
+                raise ValueError('Unrecognized opcode ' + str(op))
