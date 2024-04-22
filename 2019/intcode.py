@@ -1,4 +1,5 @@
 from collections import deque
+import copy
 
 
 class IntCodeVM:
@@ -10,6 +11,9 @@ class IntCodeVM:
         self.sq = sq
         self.halt = False
 
+    def __copy__(self):
+        ','.join(self.instructions)
+        IntCodeVM(self.data,deque(),deque())
     def inc_pc(self, diff):
         self.pc += diff
 
