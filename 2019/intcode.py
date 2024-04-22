@@ -1,10 +1,12 @@
 from collections import deque
-import copy
 
 
 class IntCodeVM:
-    def __init__(self, instructions: str, rq=deque(), sq=deque()):
-        self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(10000)]
+    def __init__(self, instructions: str, rq=deque(), sq=deque(), parsed_instructions=None):
+        if parsed_instructions is not None:
+            self.instructions = parsed_instructions
+        else:
+            self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(1000)]
         self.pc = 0
         self.rb = 0
         self.rq = rq
@@ -12,8 +14,12 @@ class IntCodeVM:
         self.halt = False
 
     def __copy__(self):
-        ','.join(self.instructions)
-        IntCodeVM(self.data,deque(),deque())
+        vm = IntCodeVM('', deque(), deque(), parsed_instructions=self.instructions.copy())
+        vm.pc = self.pc
+        vm.rb = self.rb
+        vm.halt = self.halt
+        return vm
+
     def inc_pc(self, diff):
         self.pc += diff
 
@@ -36,7 +42,18 @@ class IntCodeVM:
             raise ValueError(f'{mode} {key} {value}')
         self.instructions[wp] = value
 
+    def execute_ascii(self, s: str):
+        if s:
+            for x in s + '\n':
+                self.rq.append(ord(x))
+        self.run()
+        out = ''.join(chr(x) for x in self.sq)
+        self.sq.clear()
+        return out
+
     def run(self):
+        if self.halt:
+            return
         while self.pc < len(self.instructions):
             op = self.instructions[self.pc] % 100
             if op == 99:
