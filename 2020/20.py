@@ -82,23 +82,22 @@ def p2(data: str):
     for f, r in itertools.product([0, 1], range(4)):
         sms.append(fr(sm, f, r))
     marks = [[0] * len(g) for _ in range(len(g))]
-    for i, j in itertools.product(range(len(g)), repeat=2):
-        for sm in sms:
-            match = True
+    for i, j, sm in itertools.product(range(len(g)), range(len(g)), sms):
+        def match():
             for si, sj in itertools.product(range(len(sm)), range(len(sm[0]))):
                 if sm[si][sj] != '#':
                     continue
                 if 0 <= i + si < len(g) and 0 <= j + sj < len(g) and g[i + si][j + sj] == '#':
                     continue
-                match = False
-                break
-            if match:
-                for si, sj in itertools.product(range(len(sm)), range(len(sm[0]))):
-                    if sm[si][sj] == '#':
-                        marks[i + si][j + sj] = 1
+                return False
+            return True
+
+        if match():
+            for si, sj in itertools.product(range(len(sm)), range(len(sm[0]))):
+                if sm[si][sj] == '#':
+                    marks[i + si][j + sj] = 1
     ans = 0
     for i, j in itertools.product(range(len(g)), repeat=2):
         if g[i][j] == '#' and marks[i][j] == 0:
             ans += 1
     return ans
-
