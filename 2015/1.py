@@ -1,5 +1,9 @@
+from collections import Counter
+
+
 def p1(data: str):
-    return data.count('(') - data.count(')')
+    c = Counter(data)
+    return c['('] - c[')']
 
 
 def p2(data: str):
