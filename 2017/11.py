@@ -1,31 +1,12 @@
-from collections import Counter
+import myutil
 
 
 def p1(data: str):
-    c = Counter(data.strip().split(','))
-    pairs = [('sw', 'ne'), ('se', 'nw'), ('s', 'n')]
-    print(c)
-    for pair in pairs:
-        c[pair[0]] -= c[pair[1]]
-        c[pair[1]] = 0
-    c['se'] -= c['sw']
-    c['s'] += c['sw']
-    c['sw'] = 0
-    print(c)
-    return sum(c.values())
+    return max(map(abs, list(myutil.hex_walk(data.strip().split(',')))[-1]))
 
 
 def p2(data: str):
-    c = Counter()
-    pairs = [('sw', 'ne'), ('se', 'nw'), ('s', 'n')]
     ans = 0
-    for ch in data.strip().split(','):
-        c[ch] += 1
-        for pair in pairs:
-            c[pair[0]] -= c[pair[1]]
-            c[pair[1]] = 0
-        c['se'] -= c['sw']
-        c['s'] += c['sw']
-        c['sw'] = 0
-        ans = max(ans, sum(c.values()))
+    for move in myutil.hex_walk(data.strip().split(',')):
+        ans = max(ans, max(map(abs, move)))
     return ans
