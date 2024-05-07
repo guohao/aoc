@@ -1,6 +1,18 @@
 import itertools
 
 
+def d2p(data: str):
+    return data.split('\n\n')
+
+
+def d2g(data: str):
+    g = {}
+    for i, line in enumerate(data.splitlines()):
+        for j, c in enumerate(line.split()):
+            g[i, j] = c
+    return g
+
+
 def neighbors_2d_4(x, y):
     for dx, dy in [(1, 0), (0, 1), (0, -1), (-1, 0)]:
         yield x + dx, y + dy
