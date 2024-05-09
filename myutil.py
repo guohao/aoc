@@ -8,9 +8,13 @@ def d2p(data: str):
 def d2g(data: str):
     g = {}
     for i, line in enumerate(data.splitlines()):
-        for j, c in enumerate(line.split()):
+        for j, c in enumerate(line):
             g[i, j] = c
     return g
+
+
+def d2ig(data: str):
+    return {k: int(v) for k, v in d2g(data).items()}
 
 
 def neighbors_2d_4(x, y):
@@ -54,3 +58,12 @@ def range_of_grid_3(g):
     ry = min(y for _, y, _ in g), max(y for _, y, _ in g)
     rz = min(z for _, _, z in g), max(z for _, _, z in g)
     return rx, ry, rz
+
+
+def median(ns: list[int]):
+    ns = sorted(ns)
+    n = len(ns)
+    if n % 2 == 0:
+        return (ns[n // 2] + ns[n // 2 + 1]) // 2
+    else:
+        return ns[n // 2]
