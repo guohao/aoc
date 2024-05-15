@@ -4,48 +4,31 @@ from z3 import *
 def p1(data: str):
     solver = Solver()
     points = []
-    for part in data.split('\n\n'):
+    for i, part in enumerate(data.split('\n\n')):
         s = []
+        sx, sy, sz = Int(f'x{i}'), Int(f'y{i}'), Int(f'z{i}')
+        solver.add(sx < 10000)
+        solver.add(sy < 10000)
+        solver.add(sz < 10000)
         for line in part.splitlines()[1:]:
-            s.append(list(map(int, line.split(','))))
+            x, y, z = list(map(int, line.split(',')))
+            s.append([sx + x, sy + y, sz + z])
         points.append(s)
+    for i, sa in enumerate(points):
+        for j, sb in enumerate(points[i + 1:]):
+            same_point_vars = [Bool(f'b{i}_{j}_{k}') for k in range(len(sa))]
+            for k, pa in enumerate(sa):
+                for pb in sb:
+                    solver.add(Implies(And(pa[0] == pb[0], pa[1] == pb[1], pa[2] == pb[2]), same_point_vars[k]))
+            solver.add(AtLeast(*same_point_vars, 12))
 
-    # 为每个点创建一个布尔变量，表示这个点是否与其他点相同
-
-    ss = [[Int(f'x{i}'), Int(f'y{i}'), Int(f'z{i}')] for i in range(len(points))]
-    # 为每一对点创建一个表达式，表示这两个点的坐标是否完全相同
-
-    npoints = []
-    for i in range(len(points)):
-        npps = []
-        sx, sy, sz = ss[i]
-        for x, y, z in points[i]:
-            solver.add(sx - x <= 1000)
-            solver.add(sx - x >= -1000)
-            solver.add(sy - y <= 1000)
-            solver.add(sy - y >= -1000)
-            solver.add(sz - z <= 1000)
-            solver.add(sz - z >= -1000)
-            npps.append((sx + x, sy + y, sz + z))
-        npoints.append(npps)
-    for i, p1s in enumerate(npoints):
-        for p2s in npoints[i + 1:]:
-            same_point_vars = [Bool('b%d' % i) for i in range(len(p1s))]
-            for pp in p1s:
-                for p2 in p2s:
-                    solver.add(Implies(And(pp[0] == p2[0], pp[1] == p2[1], pp[2] == p2[2]), same_point_vars[i]))
-                    solver.add(AtLeast(*same_point_vars, 12))
     solver.check()
-    rps = set()
-    for i in range(len(ss)):
-        sx, sy, sz = ss[i]
-        for x, y, z in points[i]:
-            px = solver.model().eval(sx + x)
-            py = solver.model().eval(sy + y)
-            pz = solver.model().eval(sz + z)
-            rps.add((px, py, pz))
-    print(rps)
-    return len(rps)
+    print(solver.model())
+    ans = set()
+    for s in points:
+        for x, y, z in s:
+            ans.add((solver.model().eval(x), solver.model().eval(y), solver.model().eval(z)))
+    return len(ans)
 
 
 print(p1("""--- scanner 0 ---
