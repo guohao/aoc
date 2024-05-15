@@ -60,6 +60,12 @@ def range_of_grid_3(g):
     return rx, ry, rz
 
 
+def range_of_grid_2(g):
+    rx = min(x for x, _ in g), max(x for x, _ in g)
+    ry = min(y for _, y in g), max(y for _, y in g)
+    return rx, ry,
+
+
 def median(ns: list[int]):
     ns = sorted(ns)
     n = len(ns)
