@@ -20,23 +20,29 @@ def p1(data: str):
 
 
 def p2(data: str):
-    ranges = []
+    def x():
+        ranges = []
+        toggles = []
+        for line in data.splitlines():
+            toggle = line.startswith('on')
+            x0, x1, y0, y1, z0, z1 = list(map(int, re.findall(r'-?\d+', line)))
+            ranges.append([[x0, x1 + 1], [y0, y1 + 1], [z0, z1 + 1]])
+            toggles.append(toggle)
+        return ranges, toggles
 
-    toggles = []
-    for line in data.splitlines():
-        toggle = line.startswith('on')
-        x0, x1, y0, y1, z0, z1 = list(map(int, re.findall(r'-?\d+', line)))
-        ranges.append([[x0, x1 + 1], [y0, y1 + 1], [z0, z1 + 1]])
-        toggles.append(toggle)
+    ranges, toggles = x()
 
-    sd = [set() for _ in range(3)]
+    def build_sd():
+        sd = [set() for _ in range(3)]
 
-    for i in range(3):
-        for r in ranges:
-            sd[i].add(r[i][0])
-            sd[i].add(r[i][1])
+        for i in range(3):
+            for r in ranges:
+                sd[i].add(r[i][0])
+                sd[i].add(r[i][1])
 
-    sd = list(map(sorted, sd))
+        return list(map(sorted, sd))
+
+    sd = build_sd()
 
     xm = {x: i for i, x in enumerate(sd[0])}
     ym = {y: i for i, y in enumerate(sd[1])}
