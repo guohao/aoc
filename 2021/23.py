@@ -69,7 +69,6 @@ def solve(data: str):
                 path_weight = path_len * cost[letter]
                 total_cost = path_weight + dfs(nn_pos)
                 if ans > total_cost:
-                    # print(f'move {letter} from {p} to {moved} cost {path_weight} total_cost {total_cost}')
                     ans = total_cost
         return ans
 
