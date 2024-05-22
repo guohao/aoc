@@ -81,13 +81,19 @@ def p1(data: str):
     # sbs +=' '
     # sbs += ' '.join(f's{k}' for k in range(14))
     zs = symbols("prez")
+    zss = [0, -18, 7598, -3411808]
     ss = symbols('s:14')
     prez = {zs: sympify('0')}
-    for es in des:
+    combs = []
+    for i, es in enumerate(des):
+        d = {}
         exp = sympify(es)
-        exp = exp.subs(prez)
+        # exp = exp.subs(prez)
         exp = simplify(exp)
-        prez = {zs:exp}
+        for j in range(1, 10):
+            tmpe = exp.subs({ss[i]: j, zs: zss[i]})
+            d[j] = tmpe.evalf()
+        prez = {zs: exp}
         print(prez)
     # print(prev)
     assert len(des) == 14
