@@ -1,5 +1,7 @@
 import itertools
+import math
 import re
+from functools import reduce
 
 
 def d2p(data: str):
@@ -64,18 +66,18 @@ def range_of_grid_3(g):
 def ints(line: str):
     return list(map(int, re.findall(r'\d+', line)))
 
-def digits(line:str):
+
+def digits(line: str):
     return list(map(int, re.findall(r'\d', line)))
 
 
-def grid_of(data:str):
+def grid_of(data: str):
     g = {}
     for i, line in enumerate(data.splitlines()):
         for j, c in enumerate(line):
             if c != '.' and not c.isdigit():
                 g[i, j] = c
     return g
-
 
 
 def range_of_grid_2(g):
@@ -91,3 +93,7 @@ def median(ns: list[int]):
         return (ns[n // 2] + ns[n // 2 + 1]) // 2
     else:
         return ns[n // 2]
+
+
+def lcm(l):
+    return reduce(math.lcm, l)

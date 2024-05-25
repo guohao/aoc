@@ -11,11 +11,6 @@ def abs_sum(l):
     return sum(abs(x) for x in l)
 
 
-def lcm(l):
-    ans = 1
-    for n in l:
-        ans = math.lcm(ans, n)
-    return ans
 
 
 def ints(s: str):
