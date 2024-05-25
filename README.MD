@@ -1,3 +1,1 @@
-# AOC
-
-Solutions to [aoc](https://adventofcode.com)
+[advent-of-code](https://adventofcode.com) solutions 
