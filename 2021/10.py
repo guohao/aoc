@@ -1,6 +1,6 @@
 from collections import deque
 
-import myutil
+import util
 
 
 def p1ss(line: str):

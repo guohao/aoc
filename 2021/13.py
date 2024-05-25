@@ -1,7 +1,7 @@
 import itertools
 import re
 
-import myutil
+import util
 
 
 def p1(data: str):

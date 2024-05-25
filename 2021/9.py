@@ -1,6 +1,6 @@
 import math
 
-import myutil
+import util
 
 
 def p1(data: str):

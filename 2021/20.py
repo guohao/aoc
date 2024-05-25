@@ -1,7 +1,7 @@
 import itertools
 from functools import cache
 
-import myutil
+import util
 
 
 def solve(data: str, t):

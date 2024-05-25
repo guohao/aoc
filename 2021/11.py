@@ -1,6 +1,6 @@
 import itertools
 
-import myutil
+import util
 
 
 def p1(data: str):

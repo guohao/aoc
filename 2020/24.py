@@ -1,4 +1,4 @@
-import myutil
+import util
 import itertools
 import re
 

@@ -1,6 +1,6 @@
 import networkx as nx
 
-import myutil
+import util
 
 
 def p1(data: str):

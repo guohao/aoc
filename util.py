@@ -1,4 +1,5 @@
 import itertools
+import re
 
 
 def d2p(data: str):
@@ -58,6 +59,14 @@ def range_of_grid_3(g):
     ry = min(y for _, y, _ in g), max(y for _, y, _ in g)
     rz = min(z for _, _, z in g), max(z for _, _, z in g)
     return rx, ry, rz
+
+
+def ints(line: str):
+    return list(map(int, re.findall(r'\d+', line)))
+
+def digits(line:str):
+    return list(map(int, re.findall(r'\d', line)))
+
 
 
 def range_of_grid_2(g):
