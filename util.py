@@ -68,6 +68,15 @@ def digits(line:str):
     return list(map(int, re.findall(r'\d', line)))
 
 
+def grid_of(data:str):
+    g = {}
+    for i, line in enumerate(data.splitlines()):
+        for j, c in enumerate(line):
+            if c != '.' and not c.isdigit():
+                g[i, j] = c
+    return g
+
+
 
 def range_of_grid_2(g):
     rx = min(x for x, _ in g), max(x for x, _ in g)
