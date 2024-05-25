@@ -75,8 +75,7 @@ def grid_of(data: str):
     g = {}
     for i, line in enumerate(data.splitlines()):
         for j, c in enumerate(line):
-            if c != '.' and not c.isdigit():
-                g[i, j] = c
+            g[i, j] = c
     return g
 
 
