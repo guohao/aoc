@@ -1,14 +1,12 @@
 from heapq import *
 
-from helper import *
-
-lines = lines(raw_data(2023, 17))
-GOAL = (len(lines) - 1, len(lines[0]) - 1)
-
-g = {(i, j): int(lines[i][j]) for i in range(len(lines)) for j in range(len(lines[i]))}
+from util import *
 
 
-def dfs(min_step, max_step):
+def dfs(data: str, min_step, max_step):
+    g = {k: int(v) for k, v in grid_of(data).items()}
+    (_, xm), (_, ym) = range_of_grid_2(g)
+    goal = xm, ym
     pq = [(0, (0, 0), (0, 0), min_step)]
     visited = set()
     while pq:
@@ -16,10 +14,9 @@ def dfs(min_step, max_step):
         if (p, d, step) in visited:
             continue
         visited.add((p, d, step))
-        if p == GOAL:
-            print(heat_lost)
-            break
-        for nd in {(1, 0), (0, 1), (0, -1), (-1, 0)} - {(-d[0], -d[1])}:
+        if p == goal:
+            return heat_lost
+        for nd in set(ds_4()) - {(-d[0], -d[1])}:
             if d == nd and step == max_step:
                 continue
             if d != nd and step < min_step:
@@ -30,5 +27,9 @@ def dfs(min_step, max_step):
                 heappush(pq, (heat_lost + g[np], np, nd, ns))
 
 
-dfs(1, 3)
-dfs(4, 10)
+def p1(data: str):
+    return dfs(data, 1, 3)
+
+
+def p2(data: str):
+    return dfs(data, 4, 10)

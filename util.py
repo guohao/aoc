@@ -96,3 +96,7 @@ def median(ns: list[int]):
 
 def lcm(l):
     return reduce(math.lcm, l)
+
+
+def ds_4():
+    return [(1, 0), (0, 1), (0, -1), (-1, 0)]
