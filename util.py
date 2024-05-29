@@ -71,6 +71,10 @@ def digits(line: str):
     return list(map(int, re.findall(r'\d', line)))
 
 
+def int_grid(data: str):
+    return {k: int(v) for k, v in grid_of(data).items()}
+
+
 def grid_of(data: str):
     g = {}
     for i, line in enumerate(data.splitlines()):
@@ -100,3 +104,38 @@ def lcm(l):
 
 def ds_4():
     return [(1, 0), (0, 1), (0, -1), (-1, 0)]
+
+
+import math
+
+
+def polygon_area(vertices):
+    n = len(vertices)
+    area = 0
+    for i in range(n):
+        x1, y1 = vertices[i]
+        x2, y2 = vertices[(i + 1) % n]
+        area += x1 * y2 - y1 * x2
+    return abs(area) / 2
+
+
+def boundary_points(vertices):
+    n = len(vertices)
+    boundary_points = 0
+    for i in range(n):
+        x1, y1 = vertices[i]
+        x2, y2 = vertices[(i + 1) % n]
+        boundary_points += math.gcd(abs(x2 - x1), abs(y2 - y1))
+    return boundary_points
+
+
+def internal_points(vertices):
+    return polygon_area(vertices) - boundary_points(vertices) / 2 + 1
+
+
+def total_points(vertices):
+    return int(internal_points(vertices) + boundary_points(vertices))
+
+
+def dsd():
+    return {'R': (0, 1), 'L': (0, -1), 'D': (1, 0), 'U': (-1, 0)}

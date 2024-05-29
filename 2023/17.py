@@ -4,7 +4,7 @@ from util import *
 
 
 def dfs(data: str, min_step, max_step):
-    g = {k: int(v) for k, v in grid_of(data).items()}
+    g = int_grid(data)
     (_, xm), (_, ym) = range_of_grid_2(g)
     goal = xm, ym
     pq = [(0, (0, 0), (0, 0), min_step)]
