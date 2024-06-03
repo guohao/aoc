@@ -57,7 +57,7 @@ def p2(data: str):
         placed.append(((h + 1, h + z1 - z0 + 1), i, points))
     ans = 0
 
-    def dfs(deleted: set):
+    def bfs(deleted: set):
         nd = set()
         for d in deleted:
             for a in above[d]:
@@ -65,10 +65,10 @@ def p2(data: str):
                 if len(supported) == 0 and a not in deleted:
                     nd.add(a)
         if nd:
-            return dfs(deleted.union(nd))
+            return bfs(deleted.union(nd))
         else:
             return len(deleted)
 
     for i in range(len(bs)):
-        ans += dfs({i}) - 1
+        ans += bfs({i}) - 1
     return ans
