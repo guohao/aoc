@@ -64,7 +64,7 @@ def range_of_grid_3(g):
 
 
 def ints(line: str):
-    return list(map(int, re.findall(r'\d+', line)))
+    return list(map(int, re.findall(r'-?\d+', line)))
 
 
 def digits(line: str):
