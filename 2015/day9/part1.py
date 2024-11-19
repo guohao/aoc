@@ -4,12 +4,13 @@ import math
 import networkx as nx
 
 g = nx.Graph()
-while True:
-    line = input()
-    if not line:
-        break
-    f, t, d = line.split()[0::2]
-    g.add_edge(f, t, weight=int(d))
+try:
+    while True:
+        line = input()
+        f, t, d = line.split()[0::2]
+        g.add_edge(f, t, weight=int(d))
+except EOFError:
+    pass
 
 min_cost = math.inf
 for path in itertools.permutations(g.nodes):

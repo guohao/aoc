@@ -1,20 +1,21 @@
 from collections import deque
 
 cmds = deque()
-while True:
-    line = input()
-    if not line:
-        break
-    line = line.upper()
-    line = line.replace('AND', '&')
-    line = line.replace('OR', '|')
-    line = line.replace('NOT ', '~')
-    line = line.replace('LSHIFT ', '<<')
-    line = line.replace('RSHIFT ', '>>')
-    line = '='.join(reversed(line.split(" -> ")))
-    if line.startswith('B='):
-        line = 'B=3176'
-    cmds.append(line)
+try:
+    while True:
+        line = input()
+        line = line.upper()
+        line = line.replace('AND', '&')
+        line = line.replace('OR', '|')
+        line = line.replace('NOT ', '~')
+        line = line.replace('LSHIFT ', '<<')
+        line = line.replace('RSHIFT ', '>>')
+        line = '='.join(reversed(line.split(" -> ")))
+        if line.startswith('B='):
+            line = 'B=3176'
+        cmds.append(line)
+except EOFError:
+    pass
 
 while cmds:
     line = cmds.popleft()

@@ -1,7 +1,7 @@
 r = 0
-while True:
-    line = input()
-    if not line:
-        break
-    r += line.count('\\') + line.count('"') + 2
-print(r)
+try:
+    while True:
+        line = input()
+        r += line.count('\\') + line.count('"') + 2
+except EOFError:
+    print(r)
