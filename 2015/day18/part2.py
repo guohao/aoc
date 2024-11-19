@@ -1,0 +1,31 @@
+import itertools
+
+g = {}
+N = 100
+for i in range(N):
+    for j, c in enumerate(input()):
+        g[i, j] = c
+
+
+def suck_on(grid):
+    for x, y in itertools.product({0, N - 1}, repeat=2):
+        grid[x, y] = '#'
+
+
+suck_on(g)
+for _ in range(N):
+    n = {}
+    for i, j in itertools.product(range(N), repeat=2):
+        ons = 0
+        for di, dj in itertools.product(range(-1, 2), repeat=2):
+            if di == dj == 0:
+                continue
+            if (i + di, j + dj) in g and g[i + di, j + dj] == '#':
+                ons += 1
+        if g[i, j] == '#':
+            n[i, j] = '#' if ons in {2, 3} else '.'
+        else:
+            n[i, j] = '#' if ons == 3 else '.'
+    g = n
+    suck_on(g)
+print(list(g.values()).count('#'))
