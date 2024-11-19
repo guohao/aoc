@@ -1,3 +1,3 @@
 import re
 
-print(sum(int(x) for x in re.findall(r'-?\d+', input())))
+print(sum(map(int, re.findall(r'-?\d+', input()))))
