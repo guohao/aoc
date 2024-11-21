@@ -1,9 +1,12 @@
 import itertools
 
+import sys
+
 g = {}
-N = 100
-for i in range(N):
-    for j, c in enumerate(input()):
+lines = [line.strip() for line in sys.stdin.readlines()]
+N = len(lines)
+for i, line in enumerate(lines):
+    for j, c in enumerate(line):
         g[i, j] = c
 
 

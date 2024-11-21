@@ -1,14 +1,13 @@
 import re
+import sys
 
 rs = []
-while True:
-    line = input()
-    if not line:
-        break
+parts = sys.stdin.read().split('\n\n')
+for line in parts[0].splitlines():
     l, r = line.split('=>')
     rs.append((l.strip(), r.strip()))
 
-mm = input()
+mm = parts[1].strip()
 alls = set()
 for k, v in rs:
     for m in re.finditer(k, mm):

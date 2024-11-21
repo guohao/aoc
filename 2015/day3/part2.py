@@ -1,4 +1,4 @@
-visited = [(0, 0), (0, 0)]
+visited = [(0, 0)] * 2
 for c in input():
     i, j = visited[-2]
     match c:

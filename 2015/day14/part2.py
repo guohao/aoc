@@ -3,13 +3,14 @@ from collections import Counter
 
 n = 2503
 dist = [[] for _ in range(n)]
-try:
-    while True:
-        s, d, r = map(int, re.findall(r'\d+', input()))
-        for i in range(n):
-            dist[i].append(((i + 1) // (d + r) * d + min(d, (i + 1) % (d + r))) * s)
-except EOFError:
-    pass
+
+import sys
+
+lines = [line.strip() for line in sys.stdin.readlines()]
+for line in lines:
+    s, d, r = map(int, re.findall(r'\d+', line))
+    for i in range(n):
+        dist[i].append(((i + 1) // (d + r) * d + min(d, (i + 1) % (d + r))) * s)
 
 c = Counter()
 for i in range(n):

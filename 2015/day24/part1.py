@@ -1,12 +1,12 @@
 import itertools
 import math
 
+import sys
+
 pkgs = []
-try:
-    while True:
-        pkgs.append(int(input()))
-except EOFError:
-    pass
+for line in sys.stdin.readlines():
+    line = line.strip()
+    pkgs.append(int(line))
 
 group_weight = sum(pkgs) // 3
 

@@ -1,9 +1,12 @@
 import itertools
 
+import sys
+
 g = {}
-N = 100
-for i in range(N):
-    for j, c in enumerate(input()):
+lines = [line.strip() for line in sys.stdin.readlines()]
+N = len(lines)
+for i, line in enumerate(lines):
+    for j, c in enumerate(line):
         g[i, j] = c
 
 for _ in range(N):
@@ -19,6 +22,5 @@ for _ in range(N):
             n[i, j] = '#' if ons in {2, 3} else '.'
         else:
             n[i, j] = '#' if ons == 3 else '.'
-    # print(n)
     g = n
 print(list(g.values()).count('#'))

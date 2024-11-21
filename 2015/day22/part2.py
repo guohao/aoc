@@ -49,11 +49,10 @@ class Boss:
 
 def fight() -> int:
     ans = math.inf
-    ans_his = []
     states = [(Player(hp=50, mana=500), Boss(int(input().split()[-1]), int(input().split()[-1])))]
     epoch = 0
     while states:
-        epoch+=1
+        epoch += 1
         new_states = []
         for player, boss in states:
             if player.cost >= ans:
@@ -94,8 +93,6 @@ def fight() -> int:
                     continue
                 new_states.append((new_player, new_boss))
         states = new_states
-    for i,s in enumerate(ans_his):
-        print(i,s.name)
     return ans
 
 

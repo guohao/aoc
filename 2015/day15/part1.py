@@ -1,13 +1,14 @@
 import itertools
 import math
+
 import re
+import sys
 
 ins = []
-try:
-    while True:
-        ins.append(list(map(int, re.findall(r'-?\d+', input()))))
-except EOFError:
-    pass
+for line in sys.stdin.readlines():
+    line = line.strip()
+    digits = list(map(int, re.findall(r'-?\d+', line)))
+    ins.append(digits)
 
 r = 0
 for c in itertools.combinations_with_replacement(list(range(len(ins))), 100):

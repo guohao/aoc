@@ -1,9 +1,10 @@
 import re
+import sys
 
-ans = 0
-try:
-    while True:
-        s, d, r = map(int, re.findall(r'\d+', input()))
-        ans = max(ans, (2503 // (d + r) * d + min(d, 2503 % (d + r))) * s)
-except EOFError:
-    print(ans)
+t = 0
+for line in sys.stdin.readlines():
+    line = line.strip()
+    s, d, r = map(int, re.findall(r'\d+', line))
+    t = max(t, (2503 // (d + r) * d + min(d, 2503 % (d + r))) * s)
+
+print(t)

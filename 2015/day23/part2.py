@@ -1,9 +1,6 @@
-program = []
-try:
-    while True:
-        program.append(input())
-except EOFError:
-    pass
+import sys
+
+program = [line.strip() for line in sys.stdin.readlines()]
 
 pc = 0
 

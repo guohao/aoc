@@ -1,5 +1,5 @@
-import itertools
 import hashlib
+import itertools
 
 key = input()
 for i in itertools.count():

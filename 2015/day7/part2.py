@@ -1,27 +1,25 @@
+import sys
 from collections import deque
 
 cmds = deque()
-try:
-    while True:
-        line = input()
-        line = line.upper()
-        line = line.replace('AND', '&')
-        line = line.replace('OR', '|')
-        line = line.replace('NOT ', '~')
-        line = line.replace('LSHIFT ', '<<')
-        line = line.replace('RSHIFT ', '>>')
-        line = '='.join(reversed(line.split(" -> ")))
-        if line.startswith('B='):
-            line = 'B=3176'
-        cmds.append(line)
-except EOFError:
-    pass
+lines = sys.stdin.readlines()
+for line in lines:
+    line = line.upper().strip()
+    line = line.replace('AND', '&')
+    line = line.replace('OR', '|')
+    line = line.replace('NOT ', '~')
+    line = line.replace('LSHIFT ', '<<')
+    line = line.replace('RSHIFT ', '>>')
+    line = '='.join(reversed(line.split(" -> ")))
+    if line.startswith('B='):
+        line = 'B=3176'
+    cmds.append(line)
 
 while cmds:
     line = cmds.popleft()
     try:
         exec(line)
-    except Exception:
+    except Exception as e:
         cmds.append(line)
 
 print(eval('A'))

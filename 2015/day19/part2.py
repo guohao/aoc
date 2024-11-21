@@ -1,17 +1,15 @@
 import re
+import sys
 
 rs = []
-while True:
-    line = input()
-    if not line:
-        break
+parts = sys.stdin.read().split('\n\n')
+for line in parts[0].splitlines():
     l, r = line.split('=>')
-    rs.append((l.strip(), r.strip()))
+    rs.append((r.strip()[::-1], l.strip()[::-1]))
 
-mm = input()[::-1]
-
-reversed_rules = {v[::-1]: k[::-1] for k, v in rs}
-reversed_pattern = '|'.join(reversed_rules.keys())
+reversed_pattern = '|'.join(v for v, _ in rs)
+reversed_rules = dict(rs)
+mm = parts[1].strip()[::-1]
 
 count = 0
 while mm != 'e':

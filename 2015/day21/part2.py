@@ -1,5 +1,4 @@
 import itertools
-import math
 
 shop = """Weapons:    Cost  Damage  Armor
 Dagger        8     4       0
