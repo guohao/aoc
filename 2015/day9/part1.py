@@ -4,8 +4,8 @@ import math
 import networkx as nx
 
 g = nx.Graph()
-import sys
 
+import sys
 lines = [line.strip() for line in sys.stdin.readlines()]
 for line in lines:
     f, t, d = line.split()[0::2]
