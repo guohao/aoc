@@ -19,6 +19,7 @@ init_state[0] += ['E M', 'E G', 'D G', 'D M']
 q = deque([(0, 0, tuple(tuple(l) for l in init_state))])
 
 
+
 def safe(floor_state: list[list[string]]) -> bool:
     for floor in floor_state:
         gc = sum('G' in x for x in floor)
@@ -40,20 +41,7 @@ while q:
     if all(not a for a in state[:HEIGHT - 1]):
         print(step)
         break
-    candidate = set(state[e])
-    duplicates = set()
-    singles = set()
-    for x in candidate.copy():
-        name = x.split()[0]
-        if f'{name} G' in candidate and f'{name} M' in candidate:
-            duplicates.add(name)
-        else:
-            singles.add(x)
-    candidate = singles.copy()
-    if duplicates:
-        for dn in sorted(duplicates)[:2]:
-            candidate.add(dn + ' G')
-            candidate.add(dn + ' M')
+    candidate =state[e]
     visit = []
     if e - 1 in range(HEIGHT) and state[e - 1]:
         visit.append((e - 1, itertools.combinations(candidate, 1)))
