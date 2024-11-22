@@ -5,30 +5,28 @@ import sys
 from collections import deque
 
 HEIGHT = 4
-lines = [line.strip() for line in sys.stdin.readlines()]
-name_map = {}
 init_state = []
-for line in lines:
-    fs = []
-    for x in re.findall(r'\S+ microchip|\S+ generator', line):
-        name, type = x.split()
-        name = name.replace('-compatible', '')
-        if name not in name_map:
-            name_map[name] = len(name_map) + 1
-        fs.append(name_map[name] * (-1 if type == 'microchip' else 1))
-    init_state.append(fs)
-
-init_state[0] += [len(name_map) + 1, -len(name_map) - 1, len(name_map) + 2, -len(name_map) - 2]
+for line in sys.stdin.readlines():
+    line = line.replace('-compatible', '')
+    line = line.replace('microchip', 'M')
+    line = line.replace('generator', 'G')
+    items = []
+    for item in re.findall(r'\S+ M|\S+ G', line):
+        name, type = item.split()
+        items.append(name[0].upper() + ' ' + type)
+    init_state.append(items)
+init_state[0] += ['E M', 'E G', 'D G', 'D M']
 q = deque([(0, 0, tuple(tuple(l) for l in init_state))])
 
 
 def safe(floor_state: list[list[string]]) -> bool:
     for floor in floor_state:
-        gc = sum(x > 0 for x in floor)
+        gc = sum('G' in x for x in floor)
         if gc == 0:
             continue
         for x in floor:
-            if x < 0 and -x not in floor:
+            name, type = x.split()
+            if 'M' == type and name + ' G' not in floor:
                 return False
     return True
 
@@ -36,22 +34,37 @@ def safe(floor_state: list[list[string]]) -> bool:
 seen = set()
 while q:
     step, e, state = q.popleft()
-    if state in seen:
+    if (e, state) in seen:
         continue
-    seen.add(state)
+    seen.add((e, state))
     if all(not a for a in state[:HEIGHT - 1]):
         print(step)
         break
-    select_1 = itertools.combinations(state[e], 1)
-    select_2 = itertools.combinations(state[e], 2)
-    visit = [(e - 1, select_1), (e + 1, itertools.chain(select_1, select_2))]
+    candidate = set(state[e])
+    duplicates = set()
+    singles = set()
+    for x in candidate.copy():
+        name = x.split()[0]
+        if f'{name} G' in candidate and f'{name} M' in candidate:
+            duplicates.add(name)
+        else:
+            singles.add(x)
+    candidate = singles.copy()
+    if duplicates:
+        for dn in sorted(duplicates)[:2]:
+            candidate.add(dn + ' G')
+            candidate.add(dn + ' M')
+    visit = []
+    if e - 1 in range(HEIGHT) and state[e - 1]:
+        visit.append((e - 1, itertools.combinations(candidate, 1)))
+    visit.append((e + 1, itertools.combinations(candidate, 2)))
     for ne, select in visit:
         if ne not in range(HEIGHT):
             continue
         for c in select:
-            n_state = [set(l) for l in state]
+            n_state = list(state)
             n_state[e] = {x for x in state[e] if x not in c}
             n_state[ne] = set(c + state[ne])
             if safe([n_state[e], n_state[ne]]):
-                n_state = tuple(tuple(l) for l in n_state)
+                n_state = tuple(tuple(sorted(l)) for l in n_state)
                 q.append((step + 1, ne, n_state))
