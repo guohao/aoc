@@ -1,7 +1,6 @@
 from collections import deque
 
 nums = list(map(ord, input())) + [17, 31, 73, 47, 23]
-print(nums)
 q = deque(range(256))
 skip_size = 0
 cur_pos = 0
