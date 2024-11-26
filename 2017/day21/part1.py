@@ -1,7 +1,5 @@
 import itertools
 import sys
-from collections import Counter
-from functools import reduce
 
 lines = [line.strip() for line in sys.stdin.readlines()]
 mapper = {}
