@@ -1,3 +1,6 @@
+import networkx as nx
+
+
 def p1(data: str):
     ans = 0
     for part in data.split('\n\n'):
@@ -10,3 +13,5 @@ def p2(data: str):
     for part in data.split('\n\n'):
         cs.append(sum(list(map(int, part.split()))))
     return sum(sorted(cs, reverse=True)[:3])
+
+nx.clustering()

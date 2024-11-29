@@ -5,6 +5,7 @@ from itertools import count, product
 import networkx as nx
 
 g = nx.Graph()
+
 gs = {}
 es = {}
 

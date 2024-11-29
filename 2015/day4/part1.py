@@ -1,12 +1,9 @@
 import hashlib
 import itertools
 
-key = input()
+d = input()
 for i in itertools.count():
-    md5 = hashlib.md5()
-    md5.update(key.encode())
-    md5.update(str(i).encode())
-    v = md5.hexdigest()
-    if v[:5] == '0' * 5:
+    md5 = hashlib.md5(f'{d}{i}'.encode()).hexdigest()
+    if md5[:5] == '0' * 5:
         print(i)
         break

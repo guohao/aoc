@@ -1,2 +1,2 @@
-data = input()
-print(data.count('(') - data.count(')'))
+d = input()
+print(d.count('(') - d.count(')'))
