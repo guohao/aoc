@@ -1,10 +1,4 @@
 import sys
-import re
-import math
-from itertools import count, combinations, permutations
-from collections import defaultdict, Counter
-
-import sys
 
 ls = [line.strip() for line in sys.stdin.readlines()]
 
