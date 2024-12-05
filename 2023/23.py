@@ -45,7 +45,7 @@ def p2(data: str):
     goal = (R - 1, [c for _, c in g if (R - 1, c) in g][0])
 
     seen = set()
-    adj = {p: {q: 1 for q in neighbors_2d_4(*p) if q in g} for p in g}
+    adj = {p: {q: 1 for q in nb4(*p) if q in g} for p in g}
     while True:
         for p, qs in adj.items():
             if len(qs) != 2:

@@ -7,7 +7,7 @@ def p1(data: str):
     ans = 0
     g = myutil.d2ig(data)
     for n in g:
-        if all(g[nb] > g[n] for nb in myutil.neighbors_2d_4(*n) if nb in g):
+        if all(g[nb] > g[n] for nb in myutil.nb4(*n) if nb in g):
             ans += g[n] + 1
     return ans
 
@@ -27,7 +27,7 @@ def p2(data: str):
         if g[x, y] == 9:
             return
         seen.add((x, y))
-        for nx, ny in myutil.neighbors_2d_4(x, y):
+        for nx, ny in myutil.nb4(x, y):
             bfs(nx, ny)
 
     for i in range(mx + 1):

@@ -11,7 +11,7 @@ def p1(data: str):
     weight = nx.get_node_attributes(g, 'v')
     goal = (max(x for x, _ in g), max(y for _, y in g))
     for n in g:
-        for nb in myutil.neighbors_2d_4(*n):
+        for nb in myutil.nb4(*n):
             if nb in g:
                 g.add_edge(nb, n, v=weight[n])
     p = list(nx.shortest_path(g, (0, 0), goal, weight='v'))
@@ -35,7 +35,7 @@ def p2(data: str):
 
     ew = nx.get_node_attributes(g, 'v')
     for n in g:
-        for nb in myutil.neighbors_2d_4(*n):
+        for nb in myutil.nb4(*n):
             if nb in g:
                 g.add_edge(nb, n, v=ew[n])
     goal = N * 5 - 1, N * 5 - 1

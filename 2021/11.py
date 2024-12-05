@@ -12,7 +12,7 @@ def p1(data: str):
         while any(v > 9 and k not in flashed for k, v in g.items()):
             for n in g:
                 if g[n] > 9 and n not in flashed:
-                    for nb in myutil.neighbors_2d_8(*n):
+                    for nb in myutil.nb8(*n):
                         if nb in g:
                             g[nb] += 1
                     flashed.add(n)
@@ -31,7 +31,7 @@ def p2(data: str):
         while any(v > 9 and k not in flashed for k, v in g.items()):
             for n in g:
                 if g[n] > 9 and n not in flashed:
-                    for nb in myutil.neighbors_2d_8(*n):
+                    for nb in myutil.nb8(*n):
                         if nb in g:
                             g[nb] += 1
                     flashed.add(n)
