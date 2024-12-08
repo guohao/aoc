@@ -2,7 +2,6 @@ import sys
 from collections import defaultdict
 from itertools import product
 
-t = 0
 ls = [l.strip() for l in sys.stdin.readlines()]
 X = len(ls)
 Y = len(ls[0])
