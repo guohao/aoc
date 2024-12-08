@@ -13,7 +13,7 @@ for i in range(len(ls)):
         if v != '.':
             gd[v].append((i, j))
 ans = set()
-for k, v in gd.items():
+for v in gd.values():
     for a, b in product(v, repeat=2):
         if a == b:
             continue
