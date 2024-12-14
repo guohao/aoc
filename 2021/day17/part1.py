@@ -1,0 +1,28 @@
+import re
+import sys
+
+data = sys.stdin.read().strip()
+
+xl, xr, yd, yu = list(map(int, re.findall(r'-?\d+', data.strip())))
+
+
+def can_within(vx, vy):
+    sx, sy = 0, 0
+    maxy = 0
+    while sy >= yd:
+        sx, sy = sx + vx, sy + vy
+        maxy = max(maxy, sy)
+        if xl <= sx <= xr and yd <= sy <= yu:
+            return maxy
+        vx -= 1
+        vy -= 1
+    return -1
+
+
+ans = 0
+for i in range(1, xr + 1):
+    for j in range(1, xr + 1):
+        my = can_within(i, j)
+        if my != -1:
+            ans = max(ans, my)
+print(ans)
