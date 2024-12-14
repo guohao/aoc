@@ -18,4 +18,3 @@ for i in range(6):
         else:
             line += '#'
     print(line)
-    break

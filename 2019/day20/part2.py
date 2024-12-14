@@ -5,7 +5,7 @@ import networkx as nx
 
 import sys
 
-data = sys.stdin.read().strip()
+data = sys.stdin.read()
 
 g = {}
 X = len(data.splitlines())

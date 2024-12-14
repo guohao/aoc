@@ -25,18 +25,9 @@ def build_g(depth, target):
     return {k: v % 3 for k, v in g.items()}
 
 
-
 data = sys.stdin.read()
 lines = data.splitlines()
 depth = ints(lines[0])[0]
 target = tuple(ints(lines[1]))
 g = build_g(depth, target)
 print(sum(v for k, v in g.items() if k[0] <= target[0] and k[1] <= target[1]))
-
-
-import sys
-data = sys.stdin.read().strip()
-
-    lines = data.splitlines()
-    depth = ints(lines[0])[0]
-    target = tuple(ints(lines[1]))

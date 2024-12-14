@@ -6,7 +6,7 @@ class IntCodeVM:
         if parsed_instructions is not None:
             self.instructions = parsed_instructions
         else:
-            self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(1000)]
+            self.instructions: list[int] = list(map(int, instructions.strip().split(','))) + [0 for _ in range(10000)]
         self.pc = 0
         self.rb = 0
         self.rq = rq
