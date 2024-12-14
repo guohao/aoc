@@ -25,7 +25,6 @@ for t in itertools.count(1):
                 line += '#'
             else:
                 line += '.'
-        outs.append(line)
-    if any("#########" in line for line in outs):
-        print(t)
-        break
+        if "#########" in line:
+            print(t)
+            exit()
