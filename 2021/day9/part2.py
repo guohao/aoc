@@ -3,7 +3,7 @@ import sys
 
 lines = [l.strip() for l in sys.stdin.readlines()]
 
-g = {(i, j): c for i, line in enumerate(lines) for j, c in line}
+g = {(i, j): int(c) for i, line in enumerate(lines) for j, c in enumerate(line)}
 mx = max(x for x, _ in g)
 my = max(y for _, y in g)
 seen = set()

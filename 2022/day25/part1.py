@@ -2,10 +2,7 @@ import re
 import sys
 from functools import reduce
 
-data = sys.stdin.read()
-
 lines = [l.strip() for l in sys.stdin.readlines()]
-
 
 def atoi(s: str) -> int:
     match s:

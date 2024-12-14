@@ -43,7 +43,7 @@ def reassemble(data: str):
                     nj = j + 1
                 ans = dfs(placed | {(x, flip, rotate, i, j)}, ni, nj)
                 if ans != -1:
-                    print(ans)
+                    return ans
         return -1
 
     return tiles, dfs(frozenset(), 0, 0)

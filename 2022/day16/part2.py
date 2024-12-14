@@ -4,11 +4,12 @@ import re
 import sys
 from collections import defaultdict
 
-lines = [l.strip() for l in sys.stdin.readlines()]
 valves = {}
 dist = defaultdict(lambda: defaultdict(lambda: math.inf))
-for i, line in enumerate(lines):
-    c, r, ov = [line[1], int(next(re.finditer(r'\d+', line[4])).group()), line[9:]]
+for i, line in enumerate(sys.stdin.readlines()):
+    cells = line.split()
+    r = list(map(int, re.findall(r'-?\d+', line)))[0]
+    c, ov = cells[1],cells[9:]
     valves[c] = r
     for j in [x.replace(',', '') for x in ov]:
         dist[c][j] = 1

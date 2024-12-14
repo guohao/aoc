@@ -61,7 +61,7 @@ def dfs(n_pos):
             total_cost = path_weight + dfs(nn_pos)
             if ans > total_cost:
                 ans = total_cost
-    print(ans)
+    return ans
 
 
 print(dfs(frozenset(pos)))

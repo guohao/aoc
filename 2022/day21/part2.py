@@ -1,18 +1,18 @@
-import sys
+from z3 import *
 
 lines = [l.strip() for l in sys.stdin.readlines()]
 
-numbers = {}
+nums = {}
 ops = {}
 
 for line in lines:
     name, op = line.split(':')
     if name == 'humn':
-        numbers[name] = 'x'
+        nums[name] = 'x'
         continue
 
     if op.strip().isnumeric():
-        numbers[name] = op
+        nums[name] = op
     else:
         a, op, b = op.split()
         if name == 'root':
@@ -23,19 +23,22 @@ for line in lines:
 while 'root' in ops:
     for name, op in ops.copy().items():
         a, op, b = op
-        if a in numbers and b in numbers:
+        if a in nums and b in nums:
             if a.isnumeric() and b.isnumeric():
                 if op == '+':
-                    numbers[name] = numbers[a] + numbers[b]
+                    nums[name] = nums[a] + nums[b]
                 elif op == '-':
-                    numbers[name] = numbers[a] - numbers[b]
+                    nums[name] = nums[a] - nums[b]
                 elif op == '*':
-                    numbers[name] = numbers[a] * numbers[b]
+                    nums[name] = nums[a] * nums[b]
                 elif op == '/':
-                    numbers[name] = numbers[a] // numbers[b]
+                    nums[name] = nums[a] // nums[b]
             else:
-                numbers[name] = f'(({numbers[a]})' + op + f'({numbers[b]}))'
+                nums[name] = f'(({nums[a]})' + op + f'({nums[b]}))'
             del ops[name]
 
 x = Int('x')
-solve(eval(numbers['root']))
+s = Solver()
+s.add(eval(nums['root']))
+s.check()
+print(s.model()[x])

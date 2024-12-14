@@ -16,11 +16,11 @@ def score_of(line: str):
                 return 0
             else:
                 q.pop()
-    ans = 0
+    score = 0
     while q:
-        ans = ans * 5 + points[q.pop()]
-    print(ans)
+        score = score * 5 + points[q.pop()]
+    return score
 
 
-seq = list(filter(lambda x: x > 0, map(score_of, lines)))
+seq = sorted(list(filter(lambda x: x > 0, map(score_of, lines))))
 print(seq[len(seq) // 2])

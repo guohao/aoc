@@ -2,7 +2,7 @@ import sys
 
 x = 1
 s = []
-for cmd in sys.stdin.splitlines():
+for cmd in sys.stdin.readlines():
     cmd = cmd.strip()
     s.append(x)
     if cmd != 'noop':

@@ -50,7 +50,7 @@ def dfs(p):
             continue
         ans = max(d + dfs(nb), ans)
     seen.remove(p)
-    print(ans)
+    return ans
 
 
 print(dfs(start))

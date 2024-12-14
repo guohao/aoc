@@ -2,8 +2,6 @@ import sys
 from copy import deepcopy as dc
 
 
-data = sys.stdin.read().strip()
-
 def rotations(s):
     s = dc(s)
     k = []
@@ -23,13 +21,14 @@ def vsub(x, y):
 
 scanners = []
 
-for s in data.split("\n\n"):
+for s in sys.stdin.read().strip().split("\n\n"):
     s = s.splitlines()[1:]
     scanners.append({tuple(map(int, k.split(","))) for k in s})
 
 t = set(scanners[0])
 
 q = scanners[1:]
+
 
 def calc_intersect(s1, s2):
     for s2 in rotations(s2):
@@ -40,6 +39,7 @@ def calc_intersect(s1, s2):
                 if len(s1 & c) >= 12:
                     return c
 
+
 while q:
     k = calc_intersect(t, q[0])
     if k:
@@ -47,16 +47,4 @@ while q:
         q.pop(0)
     else:
         q.append(q.pop(0))
-
 print(len(t))
-
-
-import sys
-data = sys.stdin.read().strip()
-
-    scanners = []
-
-    for s in data.split("\n\n"):
-        s = s.splitlines()[1:]
-        scanners.append({tuple(map(int, k.split(","))) for k in s})
-

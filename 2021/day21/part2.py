@@ -11,6 +11,14 @@ for line in data.splitlines():
     ps[p] = pos - 1
 
 
+def gen_all_moves():
+    moves = set()
+    for comb in itertools.combinations_with_replacement(range(1, 4), 3):
+        for x in itertools.permutations(comb):
+            moves.add(x)
+    return moves
+
+
 def gen_dict(init_pos):
     q = deque()
     d = defaultdict(lambda: defaultdict(int))
@@ -56,11 +64,3 @@ for i, di in new_ps.items():
         win_times += curr
     ans = max(ans, win_times)
 print(ans)
-
-
-def gen_all_moves():
-    ans = set()
-    for comb in itertools.combinations_with_replacement(range(1, 4), 3):
-        for x in itertools.permutations(comb):
-            ans.add(x)
-    print(ans)

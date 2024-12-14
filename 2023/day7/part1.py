@@ -3,7 +3,7 @@ from collections import Counter
 
 hands = []
 cards = 'AKQJT98765432'[::-1]
-for line in sys.stdin.splitlines():
+for line in sys.stdin.readlines():
     hand, bid = line.split()
     points = list(map(cards.index, hand))
     c = Counter(points)

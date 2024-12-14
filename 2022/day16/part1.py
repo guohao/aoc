@@ -6,7 +6,9 @@ lines = [l.strip() for l in sys.stdin.readlines()]
 
 D = {}
 for i, line in enumerate(lines):
-    c, r, ov = [line[1], int(next(re.finditer(r'\d+', line[4])).group()), line[9:]]
+    cells = line.split()
+    r = list(map(int, re.findall(r'-?\d+', line)))[0]
+    c, ov = cells[1],cells[9:]
     ov = [x.replace(',', '') for x in ov]
     D[c] = (r, ov)
 
@@ -22,4 +24,5 @@ def dfs(current, ov: str, time_left) -> int:
         return time_left * D[current][0] + dfs(current, ov + ',' + current, time_left)
 
 
-print(dfs('AA', '', 30))
+ret = dfs('AA', '', 30)
+print(ret)
