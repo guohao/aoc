@@ -1,7 +1,9 @@
 from collections import Counter
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     ns = data.strip()
     layers = len(ns) // (25 * 6)
     ans = 0
@@ -11,10 +13,12 @@ def p1(data: str):
         if c['0'] < zc:
             zc = c['0']
             ans = c['1'] * c['2']
-    return ans
+    print(ans)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     ns = data.strip()
     layers = len(ns) // (25 * 6)
     img = ['2' for _ in range(150)]

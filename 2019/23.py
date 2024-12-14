@@ -4,7 +4,9 @@ from collections import deque
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     n = 50
     vms = []
 
@@ -31,7 +33,9 @@ def p1(data: str):
                     vms[a].rq.append(y)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     n = 50
     vms = []
 

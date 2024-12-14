@@ -2,7 +2,9 @@ import itertools
 import math
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     N = 5
     g = {(i, j): c for i, line in enumerate(data.splitlines()) for j, c in enumerate(line)}
     seen = set()
@@ -35,7 +37,9 @@ def p1(data: str):
         g = ng
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     N = 5
     gs = {
         0: {(i, j): c for i, line in enumerate(data.splitlines()) for j, c in enumerate(line)},

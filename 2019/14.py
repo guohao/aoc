@@ -7,7 +7,9 @@ def ints(s: str):
     return list(map(int, re.findall(r'\d+', s)))
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     G = nx.DiGraph()
     for line in data.splitlines():
         f, t = line.split(' => ')
@@ -29,7 +31,9 @@ def p1(data: str):
     return needs['ORE']
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     G = nx.DiGraph()
     for line in data.splitlines():
         f, t = line.split(' => ')

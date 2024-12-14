@@ -14,14 +14,18 @@ def fft(s: str):
     return out
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     data = data.strip()
     for _ in range(100):
         data = fft(data)
     return data[:8]
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     data = (data.strip() * 10000)[int(data[:7]):]
 
     def fft2(s: str):

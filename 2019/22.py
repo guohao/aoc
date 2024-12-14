@@ -1,4 +1,6 @@
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     cards = list(range(10007))
     for line in data.splitlines():
         if 'new stack' in line:
@@ -17,7 +19,9 @@ def p1(data: str):
     return cards.index(2019)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     nc, times = 119315717514047, 101741582076661
 
     add, mul = 0, 1

@@ -51,7 +51,9 @@ while q:
 print(len(t))
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     scanners = []
 
     for s in data.split("\n\n"):

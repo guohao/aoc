@@ -5,7 +5,9 @@ from collections import deque, defaultdict
 import networkx as nx
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     g = {}
     l2p = {}
     for i, line in enumerate(data.splitlines()):
@@ -35,7 +37,9 @@ def p1(data: str):
     return nx.shortest_path_length(G, l2p['AA'], l2p['ZZ'])
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     g = {}
     X = len(data.splitlines())
     Y = len(data.splitlines()[0])

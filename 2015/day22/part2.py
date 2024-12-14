@@ -93,7 +93,7 @@ def fight() -> int:
                     continue
                 new_states.append((new_player, new_boss))
         states = new_states
-    return ans
+    print(ans)
 
 
 print(fight())

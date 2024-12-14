@@ -11,12 +11,14 @@ def state_of(data: str, x, y):
     return vm.sq.popleft()
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     ans = 0
     for x in range(50):
         for y in range(50):
             ans += state_of(data, x, y)
-    return ans
+    print(ans)
 
 
 def match(data, x, y):
@@ -27,7 +29,9 @@ def match(data, x, y):
     return ur and ul and dr and dl
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     def s(xs, y):
         for i in range(xs, 10000):
             if state_of(data, i, y):

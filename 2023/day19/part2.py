@@ -26,7 +26,7 @@ def calc(name, d):
             md[k] = [v for v in d[k] if eval(expr)]
             ans += calc(target, md)
             d[k] = [v for v in d[k] if not eval(expr)]
-    return ans
+    print(ans)
 
 
 print(calc('in', {x: list(range(1, 4001)) for x in 'xmas'}))

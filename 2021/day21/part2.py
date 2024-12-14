@@ -63,4 +63,4 @@ def gen_all_moves():
     for comb in itertools.combinations_with_replacement(range(1, 4), 3):
         for x in itertools.permutations(comb):
             ans.add(x)
-    return ans
+    print(ans)

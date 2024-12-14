@@ -34,7 +34,9 @@ g = build_g(depth, target)
 print(sum(v for k, v in g.items() if k[0] <= target[0] and k[1] <= target[1]))
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     lines = data.splitlines()
     depth = ints(lines[0])[0]
     target = tuple(ints(lines[1]))

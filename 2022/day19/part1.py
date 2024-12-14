@@ -37,7 +37,7 @@ def solve(max_bps, max_minutes):
                 if gain[3] >= max_obs:
                     state.add((robots, gain))
         ans.append(max_obs)
-    return ans
+    print(ans)
 
 
 print(sum(i * obs for i, obs in enumerate(solve(len(blueprints), 24), start=1)))

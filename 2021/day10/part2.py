@@ -19,7 +19,7 @@ def score_of(line: str):
     ans = 0
     while q:
         ans = ans * 5 + points[q.pop()]
-    return ans
+    print(ans)
 
 
 seq = list(filter(lambda x: x > 0, map(score_of, lines)))

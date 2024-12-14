@@ -6,7 +6,8 @@ import networkx as nx
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+data = sys.stdin.read().strip()
+
     q = deque([[]])
     seen = set()
     D = {1: (0, -1), 2: (0, 1), 3: (-1, 0), 4: (1, 0)}
@@ -30,7 +31,9 @@ def p1(data: str):
             q.append(path + [i])
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     q = deque([[]])
     seen = set()
     D = {1: (0, -1), 2: (0, 1), 3: (-1, 0), 4: (1, 0)}

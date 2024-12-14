@@ -17,7 +17,9 @@ def ints(s: str):
     return list(map(int, re.findall(r'-?\d+', s)))
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     moons = []
     for i, line in enumerate(data.splitlines()):
         moons.append([i] + ints(line) + [0, 0, 0])
@@ -33,7 +35,9 @@ def p1(data: str):
     return sum(abs_sum(m[1:4]) * abs_sum(m[4:7]) for m in moons)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     dims = [[] for _ in range(3)]
     for line in data.splitlines():
         for i in range(3):

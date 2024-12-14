@@ -1,7 +1,9 @@
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data)
     commands = """NOT A T
 NOT B J
@@ -17,7 +19,9 @@ WALK
     return vm.sq.pop()
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data)
     commands = """NOT B J 
 NOT C T

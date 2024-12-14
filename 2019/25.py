@@ -6,7 +6,9 @@ import copy
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     q = deque()
     vm = IntCodeVM(data, deque(), deque())
 

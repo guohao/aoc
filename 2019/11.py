@@ -2,7 +2,9 @@ from collections import deque, defaultdict
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data)
 
     g = defaultdict(int)
@@ -26,7 +28,9 @@ def p1(data: str):
     return len(g)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data)
     sq = vm.sq
     rq = vm.rq

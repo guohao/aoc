@@ -1,7 +1,9 @@
 import intcode
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = intcode.IntCodeVM(data)
     vm.run()
     sq = vm.sq
@@ -15,7 +17,9 @@ def p1(data: str):
     return len(g)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     data = '2' + data[1:]
     vm = intcode.IntCodeVM(data)
     sq = vm.sq

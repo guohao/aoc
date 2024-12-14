@@ -4,7 +4,9 @@ from collections import deque
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data)
     vm.run()
     G = {}
@@ -19,10 +21,12 @@ def p1(data: str):
             continue
         if all((x + dx, y + dy) in G and G[x + dx, y + dy] == '#' for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]):
             ans += x * y
-    return ans
+    print(ans)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     vm = IntCodeVM(data, deque(), deque())
     vm.run()
     G = {}

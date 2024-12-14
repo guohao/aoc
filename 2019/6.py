@@ -1,7 +1,9 @@
 import networkx as nx
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     G = nx.DiGraph()
     for line in data.splitlines():
         a, b = line.split(')')
@@ -10,7 +12,9 @@ def p1(data: str):
     return sum(len(nx.descendants(G, n)) for n in G.nodes())
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     G = nx.Graph()
     for line in data.splitlines():
         a, b = line.split(')')

@@ -90,9 +90,13 @@ def solve(data: str, is_p2):
                 heapq.heappush(q, (steps + distance, tuple(nps), keys | frozenset([G[x, y]])))
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     return solve(data, False)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     return solve(data, True)

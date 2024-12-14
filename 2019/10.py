@@ -10,7 +10,9 @@ def calculate_angle(center, point):
     return adjusted_angle
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     g = set()
     for i, line in enumerate(data.splitlines()):
         for j, c in enumerate(line):
@@ -26,7 +28,9 @@ def p1(data: str):
     return max(count(n) for n in g)
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     g = set()
     for i, line in enumerate(data.splitlines()):
         for j, c in enumerate(line):

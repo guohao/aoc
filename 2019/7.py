@@ -3,7 +3,9 @@ from collections import deque
 from intcode import IntCodeVM
 
 
-def p1(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     ans = 0
     for amps in itertools.permutations(list(range(5)), 5):
         cur_input = 0
@@ -14,7 +16,7 @@ def p1(data: str):
             vm.run()
             cur_input = vm.sq.popleft()
         ans = max(ans, cur_input)
-    return ans
+    print(ans)
 
 
 def run_amps(amps: tuple, data: str):
@@ -29,8 +31,10 @@ def run_amps(amps: tuple, data: str):
     return qs[0][-1]
 
 
-def p2(data: str):
+import sys
+data = sys.stdin.read().strip()
+
     ans = 0
     for amps in itertools.permutations(list(range(5, 10)), 5):
         ans = max(ans, run_amps(amps, data))
-    return ans
+    print(ans)
