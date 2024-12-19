@@ -10,10 +10,10 @@ for line in lines[2:]:
     dp = [0] * (n + 1)
     dp[0] = 1
 
-    for i in range(1, n + 1):
+    for i in range(n + 1):
         for p in ps:
             l = len(p)
-            if l <= i and line[i - l:i] == p:
+            if line[i - l:i] == p:
                 dp[i] += dp[i - l]
     t += dp[n]
 
